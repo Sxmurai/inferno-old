@@ -9,74 +9,78 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-@Module.Define(name = "TickShift")
-@Module.Info(description = "Shifts around your ticks xd")
+@Module.Declaration(name = "TickShift", category = Category.Exploits)
 public class TickShift extends Module {
-    public final Option<Float> rate = new Option<>("Rate", 2.0f, 1.1f, 20.0f);
-    public final Option<Integer> ticks = new Option<>("Ticks", 10, 1, 100);
-    public final Option<Boolean> autoDisable = new Option<>("AutoDisable", true);
-
-    private final Queue<CPacketPlayer> packets = new ConcurrentLinkedQueue<>();
-    private boolean stop = false; // this is because of my autism
-    private int passed = 0;
-
-    @Override
-    protected void onDeactivated() {
-        if (fullNullCheck()) {
-            mc.timer.tickLength = 50.0f;
-
-            if (!this.packets.isEmpty()) {
-                this.empty();
-            }
-        }
-
-        this.passed = 0;
+	 	
+    BooleanSetting disable = registerBoolean("Disable", true);	
+    IntegerSetting disableTicks = registerInteger("DisableTicks", 26, 1, 100);
+    BooleanSetting movementEnable = registerBoolean("MovementEnable", true);		
+    IntegerSetting enableTicks = registerInteger("EnableTicks", 30, 1, 100);
+    DoubleSetting multiplier = registerDouble("Multiplier", 3.0, 1.0, 10.0);
+	
+    private int ticksPassed = 0;
+    private int ticksStill = 0;
+    private boolean playerMoving;
+    private boolean timerOn = false;
+	
+    public void onUpdate() {
+	 if(timerOn == false) {
+		if(isMoving(mc.player)) {
+			if(ticksStill >= 1) {
+				ticksStill--;	
+			}
+			
+	 	} else if (!isMoving(mc.player)) {
+	      		ticksStill++;	 
+	 	} 
+	 }
+	 
+	 
+	 if(ticksStill >= enableTicks.getValue()) {
+		 timerOn = true;
+		 if(movementEnable.getValue()) { 
+			if(mc.gameSettings.keyBindJump.isKeyDown() || mc.gameSettings.keyBindSneak.isKeyDown() || mc.gameSettings.keyBindRight.isKeyDown() || mc.gameSettings.keyBindLeft.isKeyDown() || mc.gameSettings.keyBindForward.isKeyDown() || mc.gameSettings.keyBindBack.isKeyDown()) { 
+				mc.timer.tickLength = ((float) (50.0 / multiplier.getValue()));  
+				ticksPassed++; 
+		 	}	  
+		 } else {
+			mc.timer.tickLength = ((float) (50.0 / multiplier.getValue())); 
+			ticksPassed++; 		 
+		 }
+		 
+		 
+	 }
+	    
+	if(ticksPassed >= disableTicks.getValue()) {
+	    	ticksPassed = 0;
+		if(disable.getValue()) {
+			disable();
+		} else {
+			reset();	
+		}
+		
+	 }
     }
-
-    @Override
-    public void onTick() {
-        ++this.passed;
-        if (this.passed >= this.ticks.getValue()) {
-            this.passed = 0;
-            if (this.autoDisable.getValue()) {
-                this.toggle();
-            } else {
-                mc.timer.tickLength = 50.0f;
-                this.empty();
-            }
-
-            return;
-        }
-
-        mc.timer.tickLength = 50.0f / this.rate.getValue();
+	
+    public static boolean isMoving(EntityLivingBase entity) {
+        return entity.moveForward != 0 || entity.moveStrafing != 0;
+    }		
+	  
+    public void onDisable() {
+	timerOn = false;
+	ticksStill = 0;
+    	mc.timer.tickLength = 50f;    
     }
-
-    @SubscribeEvent
-    public void onPacketSend(PacketEvent.Send event) {
-        if (event.getPacket() instanceof CPacketPlayer) {
-            if (!this.stop) {
-                this.packets.add((CPacketPlayer) event.getPacket());
-            }
-
-            event.setCanceled(true);
-        }
+		
+    public void reset() {
+	timerOn = false;
+	ticksStill = 0;
+    	mc.timer.tickLength = 50f;   
     }
-
-    private void empty() {
-        if (this.stop) {
-            return;
-        }
-
-        this.stop = true;
-        while (!this.packets.isEmpty()) {
-            CPacketPlayer packet = this.packets.poll();
-            if (packet == null) {
-                break;
-            }
-
-            mc.player.connection.sendPacket(packet);
-        }
-
-        this.stop = false;
+ 	
+    public String getHudInfo() {
+	return "[" + ChatFormatting.WHITE + String.valueOf(ticksStill) + ChatFormatting.GRAY + "]"; 
     }
+ 
+
 }
