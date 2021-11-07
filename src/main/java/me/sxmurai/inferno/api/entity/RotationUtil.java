@@ -47,5 +47,9 @@ public class RotationUtil implements Util {
         public void setPitch(float pitch) {
             this.pitch = pitch;
         }
+
+        public boolean isValid() {
+            return this.yaw != -1.0f && this.pitch != -1.0f;
+        }
     }
 }

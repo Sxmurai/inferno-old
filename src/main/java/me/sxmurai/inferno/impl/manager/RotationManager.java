@@ -19,7 +19,7 @@ public class RotationManager implements Wrapper {
     public void onPacketSend(PacketEvent.Send event) {
         if (fullNullCheck() && event.getPacket() instanceof CPacketPlayer) {
             CPacketPlayer packet = (CPacketPlayer) event.getPacket();
-            if (packet.rotating && (this.rotation.getYaw() != -1.0f && this.rotation.getPitch() != -1.0f)) {
+            if (packet.rotating && this.rotation.isValid()) {
                 packet.yaw = this.rotation.getYaw();
                 packet.pitch = this.rotation.getPitch();
             }
@@ -34,8 +34,8 @@ public class RotationManager implements Wrapper {
     }
 
     private void reset() {
-        this.rotation.setYaw(mc.player.rotationYaw);
-        this.rotation.setPitch(mc.player.rotationPitch);
+        this.rotation.setYaw(-1.0f);
+        this.rotation.setPitch(-1.0f);
     }
 
     public void setRotations(float yaw, float pitch) {
@@ -58,10 +58,24 @@ public class RotationManager implements Wrapper {
     }
 
     public float getYaw() {
-        return this.rotation.getYaw();
+        return this.getYaw(false);
+    }
+
+    public float getYaw(boolean safe) {
+        float yaw = this.rotation.getYaw();
+        return yaw == -1.0f && safe ? mc.player.rotationYaw : yaw;
     }
 
     public float getPitch() {
-        return this.rotation.getPitch();
+        return this.getPitch(false);
+    }
+
+    public float getPitch(boolean safe) {
+        float pitch = this.rotation.getPitch();
+        return pitch == -1.0f && safe ? mc.player.rotationPitch : pitch;
+    }
+
+    public boolean isValid() {
+        return this.rotation.isValid();
     }
 }

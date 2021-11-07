@@ -14,8 +14,8 @@ public class NoRotate extends Module {
     public void onPacketReceive(PacketEvent.Receive event) {
         if (event.getPacket() instanceof SPacketPlayerPosLook) {
             SPacketPlayerPosLook packet = (SPacketPlayerPosLook) event.getPacket();
-            packet.yaw = Inferno.rotationManager.getYaw();
-            packet.pitch = Inferno.rotationManager.getPitch();
+            packet.yaw = Inferno.rotationManager.getYaw(true);
+            packet.pitch = Inferno.rotationManager.getPitch(true);
         }
     }
 }

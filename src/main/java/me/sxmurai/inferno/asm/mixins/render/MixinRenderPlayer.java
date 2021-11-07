@@ -22,7 +22,7 @@ public class MixinRenderPlayer {
 
     @Inject(method = "doRender", at = @At("HEAD"))
     public void doRenderPre(AbstractClientPlayer player, double x, double y, double z, float entityYaw, float partialTicks, CallbackInfo info) {
-        if (player == Wrapper.mc.player) {
+        if (player == Wrapper.mc.player && Inferno.rotationManager.isValid()) {
             this.renderPitch = player.rotationPitch;
             this.renderYaw = player.rotationYaw;
 
@@ -35,6 +35,7 @@ public class MixinRenderPlayer {
             player.rotationYaw = Inferno.rotationManager.getYaw();
 
             player.rotationYawHead = Inferno.rotationManager.getYaw();
+            player.renderYawOffset = Inferno.rotationManager.getYaw();
 
             player.prevRotationYawHead = this.lastRenderHeadYaw;
             player.prevRotationPitch = this.lastRenderPitch;
@@ -43,7 +44,7 @@ public class MixinRenderPlayer {
 
     @Inject(method = "doRender", at = @At("RETURN"))
     public void doRenderPost(AbstractClientPlayer player, double x, double y, double z, float entityYaw, float partialTicks, CallbackInfo info) {
-        if (player == Wrapper.mc.player) {
+        if (player == Wrapper.mc.player && Inferno.rotationManager.isValid()) {
             this.lastRenderHeadYaw = player.rotationYawHead;
             this.lastRenderPitch = player.rotationPitch;
 
@@ -53,6 +54,7 @@ public class MixinRenderPlayer {
             player.prevRotationPitch = this.prevRenderPitch;
 
             player.rotationYawHead = this.renderHeadYaw;
+            player.renderYawOffset = this.prevRenderHeadYaw;
             player.prevRotationYawHead = this.prevRenderHeadYaw;
         }
     }
