@@ -35,6 +35,7 @@ public class ModuleManager {
                 new AutoCrystal(),
                 new AutoObsidian(),
                 new Critcals(),
+                new Offhand(),
                 new Quiver(),
                 new SelfFill(),
 
