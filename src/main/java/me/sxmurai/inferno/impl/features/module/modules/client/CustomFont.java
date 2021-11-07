@@ -36,7 +36,7 @@ public class CustomFont extends Module {
         Plain(Font.PLAIN),
         Bold(Font.BOLD),
         Italic(Font.ITALIC),
-        BoldedItalic(4);
+        BoldedItalic(Font.BOLD + Font.ITALIC);
 
         private final int style;
         Style(int style) {
