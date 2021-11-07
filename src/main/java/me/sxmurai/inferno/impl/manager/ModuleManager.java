@@ -7,10 +7,7 @@ import me.sxmurai.inferno.impl.features.module.modules.client.GUI;
 import me.sxmurai.inferno.impl.features.module.modules.client.Notifier;
 import me.sxmurai.inferno.impl.features.module.modules.combat.*;
 import me.sxmurai.inferno.impl.features.module.modules.miscellaneous.*;
-import me.sxmurai.inferno.impl.features.module.modules.movement.FastFall;
-import me.sxmurai.inferno.impl.features.module.modules.movement.NoSlow;
-import me.sxmurai.inferno.impl.features.module.modules.movement.Sprint;
-import me.sxmurai.inferno.impl.features.module.modules.movement.Velocity;
+import me.sxmurai.inferno.impl.features.module.modules.movement.*;
 import me.sxmurai.inferno.impl.features.module.modules.player.*;
 import me.sxmurai.inferno.impl.features.module.modules.visual.*;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -49,6 +46,7 @@ public class ModuleManager {
                 // movement
                 new FastFall(),
                 new NoSlow(),
+                new Speed(),
                 new Sprint(),
                 new Velocity(),
 
