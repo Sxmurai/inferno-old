@@ -1,7 +1,7 @@
 package me.sxmurai.inferno.impl.features.module.modules.combat;
 
 import me.sxmurai.inferno.Inferno;
-import me.sxmurai.inferno.api.entity.CrystalUtil;
+import me.sxmurai.inferno.api.entity.DamageUtil;
 import me.sxmurai.inferno.api.entity.EntityUtil;
 import me.sxmurai.inferno.api.entity.InventoryUtil;
 import me.sxmurai.inferno.api.entity.RotationUtil;
@@ -222,7 +222,7 @@ public class AutoCrystal extends Module {
 
             if (this.placePos != null && this.hand != null) {
                 this.updateRotations();
-                CrystalUtil.place(this.placePos, this.hand, this.direction.getValue().facing, this.swing.getValue(), this.raytrace.getValue().offset);
+                DamageUtil.place(this.placePos, this.hand, this.direction.getValue().facing, this.swing.getValue(), this.raytrace.getValue().offset);
                 this.placeTimer.reset();
             }
         }
@@ -270,7 +270,7 @@ public class AutoCrystal extends Module {
     }
 
     private Crystal getPlacePosition() {
-        List<BlockPos> positions = CrystalUtil.getPositions(this.placeRange.getValue().intValue(), this.placements.getValue() == Placements.Protocol);
+        List<BlockPos> positions = DamageUtil.getPositions(this.placeRange.getValue().intValue(), this.placements.getValue() == Placements.Protocol);
         if (!positions.isEmpty()) {
             BlockPos pos = null;
             float damage = 0.0f;
@@ -281,14 +281,14 @@ public class AutoCrystal extends Module {
                     continue;
                 }
 
-                float selfDamage = CrystalUtil.calculateDamage(new Vec3d(place.x + 0.5, place.y + 1.0, place.z + 0.5), mc.player);
+                float selfDamage = DamageUtil.calculateDamage(new Vec3d(place.x + 0.5, place.y + 1.0, place.z + 0.5), mc.player);
                 if ((this.safe.getValue() && selfDamage + 0.5f >= EntityUtil.getHealth(mc.player)) || selfDamage + 0.5f > this.maxLocal.getValue()) {
                     continue;
                 }
 
                 float targetDamage = 0.0f;
                 if (t != null) {
-                    targetDamage = CrystalUtil.calculateDamage(new Vec3d(place.x + 0.5, place.y + 1.0, place.z + 0.5), t);
+                    targetDamage = DamageUtil.calculateDamage(new Vec3d(place.x + 0.5, place.y + 1.0, place.z + 0.5), t);
                     if (selfDamage > targetDamage || targetDamage < this.placeMin.getValue()) {
                         continue;
                     }
@@ -305,7 +305,7 @@ public class AutoCrystal extends Module {
                             continue;
                         }
 
-                        float playerDamage = CrystalUtil.calculateDamage(new Vec3d(place.x + 0.5, place.y + 1.0, place.z + 0.5), player);
+                        float playerDamage = DamageUtil.calculateDamage(new Vec3d(place.x + 0.5, place.y + 1.0, place.z + 0.5), player);
                         if (playerDamage > targetDamage) {
                             t = player;
                             targetDamage = playerDamage;
@@ -327,11 +327,11 @@ public class AutoCrystal extends Module {
                     }
 
                     BlockPos neighbor = base.offset(facing);
-                    if (!CrystalUtil.canPlaceCrystal(neighbor, this.placements.getValue() == Placements.Protocol)) {
+                    if (!DamageUtil.canPlaceCrystal(neighbor, this.placements.getValue() == Placements.Protocol)) {
                         continue;
                     }
 
-                    float d = CrystalUtil.calculateDamage(new Vec3d(neighbor.x + 0.5, neighbor.y + 1.0, neighbor.z + 0.5), t);
+                    float d = DamageUtil.calculateDamage(new Vec3d(neighbor.x + 0.5, neighbor.y + 1.0, neighbor.z + 0.5), t);
                     if (d <= this.faceplaceDamage.getValue()) {
                         continue;
                     }

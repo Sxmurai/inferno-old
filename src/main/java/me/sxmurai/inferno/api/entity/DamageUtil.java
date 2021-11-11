@@ -22,7 +22,7 @@ import net.minecraft.world.Explosion;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class CrystalUtil implements Wrapper {
+public class DamageUtil implements Wrapper {
     public static void place(BlockPos pos, EnumHand hand, EnumFacing facing, boolean swing, double raytrace) {
         raytrace = raytrace == -1.0 ? 0.0 : raytrace;
         RayTraceResult result = mc.world.rayTraceBlocks(new Vec3d(mc.player.posX, mc.player.posY + mc.player.getEyeHeight(), mc.player.posZ), new Vec3d(pos.x + 0.5, pos.y + raytrace, pos.z + 0.5), false, true, false);

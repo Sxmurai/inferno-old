@@ -1,7 +1,7 @@
 package me.sxmurai.inferno.impl.features.module.modules.combat;
 
 import me.sxmurai.inferno.Inferno;
-import me.sxmurai.inferno.api.entity.CrystalUtil;
+import me.sxmurai.inferno.api.entity.DamageUtil;
 import me.sxmurai.inferno.api.entity.EntityUtil;
 import me.sxmurai.inferno.api.entity.InventoryUtil;
 import me.sxmurai.inferno.api.timing.TickTimer;
@@ -47,7 +47,7 @@ public class Aura extends Module {
 
             List<EntityLivingBase> entities = mc.world.getEntities(EntityLivingBase.class, (e) -> !e.isDead && !this.isInvalid(e));
             if (!entities.isEmpty()) {
-                entities.sort(Comparator.comparingDouble((e) -> this.priority.getValue() == Priority.Closest ? mc.player.getDistance(e) : CrystalUtil.getAttackDamage(e)));
+                entities.sort(Comparator.comparingDouble((e) -> this.priority.getValue() == Priority.Closest ? mc.player.getDistance(e) : DamageUtil.getAttackDamage(e)));
                 this.target = entities.get(0);
             }
 
