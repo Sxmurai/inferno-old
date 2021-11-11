@@ -127,12 +127,6 @@ public class DamageUtil implements Wrapper {
         float attackStrength = mc.player.getCooledAttackStrength(0.5f);
         damage *= 0.2f + attackStrength * attackStrength * 0.8f;
 
-        // this should be the damage calculation for strength: https://bugs.mojang.com/browse/MCPE-34981#comment-634545
-        // i might have to rewrite this entire function, cause its kinda stupid rn
-        if (mc.player.isPotionActive(MobEffects.STRENGTH)) {
-            damage *= (float) (Math.floor(mc.player.getActivePotionEffect(MobEffects.STRENGTH).getAmplifier() + 1) * 1.3f + 1.0f);
-        }
-
         return enchantModifier * damage;
     }
 }
