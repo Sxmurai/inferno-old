@@ -5,6 +5,7 @@ import me.sxmurai.inferno.impl.features.Wrapper;
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.item.EntityEnderCrystal;
 import net.minecraft.entity.player.EntityPlayer;
@@ -116,5 +117,20 @@ public class CrystalUtil implements Wrapper {
     public static float getDamageMultiplier(float damage) {
         int difficulty = mc.world.getDifficulty().getId();
         return damage * (difficulty == 0 ? 0 : (difficulty == 2 ? 1 : (difficulty == 1 ? 0.5f : 1.5f)));
+    }
+
+    // i think? this is probably wrong, but im not gonna skid this so
+    public static float getAttackDamage(EntityLivingBase target) {
+        float damage = (float) mc.player.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).getAttributeValue();
+        float enchantModifier = EnchantmentHelper.getModifierForCreature(mc.player.getHeldItemMainhand(), target.getCreatureAttribute());
+
+        float attackStrength = mc.player.getCooledAttackStrength(0.5f);
+        damage *= 0.2f + attackStrength * attackStrength * 0.8f;
+
+        if (mc.player.isPotionActive(MobEffects.STRENGTH)) {
+
+        }
+
+        return enchantModifier * damage;
     }
 }
