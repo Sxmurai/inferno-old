@@ -1,6 +1,6 @@
 package me.sxmurai.inferno.impl.features.module.modules.visual;
 
-import me.sxmurai.inferno.api.render.ColorUtil;
+import me.sxmurai.inferno.util.render.ColorUtil;
 import me.sxmurai.inferno.impl.features.module.Module;
 import me.sxmurai.inferno.impl.option.Option;
 

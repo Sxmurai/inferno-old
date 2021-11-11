@@ -1,8 +1,8 @@
 package me.sxmurai.inferno.impl.ui.components.bar.buttons;
 
 import me.sxmurai.inferno.Inferno;
-import me.sxmurai.inferno.api.render.RenderUtil;
-import me.sxmurai.inferno.api.timing.Timer;
+import me.sxmurai.inferno.util.render.RenderUtil;
+import me.sxmurai.inferno.util.timing.Timer;
 import me.sxmurai.inferno.impl.ui.components.widgets.button.buttons.TextButton;
 
 public class CustomTextButton extends TextButton {

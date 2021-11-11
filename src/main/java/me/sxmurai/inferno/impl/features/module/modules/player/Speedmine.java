@@ -2,10 +2,10 @@ package me.sxmurai.inferno.impl.features.module.modules.player;
 
 import me.sxmurai.inferno.impl.event.world.DamageBlockEvent;
 import me.sxmurai.inferno.impl.event.world.DestroyBlockEvent;
-import me.sxmurai.inferno.api.render.ColorUtil;
-import me.sxmurai.inferno.api.entity.InventoryUtil;
-import me.sxmurai.inferno.api.render.RenderUtil;
-import me.sxmurai.inferno.api.timing.Timer;
+import me.sxmurai.inferno.util.render.ColorUtil;
+import me.sxmurai.inferno.util.entity.InventoryUtil;
+import me.sxmurai.inferno.util.render.RenderUtil;
+import me.sxmurai.inferno.util.timing.Timer;
 import me.sxmurai.inferno.impl.features.module.Module;
 import me.sxmurai.inferno.impl.option.Option;
 import net.minecraft.item.ItemPickaxe;

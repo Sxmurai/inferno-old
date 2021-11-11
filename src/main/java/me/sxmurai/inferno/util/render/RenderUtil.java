@@ -1,6 +1,6 @@
-package me.sxmurai.inferno.api.render;
+package me.sxmurai.inferno.util.render;
 
-import me.sxmurai.inferno.api.Util;
+import me.sxmurai.inferno.util.Util;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;

@@ -1,7 +1,7 @@
-package me.sxmurai.inferno.api.entity;
+package me.sxmurai.inferno.util.entity;
 
-import me.sxmurai.inferno.api.timing.TickTimer;
-import me.sxmurai.inferno.api.Util;
+import me.sxmurai.inferno.util.timing.TickTimer;
+import me.sxmurai.inferno.util.Util;
 import net.minecraft.block.Block;
 import net.minecraft.inventory.ClickType;
 import net.minecraft.item.Item;

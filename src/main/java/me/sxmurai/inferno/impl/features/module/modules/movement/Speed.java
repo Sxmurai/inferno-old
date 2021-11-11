@@ -1,6 +1,6 @@
 package me.sxmurai.inferno.impl.features.module.modules.movement;
 
-import me.sxmurai.inferno.api.entity.MovementUtil;
+import me.sxmurai.inferno.util.entity.MovementUtil;
 import me.sxmurai.inferno.impl.event.entity.MoveEvent;
 import me.sxmurai.inferno.impl.event.entity.UpdateWalkingPlayerEvent;
 import me.sxmurai.inferno.impl.event.network.PacketEvent;

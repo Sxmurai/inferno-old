@@ -1,7 +1,7 @@
 package me.sxmurai.inferno.impl.config.configs;
 
 import me.sxmurai.inferno.Inferno;
-import me.sxmurai.inferno.api.render.ColorUtil;
+import me.sxmurai.inferno.util.render.ColorUtil;
 import me.sxmurai.inferno.impl.config.Config;
 import me.sxmurai.inferno.impl.features.module.Module;
 import me.sxmurai.inferno.impl.option.EnumConverter;

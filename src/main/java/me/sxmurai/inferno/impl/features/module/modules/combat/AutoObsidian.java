@@ -1,9 +1,9 @@
 package me.sxmurai.inferno.impl.features.module.modules.combat;
 
 import me.sxmurai.inferno.impl.event.entity.JumpEvent;
-import me.sxmurai.inferno.api.world.BlockUtil;
-import me.sxmurai.inferno.api.entity.InventoryUtil;
-import me.sxmurai.inferno.api.timing.TickTimer;
+import me.sxmurai.inferno.util.world.BlockUtil;
+import me.sxmurai.inferno.util.entity.InventoryUtil;
+import me.sxmurai.inferno.util.timing.TickTimer;
 import me.sxmurai.inferno.impl.features.module.Module;
 import me.sxmurai.inferno.impl.option.Option;
 import net.minecraft.init.Blocks;

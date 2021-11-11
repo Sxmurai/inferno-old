@@ -1,6 +1,6 @@
 package me.sxmurai.inferno.impl.features.notification;
 
-import me.sxmurai.inferno.api.timing.Timer;
+import me.sxmurai.inferno.util.timing.Timer;
 
 public class Notification {
     private final int id;

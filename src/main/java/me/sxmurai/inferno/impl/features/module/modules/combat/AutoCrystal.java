@@ -1,14 +1,14 @@
 package me.sxmurai.inferno.impl.features.module.modules.combat;
 
 import me.sxmurai.inferno.Inferno;
-import me.sxmurai.inferno.api.entity.DamageUtil;
-import me.sxmurai.inferno.api.entity.EntityUtil;
-import me.sxmurai.inferno.api.entity.InventoryUtil;
-import me.sxmurai.inferno.api.entity.RotationUtil;
-import me.sxmurai.inferno.api.render.ColorUtil;
-import me.sxmurai.inferno.api.render.RenderUtil;
-import me.sxmurai.inferno.api.timing.TickTimer;
-import me.sxmurai.inferno.api.world.BlockUtil;
+import me.sxmurai.inferno.util.entity.DamageUtil;
+import me.sxmurai.inferno.util.entity.EntityUtil;
+import me.sxmurai.inferno.util.entity.InventoryUtil;
+import me.sxmurai.inferno.util.entity.RotationUtil;
+import me.sxmurai.inferno.util.render.ColorUtil;
+import me.sxmurai.inferno.util.render.RenderUtil;
+import me.sxmurai.inferno.util.timing.TickTimer;
+import me.sxmurai.inferno.util.world.BlockUtil;
 import me.sxmurai.inferno.impl.event.entity.EntityRemoveEvent;
 import me.sxmurai.inferno.impl.event.network.PacketEvent;
 import me.sxmurai.inferno.impl.features.module.Module;

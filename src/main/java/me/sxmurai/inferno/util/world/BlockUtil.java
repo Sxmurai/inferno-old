@@ -1,4 +1,4 @@
-package me.sxmurai.inferno.api.world;
+package me.sxmurai.inferno.util.world;
 
 import me.sxmurai.inferno.Inferno;
 import me.sxmurai.inferno.impl.features.Wrapper;

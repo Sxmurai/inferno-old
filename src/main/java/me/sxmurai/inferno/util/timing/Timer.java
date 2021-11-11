@@ -1,4 +1,4 @@
-package me.sxmurai.inferno.api.timing;
+package me.sxmurai.inferno.util.timing;
 
 public class Timer {
     private long time = -1L;

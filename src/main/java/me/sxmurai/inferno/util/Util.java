@@ -1,4 +1,4 @@
-package me.sxmurai.inferno.api;
+package me.sxmurai.inferno.util;
 
 import net.minecraft.client.Minecraft;
 

@@ -2,8 +2,8 @@ package me.sxmurai.inferno.impl.manager;
 
 import me.sxmurai.inferno.impl.event.entity.UpdateWalkingPlayerEvent;
 import me.sxmurai.inferno.impl.event.network.PacketEvent;
-import me.sxmurai.inferno.api.entity.RotationUtil;
-import me.sxmurai.inferno.api.timing.Timer;
+import me.sxmurai.inferno.util.entity.RotationUtil;
+import me.sxmurai.inferno.util.timing.Timer;
 import me.sxmurai.inferno.impl.features.Wrapper;
 import net.minecraft.entity.Entity;
 import net.minecraft.network.play.client.CPacketPlayer;

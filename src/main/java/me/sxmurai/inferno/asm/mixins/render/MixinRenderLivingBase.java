@@ -1,6 +1,6 @@
 package me.sxmurai.inferno.asm.mixins.render;
 
-import me.sxmurai.inferno.api.render.ColorUtil;
+import me.sxmurai.inferno.util.render.ColorUtil;
 import me.sxmurai.inferno.impl.features.module.modules.visual.Chams;
 import me.sxmurai.inferno.impl.features.module.modules.visual.PopChams;
 import net.minecraft.client.model.ModelBase;

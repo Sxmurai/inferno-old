@@ -1,7 +1,7 @@
 package me.sxmurai.inferno.impl.ui.components.bar;
 
-import me.sxmurai.inferno.api.render.ColorUtil;
-import me.sxmurai.inferno.api.render.RenderUtil;
+import me.sxmurai.inferno.util.render.ColorUtil;
+import me.sxmurai.inferno.util.render.RenderUtil;
 import me.sxmurai.inferno.impl.ui.InfernoGUI;
 import me.sxmurai.inferno.impl.ui.click.ClickGUIComponent;
 import me.sxmurai.inferno.impl.ui.components.Component;

@@ -1,4 +1,4 @@
-package me.sxmurai.inferno.api.entity;
+package me.sxmurai.inferno.util.entity;
 
 import me.sxmurai.inferno.impl.features.Wrapper;
 

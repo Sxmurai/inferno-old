@@ -1,7 +1,7 @@
 package me.sxmurai.inferno.impl.features.module.modules.movement;
 
-import me.sxmurai.inferno.api.world.BlockUtil;
-import me.sxmurai.inferno.api.timing.TickTimer;
+import me.sxmurai.inferno.util.world.BlockUtil;
+import me.sxmurai.inferno.util.timing.TickTimer;
 import me.sxmurai.inferno.impl.features.module.Module;
 import me.sxmurai.inferno.impl.option.Option;
 import net.minecraft.network.play.client.CPacketEntityAction;

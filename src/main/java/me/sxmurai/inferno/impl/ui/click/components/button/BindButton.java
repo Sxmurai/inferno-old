@@ -1,7 +1,7 @@
 package me.sxmurai.inferno.impl.ui.click.components.button;
 
 import me.sxmurai.inferno.Inferno;
-import me.sxmurai.inferno.api.render.ScaleUtil;
+import me.sxmurai.inferno.util.render.ScaleUtil;
 import me.sxmurai.inferno.impl.features.module.Module;
 import me.sxmurai.inferno.impl.ui.components.widgets.button.Button;
 import org.lwjgl.input.Keyboard;
