@@ -6,6 +6,7 @@ import me.sxmurai.inferno.impl.option.Option;
 import net.minecraft.client.gui.GuiChat;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.network.play.client.CPacketEntityAction;
+import net.minecraft.network.play.client.CPacketHeldItemChange;
 import net.minecraft.network.play.client.CPacketPlayer;
 import net.minecraft.network.play.client.CPacketPlayerDigging;
 import net.minecraft.util.EnumFacing;
@@ -14,6 +15,7 @@ import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.lwjgl.input.Keyboard;
 
+// new bypass made by FencingF, thought it was funny and big meme
 @Module.Define(name = "NoSlow", category = Module.Category.Movement)
 @Module.Info(description = "Stops the slowdown effect")
 public class NoSlow extends Module {
@@ -28,9 +30,7 @@ public class NoSlow extends Module {
             mc.gameSettings.keyBindSprint
     };
 
-    public final Option<Boolean> ncpStrict = new Option<>("NCPStrict", true);
-    public final Option<Boolean> sneak = new Option<>("Sneak", false);
-
+    public final Option<Bypass> bypass = new Option<>("Bypass", Bypass.NCP);
     public final Option<Boolean> items = new Option<>("Items", true);
     public final Option<Boolean> guiMove = new Option<>("GuiMove", true);
     public static final Option<Boolean> soulSand = new Option<>("Soulsand", false);
@@ -59,22 +59,26 @@ public class NoSlow extends Module {
             }
         }
 
-        if (this.items.getValue() && !mc.player.isHandActive() && this.sneak.getValue() && this.sneaking) {
+        if (this.items.getValue() && !mc.player.isHandActive() && this.bypass.getValue() == Bypass.Sneak && this.sneaking) {
             this.sneaking = false;
             mc.player.connection.sendPacket(new CPacketEntityAction(mc.player, CPacketEntityAction.Action.STOP_SNEAKING));
+        }
+
+        if (this.bypass.getValue() == Bypass.New) {
+            mc.player.connection.sendPacket(new CPacketHeldItemChange(mc.player.inventory.currentItem));
         }
     }
 
     @SubscribeEvent
     public void onPacketSend(PacketEvent.Send event) {
-        if (fullNullCheck() && event.getPacket() instanceof CPacketPlayer && this.ncpStrict.getValue() && this.shouldDoItemNoSlow()) {
+        if (fullNullCheck() && event.getPacket() instanceof CPacketPlayer && this.bypass.getValue() == Bypass.NCP && this.shouldDoItemNoSlow()) {
             mc.player.connection.sendPacket(new CPacketPlayerDigging(CPacketPlayerDigging.Action.ABORT_DESTROY_BLOCK, mc.player.getPosition(), EnumFacing.DOWN));
         }
     }
 
     @SubscribeEvent
     public void onItemUse(LivingEntityUseItemEvent event) {
-        if (this.shouldDoItemNoSlow() && this.sneak.getValue() && !this.sneaking) {
+        if (this.shouldDoItemNoSlow() && this.bypass.getValue() == Bypass.Sneak && !this.sneaking) {
             this.sneaking = true;
             mc.player.connection.sendPacket(new CPacketEntityAction(mc.player, CPacketEntityAction.Action.START_SNEAKING));
         }
@@ -90,5 +94,9 @@ public class NoSlow extends Module {
 
     private boolean shouldDoItemNoSlow() {
         return this.items.getValue() && mc.player.isHandActive() && !mc.player.isRiding();
+    }
+
+    public enum Bypass {
+        NCP, Sneak, New
     }
 }
