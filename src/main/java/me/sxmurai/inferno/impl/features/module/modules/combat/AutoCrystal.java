@@ -34,7 +34,6 @@ import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-// this is gonna be fucking hell nightmare nightmare nightmare
 @Module.Define(name = "AutoCrystal", category = Module.Category.Combat)
 @Module.Info(description = "Automatically breaks and destroys end crystals")
 public class AutoCrystal extends Module {
@@ -76,7 +75,6 @@ public class AutoCrystal extends Module {
     private final TickTimer placeTimer = new TickTimer();
     private final TickTimer destroyTimer = new TickTimer();
     private final TickTimer swapTimer = new TickTimer();
-    private final TickTimer yawStepTimer = new TickTimer();
 
     private int oldSlot = -1;
     private EnumHand hand = EnumHand.MAIN_HAND;
