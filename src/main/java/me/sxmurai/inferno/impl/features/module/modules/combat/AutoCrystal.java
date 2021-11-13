@@ -108,7 +108,7 @@ public class AutoCrystal extends Module {
     public void onPacketReceive(PacketEvent.Receive event) {
         if (event.getPacket() instanceof SPacketSoundEffect) {
             if (this.sync.getValue()) {
-                SPacketSoundEffect packet = (SPacketSoundEffect) event.getPacket();
+                SPacketSoundEffect packet = event.getPacket();
                 if (packet.getSound() == SoundEvents.ENTITY_GENERIC_EXPLODE) {
                     for (Entity entity : mc.world.loadedEntityList) {
                         if (entity.isDead || !(entity instanceof EntityEnderCrystal)) {
@@ -126,7 +126,7 @@ public class AutoCrystal extends Module {
             }
         } else if (event.getPacket() instanceof SPacketExplosion) {
             if (this.inhibit.getValue()) {
-                SPacketExplosion packet = (SPacketExplosion) event.getPacket();
+                SPacketExplosion packet = event.getPacket();
                 for (int i = 0; i < mc.world.loadedEntityList.size(); ++i) {
                     Entity entity = mc.world.loadedEntityList.get(i);
                     if (entity.isDead || !(entity instanceof EntityEnderCrystal)) {
@@ -142,7 +142,7 @@ public class AutoCrystal extends Module {
                 }
             }
         } else if (event.getPacket() instanceof SPacketSpawnObject) {
-            SPacketSpawnObject packet = (SPacketSpawnObject) event.getPacket();
+            SPacketSpawnObject packet = event.getPacket();
             if (packet.getType() == 51 && mc.world.getEntityByID(packet.getEntityID()) instanceof EntityEnderCrystal) {
                 BlockPos pos = new BlockPos(packet.getX(), packet.getY(), packet.getZ());
                 if (this.placePos != null && this.placePos.equals(pos.down())) {
@@ -152,8 +152,7 @@ public class AutoCrystal extends Module {
             }
         } else if (event.getPacket() instanceof SPacketDestroyEntities) {
             if (this.sync.getValue()) {
-                SPacketDestroyEntities packet = (SPacketDestroyEntities) event.getPacket();
-                for (int id : packet.getEntityIDs()) {
+                for (int id : ((SPacketDestroyEntities) event.getPacket()).getEntityIDs()) {
                     Entity entity = mc.world.getEntityByID(id);
                     if (entity == null || entity.isDead || !(entity instanceof EntityEnderCrystal)) {
                         continue;
