@@ -114,7 +114,7 @@ public class Aura extends Module {
             return true;
         }
 
-        if (this.invisible.getValue() && EntityUtil.isInvisible(target) || !this.players.getValue() && EntityUtil.isPlayer(target) || !this.mobs.getValue() && EntityUtil.isHostile(target) || !this.passive.getValue() && EntityUtil.isPassive(target)) {
+        if ((!this.invisible.getValue() && EntityUtil.isInvisible(target)) || (!this.players.getValue() && EntityUtil.isPlayer(target)) || (!this.passive.getValue() && EntityUtil.isPassive(target)) || (!this.mobs.getValue() && EntityUtil.isHostile(target))) {
             return true;
         }
 

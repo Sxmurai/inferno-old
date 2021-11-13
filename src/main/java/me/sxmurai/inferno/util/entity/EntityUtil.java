@@ -63,7 +63,7 @@ public class EntityUtil implements Wrapper {
     }
 
     public static boolean isPassive(Entity entity) {
-        return !isHostile(entity) ||
+        return !isHostile(entity) &&
                 entity instanceof INpc ||
                 entity.isCreatureType(EnumCreatureType.AMBIENT, false) ||
                 entity.isCreatureType(EnumCreatureType.CREATURE, false) ||
