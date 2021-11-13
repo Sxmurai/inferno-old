@@ -102,28 +102,4 @@ public class InventoryUtil implements Util {
             }
         }
     }
-
-    public static class TaskHandler {
-        private final Queue<Task> tasks = new ConcurrentLinkedQueue<>();
-        private final TickTimer timer = new TickTimer();
-
-        public void run(int ticks, int actions) {
-            if (this.timer.passed(ticks)) {
-                this.timer.reset();
-
-                for (int i = 0; i < actions; ++i) {
-                    Task task = this.tasks.poll();
-                    if (task == null) {
-                        break;
-                    }
-
-                    task.run();
-                }
-            }
-        }
-
-        public void add(Task task) {
-            this.tasks.add(task);
-        }
-    }
 }
