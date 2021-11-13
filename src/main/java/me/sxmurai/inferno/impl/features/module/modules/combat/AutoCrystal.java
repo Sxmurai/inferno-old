@@ -13,12 +13,12 @@ import me.sxmurai.inferno.impl.event.entity.EntityRemoveEvent;
 import me.sxmurai.inferno.impl.event.network.PacketEvent;
 import me.sxmurai.inferno.impl.features.module.Module;
 import me.sxmurai.inferno.impl.option.Option;
+import me.sxmurai.inferno.util.world.CrystalUtil;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityEnderCrystal;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
-import net.minecraft.network.play.client.CPacketUseEntity;
 import net.minecraft.network.play.server.SPacketDestroyEntities;
 import net.minecraft.network.play.server.SPacketExplosion;
 import net.minecraft.network.play.server.SPacketSoundEffect;
@@ -44,7 +44,7 @@ public class AutoCrystal extends Module {
     public final Option<Integer> placeDelay = new Option<>("PlaceDelay", 3, 0, 20);
     public final Option<Float> placeMin = new Option<>("PlaceMin", 4.0f, 1.0f, 36.0f);
     public final Option<Placements> placements = new Option<>("Placements", Placements.Native);
-    public final Option<Direction> direction = new Option<>("Direction", Direction.Up);
+    public final Option<CrystalUtil.Placement> direction = new Option<>("Direction", CrystalUtil.Placement.Normal);
     public final Option<Float> faceplace = new Option<>("Faceplace", 16.0f, 1.0f, 36.0f);
     public final Option<Float> faceplaceDamage = new Option<>("FaceplaceDamage", 2.0f, 1.0f, 6.0f);
 
@@ -222,7 +222,7 @@ public class AutoCrystal extends Module {
 
             if (this.placePos != null && this.hand != null) {
                 this.updateRotations();
-                DamageUtil.place(this.placePos, this.hand, this.direction.getValue().facing, this.swing.getValue(), this.raytrace.getValue().offset);
+                CrystalUtil.place(this.placePos, this.hand, this.direction.getValue(), this.swing.getValue(), this.raytrace.getValue().offset);
                 this.placeTimer.reset();
             }
         }
@@ -257,13 +257,7 @@ public class AutoCrystal extends Module {
             if (this.crystal != null) {
                 this.placePos = null;
                 this.updateRotations();
-
-                if (this.destroyPacket.getValue()) {
-                    mc.player.connection.sendPacket(new CPacketUseEntity(this.crystal));
-                } else {
-                    mc.playerController.attackEntity(mc.player, this.crystal);
-                }
-
+                CrystalUtil.destroy(this.crystal, this.hand, this.swing.getValue(), this.destroyPacket.getValue());
                 this.destroyTimer.reset();
             }
         }

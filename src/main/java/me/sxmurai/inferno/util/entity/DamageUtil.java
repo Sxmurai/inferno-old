@@ -1,7 +1,7 @@
 package me.sxmurai.inferno.util.entity;
 
-import me.sxmurai.inferno.util.world.BlockUtil;
 import me.sxmurai.inferno.impl.features.Wrapper;
+import me.sxmurai.inferno.util.world.BlockUtil;
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
@@ -11,30 +11,18 @@ import net.minecraft.entity.item.EntityEnderCrystal;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.MobEffects;
-import net.minecraft.network.play.client.CPacketPlayerTryUseItemOnBlock;
 import net.minecraft.util.CombatRules;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.math.*;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.Explosion;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class DamageUtil implements Wrapper {
-    public static void place(BlockPos pos, EnumHand hand, EnumFacing facing, boolean swing, double raytrace) {
-        raytrace = raytrace == -1.0 ? 0.0 : raytrace;
-        RayTraceResult result = mc.world.rayTraceBlocks(new Vec3d(mc.player.posX, mc.player.posY + mc.player.getEyeHeight(), mc.player.posZ), new Vec3d(pos.x + 0.5, pos.y + raytrace, pos.z + 0.5), false, true, false);
-        EnumFacing direction = result == null || result.sideHit == null ? facing : result.sideHit;
-
-        mc.player.connection.sendPacket(new CPacketPlayerTryUseItemOnBlock(pos, direction, hand, 0.0f, 0.0f, 0.0f));
-
-        if (swing) {
-            mc.player.swingArm(hand);
-        }
-    }
-
     public static List<BlockPos> getPositions(int range, boolean protocol) {
         return BlockUtil.getSphere(new BlockPos(mc.player.posX, mc.player.posY, mc.player.posZ), range, range, false, true, 0)
                 .stream()
