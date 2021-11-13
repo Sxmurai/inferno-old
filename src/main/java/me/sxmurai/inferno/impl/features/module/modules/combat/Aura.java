@@ -56,14 +56,15 @@ public class Aura extends Module {
                 this.oldSlot = -1;
             }
         } else {
-            if (this.weapon.getValue() != Weapon.None && !InventoryUtil.isHolding(ItemSword.class, false)) {
-                int slot = InventoryUtil.getHotbarItemSlot(ItemSword.class, false);
-                if (slot == -1 && this.weapon.getValue() == Weapon.Require) {
+            if (!InventoryUtil.isHolding(ItemSword.class, false) && this.weapon.getValue() != Weapon.None) {
+                if (this.weapon.getValue() == Weapon.Require) {
                     return;
-                }
-
-                if (slot != -1) {
-                    InventoryUtil.swap(slot, InventoryUtil.Swap.Legit);
+                } else if (this.weapon.getValue() == Weapon.Switch) {
+                    int slot = InventoryUtil.getHotbarItemSlot(ItemSword.class, false);
+                    if (slot != -1) {
+                        this.oldSlot = mc.player.inventory.currentItem;
+                        InventoryUtil.swap(slot, InventoryUtil.Swap.Legit);
+                    }
                 }
             }
 
