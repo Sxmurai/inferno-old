@@ -12,8 +12,8 @@ public class PacketEvent extends Event {
         this.packet = packet;
     }
 
-    public Packet<?> getPacket() {
-        return packet;
+    public <T extends Packet<?>> T getPacket() {
+        return (T) packet;
     }
 
     public static class Send extends PacketEvent {
