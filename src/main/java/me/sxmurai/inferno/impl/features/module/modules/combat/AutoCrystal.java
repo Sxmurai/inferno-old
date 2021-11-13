@@ -420,7 +420,10 @@ public class AutoCrystal extends Module {
     }
 
     public enum Raytrace {
-        None(-1.0), Base(0.5), Normal(1.5);
+        None(-1.0),
+        Base(0.5),
+        Normal(1.5),
+        Double(2.5);
 
         private final double offset;
         Raytrace(double offset) {
