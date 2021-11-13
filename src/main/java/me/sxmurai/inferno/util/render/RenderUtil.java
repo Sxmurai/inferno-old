@@ -197,47 +197,44 @@ public class RenderUtil implements Util {
     }
 
     public static void drawFilledBox(AxisAlignedBB box, int hex) {
-        GL11.glPushMatrix();
+        GlStateManager.pushMatrix();
         GlStateManager.enableBlend();
-        GL11.glDisable(GL11.GL_DEPTH);
+        GlStateManager.disableDepth();
         GlStateManager.tryBlendFuncSeparate(770, 771, 0, 1);
-        GL11.glDisable(GL11.GL_TEXTURE_2D);
-        GL11.glDepthMask(false);
-        GL11.glEnable(GL11.GL_LINE_SMOOTH);
-        GL11.glHint(GL11.GL_LINE_SMOOTH_HINT, GL11.GL_NICEST);
+        GlStateManager.disableTexture2D();
+        GlStateManager.depthMask(false);
 
         ColorUtil.Color color = ColorUtil.getColor(hex);
         RenderGlobal.renderFilledBox(box, color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha());
 
-        GL11.glDisable(GL11.GL_LINE_SMOOTH);
-        GL11.glDepthMask(true);
-        GL11.glEnable(GL11.GL_DEPTH);
-        GL11.glEnable(GL11.GL_TEXTURE_2D);
+        GlStateManager.depthMask(true);
+        GlStateManager.enableDepth();
+        GlStateManager.enableTexture2D();
         GlStateManager.disableBlend();
-        GL11.glPopMatrix();
+        GlStateManager.popMatrix();
     }
 
     public static void drawOutlinedBox(AxisAlignedBB box, float width, int hex) {
-        GL11.glPushMatrix();
+        GlStateManager.pushMatrix();
         GlStateManager.enableBlend();
-        GL11.glDisable(GL11.GL_DEPTH);
+        GlStateManager.disableDepth();
         GlStateManager.tryBlendFuncSeparate(770, 771, 0, 1);
-        GL11.glDisable(GL11.GL_TEXTURE_2D);
-        GL11.glDepthMask(false);
+        GlStateManager.disableTexture2D();
+        GlStateManager.depthMask(false);
         GL11.glEnable(GL11.GL_LINE_SMOOTH);
         GL11.glHint(GL11.GL_LINE_SMOOTH_HINT, GL11.GL_NICEST);
-        GL11.glLineWidth(width);
+        GlStateManager.glLineWidth(width);
 
         ColorUtil.Color color = ColorUtil.getColor(hex);
         RenderGlobal.drawBoundingBox(box.minX, box.minY, box.minZ, box.maxX, box.maxY, box.maxZ, color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha());
 
-        GL11.glLineWidth(1.0f);
+        GlStateManager.glLineWidth(1.0f);
         GL11.glDisable(GL11.GL_LINE_SMOOTH);
-        GL11.glDepthMask(true);
-        GL11.glEnable(GL11.GL_DEPTH);
-        GL11.glEnable(GL11.GL_TEXTURE_2D);
+        GlStateManager.depthMask(true);
+        GlStateManager.enableDepth();
+        GlStateManager.enableTexture2D();
         GlStateManager.disableBlend();
-        GL11.glPopMatrix();
+        GlStateManager.popMatrix();
     }
 
     public static void drawEsp(AxisAlignedBB box, boolean filled, boolean outline, float width, int hex) {
