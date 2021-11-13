@@ -54,7 +54,6 @@ public class MixinRenderPlayer {
             player.prevRotationPitch = this.prevRenderPitch;
 
             player.rotationYawHead = this.renderHeadYaw;
-            player.renderYawOffset = this.prevRenderHeadYaw;
             player.prevRotationYawHead = this.prevRenderHeadYaw;
         }
     }
