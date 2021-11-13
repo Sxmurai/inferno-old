@@ -411,15 +411,6 @@ public class AutoCrystal extends Module {
         Native, Protocol
     }
 
-    public enum Direction {
-        Up(EnumFacing.UP), Down(EnumFacing.DOWN);
-
-        private final EnumFacing facing;
-        Direction(EnumFacing facing) {
-            this.facing = facing;
-        }
-    }
-
     public enum YawStep {
         None, Semi, Full
     }
