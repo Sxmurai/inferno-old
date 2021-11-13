@@ -456,12 +456,12 @@ public class AutoCrystal extends Module {
         private final TickTimer timer = new TickTimer();
 
         public void rotate(float yaw, float pitch, boolean breaking) {
-            if (AutoCrystal.this.yawStep.getValue() == YawStep.None) {
+            if (yawStep.getValue() == YawStep.None) {
                 this.rotation.setYaw(yaw);
                 this.rotation.setPitch(pitch);
                 Inferno.rotationManager.setRotations(yaw, pitch);
             } else {
-                if (AutoCrystal.this.yawStep.getValue() == YawStep.Semi && !breaking) {
+                if (yawStep.getValue() == YawStep.Semi && !breaking) {
                     this.rotation.setYaw(yaw);
                     this.rotation.setPitch(pitch);
                     Inferno.rotationManager.setRotations(yaw, pitch);
@@ -473,7 +473,7 @@ public class AutoCrystal extends Module {
         }
 
         public void rotate(float yaw, float pitch) {
-            if (AutoCrystal.this.yawStep.getValue() != YawStep.None) {
+            if (yawStep.getValue() != YawStep.None) {
                 if (this.getYaw() == -1.0f && this.getPitch() == -1.0f) {
                     this.rotation.setYaw(yaw);
                     this.rotation.setPitch(pitch);
@@ -484,12 +484,12 @@ public class AutoCrystal extends Module {
                 if (this.rotations.isEmpty()) {
                     double yawDiff = 0.0, pitchDiff = 0.0;
 
-                    if (Math.abs(yaw - this.rotation.getYaw()) >= AutoCrystal.this.yawStepThreshold.getValue()) {
-                        yawDiff = Math.abs(yaw - this.rotation.getYaw()) / AutoCrystal.this.yawSteps.getValue();
+                    if (Math.abs(yaw - this.rotation.getYaw()) >= yawStepThreshold.getValue()) {
+                        yawDiff = Math.abs(yaw - this.rotation.getYaw()) / yawSteps.getValue();
                     }
 
-                    if (Math.abs(pitch - this.rotation.getPitch()) >= AutoCrystal.this.yawStepThreshold.getValue()) {
-                        pitchDiff = Math.abs(pitch - this.rotation.getPitch()) / AutoCrystal.this.yawSteps.getValue();
+                    if (Math.abs(pitch - this.rotation.getPitch()) >= yawStepThreshold.getValue()) {
+                        pitchDiff = Math.abs(pitch - this.rotation.getPitch()) / yawSteps.getValue();
                     }
 
                     if (yawDiff != 0.0 || pitchDiff != 0.0) {
@@ -497,7 +497,7 @@ public class AutoCrystal extends Module {
 
                         float y = yawDiff == 0.0 ? yaw : this.rotation.getYaw();
                         float p = pitchDiff == 0.0 ? pitch : this.rotation.getPitch();
-                        for (int step = 0; step < AutoCrystal.this.yawSteps.getValue(); ++step) {
+                        for (int step = 0; step < yawSteps.getValue(); ++step) {
                             y = this.rotation.getYaw() > yaw ? y - (float) yawDiff : y + (float) yawDiff;
                             p = this.rotation.getPitch() > pitch ? p - (float) pitchDiff : p + (float) pitchDiff;
 
@@ -505,10 +505,10 @@ public class AutoCrystal extends Module {
                         }
                     }
                 } else {
-                    if (this.timer.passed(AutoCrystal.this.yawStepTicks.getValue())) {
+                    if (this.timer.passed(yawStepTicks.getValue())) {
                         this.timer.reset();
 
-                        int packets = AutoCrystal.this.yawSteps.getValue() / AutoCrystal.this.yawStepTicks.getValue();
+                        int packets = yawSteps.getValue() / yawStepTicks.getValue();
                         for (int i = 0; i < packets; ++i) {
                             RotationUtil.Rotation r = this.rotations.poll();
                             if (r == null) {
