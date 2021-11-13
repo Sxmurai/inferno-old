@@ -38,7 +38,7 @@ public class HotbarRefill extends Module {
 
         for (int i = 0; i < 9; ++i) {
             ItemStack stack = mc.player.inventory.getStackInSlot(i);
-            if (stack.getItem() != this.hotbar.get(i).getItem() || stack.stackSize < this.threshold.getValue()) {
+            if (stack.getItem() != this.hotbar.get(i).getItem() || stack.stackSize < this.threshold.getValue() || stack.getMaxStackSize() > stack.stackSize) {
                 this.refill(i);
             }
         }
