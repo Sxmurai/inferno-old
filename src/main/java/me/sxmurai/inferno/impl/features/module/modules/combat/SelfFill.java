@@ -18,7 +18,7 @@ import net.minecraft.util.math.BlockPos;
 public class SelfFill extends Module {
     public final Option<Type> type = new Option<>("Type", Type.Obsidian);
     public final Option<Boolean> offhand = new Option<>("Offhand", true);
-    public final Option<Switch> switchTo = new Option<>("Switch", Switch.Legit);
+    public final Option<InventoryUtil.Swap> swap = new Option<>("Swap", InventoryUtil.Swap.Legit);
     public final Option<Double> rubberband = new Option<>("Rubberband", 3.0, -5.0, 5.0);
     public final Option<Boolean> rotate = new Option<>("Rotate", true);
     public final Option<Boolean> swing = new Option<>("Swing", true);
@@ -49,7 +49,7 @@ public class SelfFill extends Module {
             return;
         }
 
-        if (this.switchTo.getValue() != Switch.None) {
+        if (this.swap.getValue() != InventoryUtil.Swap.None) {
             int slot = InventoryUtil.getHotbarBlockSlot(this.type.getValue().block, this.offhand.getValue());
             if (slot == -1) {
                 this.toggle();
@@ -61,7 +61,7 @@ public class SelfFill extends Module {
 
             if (this.hand == EnumHand.MAIN_HAND) {
                 this.oldSlot = mc.player.inventory.currentItem;
-                InventoryUtil.switchTo(slot, this.switchTo.getValue() == Switch.Silent);
+                InventoryUtil.swap(slot, this.swap.getValue());
             }
         } else {
             // @todo
@@ -75,7 +75,7 @@ public class SelfFill extends Module {
         this.hand = null;
 
         if (this.oldSlot != -1 && fullNullCheck()) {
-            InventoryUtil.switchTo(this.oldSlot, this.switchTo.getValue() == Switch.Silent);
+            InventoryUtil.swap(this.oldSlot, this.swap.getValue());
         }
 
         this.oldSlot = -1;

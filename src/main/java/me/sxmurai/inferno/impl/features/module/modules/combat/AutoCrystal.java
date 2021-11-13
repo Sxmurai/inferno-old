@@ -58,8 +58,8 @@ public class AutoCrystal extends Module {
     public final Option<Boolean> destroyPacket = new Option<>("DestroyPacket", true);
 
     public final Option<Boolean> await = new Option<>("Await", true);
-    public final Option<Swap> swap = new Option<>("Swap", Swap.Legit);
-    public final Option<Integer> swapDelay = new Option<>("SwapDelay", 2, 0, 12, () -> this.swap.getValue() != Swap.None);
+    public final Option<InventoryUtil.Swap> swap = new Option<>("Swap", InventoryUtil.Swap.Legit);
+    public final Option<Integer> swapDelay = new Option<>("SwapDelay", 2, 0, 12, () -> this.swap.getValue() != InventoryUtil.Swap.None);
     public final Option<Raytrace> raytrace = new Option<>("Raytrace", Raytrace.Base);
     public final Option<Boolean> sync = new Option<>("Sync", true);
     public final Option<Boolean> safe = new Option<>("Safe", true);
@@ -91,7 +91,7 @@ public class AutoCrystal extends Module {
     @Override
     protected void onDeactivated() {
         if (fullNullCheck() && this.oldSlot != -1) {
-            InventoryUtil.switchTo(this.oldSlot, this.swap.getValue() == Swap.Silent);
+            InventoryUtil.swap(this.oldSlot, this.swap.getValue());
         }
 
         this.oldSlot = -1;
@@ -357,7 +357,7 @@ public class AutoCrystal extends Module {
         }
 
         if (!InventoryUtil.isHolding(Items.END_CRYSTAL, true)) {
-            if (this.swap.getValue() != Swap.None && this.placePos != null) {
+            if (this.swap.getValue() != InventoryUtil.Swap.None && this.placePos != null) {
                 int slot = InventoryUtil.getHotbarItemSlot(Items.END_CRYSTAL, true);
                 if (slot == -1) {
                     return false;
@@ -366,7 +366,7 @@ public class AutoCrystal extends Module {
                 this.hand = slot == InventoryUtil.OFFHAND_SLOT ? EnumHand.OFF_HAND : EnumHand.MAIN_HAND;
                 if (this.hand == EnumHand.MAIN_HAND) {
                     this.oldSlot = mc.player.inventory.currentItem;
-                    InventoryUtil.switchTo(slot, this.swap.getValue() == Swap.Silent);
+                    InventoryUtil.swap(slot, this.swap.getValue());
                 }
 
                 if (this.hand == null) {
@@ -424,10 +424,6 @@ public class AutoCrystal extends Module {
         Direction(EnumFacing facing) {
             this.facing = facing;
         }
-    }
-
-    public enum Swap {
-        None, Legit, Silent
     }
 
     public enum YawStep {

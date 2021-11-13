@@ -1,6 +1,5 @@
 package me.sxmurai.inferno.util.entity;
 
-import me.sxmurai.inferno.util.timing.TickTimer;
 import me.sxmurai.inferno.util.Util;
 import net.minecraft.block.Block;
 import net.minecraft.inventory.ClickType;
@@ -9,9 +8,6 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.play.client.CPacketHeldItemChange;
 import net.minecraft.util.EnumHand;
-
-import java.util.Queue;
-import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class InventoryUtil implements Util {
     public static final int OFFHAND_SLOT = 45;
@@ -74,10 +70,14 @@ public class InventoryUtil implements Util {
         return mc.player.getHeldItem(hand);
     }
 
-    public static void switchTo(int slot, boolean silent) {
+    public static void swap(int slot, Swap swap) {
+        if (swap == Swap.None) {
+            return;
+        }
+
         mc.player.connection.sendPacket(new CPacketHeldItemChange(slot));
 
-        if (!silent) {
+        if (swap == Swap.Legit) {
             mc.player.inventory.currentItem = slot;
         }
 
@@ -101,5 +101,9 @@ public class InventoryUtil implements Util {
                 mc.playerController.updateController();
             }
         }
+    }
+
+    public enum Swap {
+        None, Legit, Silent
     }
 }

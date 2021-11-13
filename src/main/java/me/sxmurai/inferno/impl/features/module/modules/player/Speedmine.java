@@ -22,7 +22,7 @@ public class Speedmine extends Module {
     public final Option<Boolean> reset = new Option<>("Reset", false);
     public final Option<Boolean> doublePacket = new Option<>("Double", false);
     public final Option<Float> range = new Option<>("Range", 5.0f, 1.0f, 10.0f);
-    public final Option<Switch> switchTo = new Option<>("Switch", Switch.None);
+    public final Option<InventoryUtil.Swap> swap = new Option<>("Swap", InventoryUtil.Swap.None);
     public final Option<Boolean> render = new Option<>("Render", true);
     public final Option<Boolean> filled = new Option<>("Filled", true, render::getValue);
     public final Option<Boolean> outlined = new Option<>("Outlined", true, render::getValue);
@@ -64,11 +64,11 @@ public class Speedmine extends Module {
         this.current = event.getPos();
         mc.playerController.isHittingBlock = this.reset.getValue();
 
-        if (!InventoryUtil.isHolding(ItemPickaxe.class, false) && this.switchTo.getValue() != Switch.None) {
+        if (!InventoryUtil.isHolding(ItemPickaxe.class, false) && this.swap.getValue() != InventoryUtil.Swap.None) {
             int slot = InventoryUtil.getHotbarItemSlot(ItemPickaxe.class, false);
             if (slot != -1) {
                 this.oldSlot = mc.player.inventory.currentItem;
-                InventoryUtil.switchTo(slot, this.switchTo.getValue() == Switch.Silent);
+                InventoryUtil.swap(slot, this.swap.getValue());
             }
         }
 
@@ -113,7 +113,7 @@ public class Speedmine extends Module {
 
     private void switchBack() {
         if (this.oldSlot != -1) {
-            InventoryUtil.switchTo(this.oldSlot, this.switchTo.getValue() == Switch.Silent);
+            InventoryUtil.swap(this.oldSlot, this.swap.getValue());
         }
 
         this.oldSlot = -1;

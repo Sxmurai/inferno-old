@@ -52,7 +52,7 @@ public class Aura extends Module {
             }
 
             if (this.target == null && this.oldSlot != -1) {
-                InventoryUtil.switchTo(this.oldSlot, false);
+                InventoryUtil.swap(this.oldSlot, InventoryUtil.Swap.Legit);
                 this.oldSlot = -1;
             }
         } else {
@@ -63,7 +63,7 @@ public class Aura extends Module {
                 }
 
                 if (slot != -1) {
-                    InventoryUtil.switchTo(slot, false);
+                    InventoryUtil.swap(slot, InventoryUtil.Swap.Legit);
                 }
             }
 

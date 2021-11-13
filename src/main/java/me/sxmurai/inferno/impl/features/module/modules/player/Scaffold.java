@@ -23,7 +23,7 @@ public class Scaffold extends Module {
 
     public final Option<Boolean> tower = new Option<>("Tower", true);
     public final Option<Boolean> offhand = new Option<>("Offhand", true);
-    public final Option<Switch> switchTo = new Option<>("Switch", Switch.Legit);
+    public final Option<InventoryUtil.Swap> switchTo = new Option<>("Swap", InventoryUtil.Swap.Legit);
     public final Option<Place> place = new Option<>("Place", Place.Vanilla);
     public final Option<Boolean> rotate = new Option<>("Rotate", true);
     public final Option<Boolean> swing = new Option<>("Swing", true);
@@ -49,7 +49,7 @@ public class Scaffold extends Module {
             EnumHand hand = slot == InventoryUtil.OFFHAND_SLOT ? EnumHand.OFF_HAND : EnumHand.MAIN_HAND;
             if (hand == EnumHand.MAIN_HAND) {
                 oldSlot = mc.player.inventory.currentItem;
-                InventoryUtil.switchTo(slot, this.switchTo.getValue() == Switch.Silent);
+                InventoryUtil.swap(slot, this.switchTo.getValue());
             }
 
             mc.player.setActiveHand(hand);
@@ -68,7 +68,7 @@ public class Scaffold extends Module {
             }
 
             if (oldSlot != -1) {
-                InventoryUtil.switchTo(oldSlot, this.switchTo.getValue() == Switch.Silent);
+                InventoryUtil.swap(oldSlot, this.switchTo.getValue());
             }
         }
     }

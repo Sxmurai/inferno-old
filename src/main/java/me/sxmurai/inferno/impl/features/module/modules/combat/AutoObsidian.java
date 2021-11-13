@@ -25,7 +25,7 @@ public class AutoObsidian extends Module {
     public final Option<Place> place = new Option<>("Place", Place.Vanilla);
     public final Option<Toggle> toggle = new Option<>("Toggle", Toggle.Finished);
     public final Option<Boolean> offhand = new Option<>("Offhand", true);
-    public final Option<Switch> switchTo = new Option<>("Switch", Switch.Legit);
+    public final Option<InventoryUtil.Swap> swap = new Option<>("Swap", InventoryUtil.Swap.Legit);
     public final Option<Boolean> rotate = new Option<>("Rotate", true);
     public final Option<Boolean> swing = new Option<>("Swing", true);
     public final Option<Boolean> sneak = new Option<>("Sneak", false);
@@ -43,7 +43,7 @@ public class AutoObsidian extends Module {
     @Override
     protected void onDeactivated() {
         if (fullNullCheck() && this.oldSlot != -1) {
-            InventoryUtil.switchTo(this.oldSlot, this.switchTo.getValue() == Switch.Silent);
+            InventoryUtil.swap(this.oldSlot, this.swap.getValue());
         }
 
         this.oldSlot = -1;
@@ -68,7 +68,7 @@ public class AutoObsidian extends Module {
                 this.hand = slot == 45 ? EnumHand.OFF_HAND : EnumHand.MAIN_HAND;
                 if (this.hand == EnumHand.MAIN_HAND) {
                     this.oldSlot = mc.player.inventory.currentItem;
-                    InventoryUtil.switchTo(slot, this.switchTo.getValue() == Switch.Silent);
+                    InventoryUtil.swap(slot, this.swap.getValue());
                 }
 
                 mc.player.setActiveHand(this.hand);
@@ -130,10 +130,6 @@ public class AutoObsidian extends Module {
 
     public enum Place {
         Vanilla, Packet
-    }
-
-    public enum Switch {
-        Legit, Silent
     }
 
     public enum Toggle {
