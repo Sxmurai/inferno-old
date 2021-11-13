@@ -1,5 +1,6 @@
 package me.sxmurai.inferno.impl.features.module.modules.player;
 
+import me.sxmurai.inferno.Inferno;
 import me.sxmurai.inferno.impl.features.module.Module;
 import me.sxmurai.inferno.impl.option.Option;
 
@@ -19,9 +20,9 @@ public class Timer extends Module {
     @Override
     public void onUpdate() {
         if (this.sync.getValue()) {
-            // @todo server manager is needed for calculating TPS
+            mc.timer.tickLength = 1000.0f / (float) Inferno.serverManager.getTps();
         } else {
-            mc.timer.tickLength = (50.0f / this.speed.getValue());
+            mc.timer.tickLength = 50.0f / this.speed.getValue();
         }
     }
 }
