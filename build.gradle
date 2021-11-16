@@ -23,7 +23,7 @@ apply plugin: 'com.github.johnrengelman.shadow' // Gradle plugin to create fat/u
 apply plugin: 'org.spongepowered.mixin' // Gradle plugin providing integration for plugins made for the Sponge platform.
 // Only edit below this line, The above code adds & enables the necessary things for Forge to be setup.
 
-version = "b1.1.0" // The jar version number that will be output when building.
+version = 'b1.1.0' // The jar version number that will be output when building.
 group = 'me.sxmurai.inferno' // https://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'Inferno' // The jar name that will be output when building.
 
