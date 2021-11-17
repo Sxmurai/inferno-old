@@ -2,6 +2,7 @@ package me.sxmurai.inferno.util.world;
 
 import me.sxmurai.inferno.Inferno;
 import me.sxmurai.inferno.impl.features.Wrapper;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.network.play.client.CPacketEntityAction;
 import net.minecraft.network.play.client.CPacketPlayerTryUseItemOnBlock;
@@ -50,14 +51,17 @@ public class BlockUtil implements Wrapper {
     public static EnumFacing getFacing(BlockPos pos) {
         for (EnumFacing facing : EnumFacing.values()) {
             BlockPos neighbor = pos.offset(facing);
-            if (mc.world.isAirBlock(neighbor) || BlockUtil.intersects(neighbor)) {
-                continue;
+            if (BlockUtil.isClickable(neighbor)) {
+                return facing;
             }
-
-            return facing;
         }
 
         return null;
+    }
+
+    public static boolean isClickable(BlockPos pos) {
+        IBlockState state = mc.world.getBlockState(pos);
+        return !state.getMaterial().isReplaceable() && state.getBlock().canCollideCheck(state, false) && !BlockUtil.intersects(pos);
     }
 
     public static boolean intersects(BlockPos pos) {
