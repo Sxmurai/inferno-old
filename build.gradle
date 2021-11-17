@@ -96,6 +96,7 @@ shadowJar {
     dependencies {
         // The libraries are put in the shadow jar path so it will be put into the jar when compiled or else it wont work.
         include dependency('org.spongepowered:mixin') // The needed Library for Minecraft Mixin's.
+        include dependency('org.json:json')
     }
     exclude 'dummyThing', 'LICENSE.txt', 'org/**/*.html', 'META-INF/maven/**' // Removes unneeded files that are legit just useless bloat text files.
     classifier = '' // The name at the end of the jar that will have all the sources. If u put nothing it will only output one jar with all the needed depends.
