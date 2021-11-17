@@ -51,6 +51,7 @@ public class ModuleManager {
                 new Velocity(),
 
                 // player
+                new AntiVoid(),
                 new FastUse(),
                 new HotbarRefill(),
                 new MultiTask(),
