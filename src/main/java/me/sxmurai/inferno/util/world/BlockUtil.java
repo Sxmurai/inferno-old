@@ -26,11 +26,11 @@ public class BlockUtil implements Wrapper {
             mc.player.connection.sendPacket(new CPacketEntityAction(mc.player, CPacketEntityAction.Action.START_SNEAKING));
         }
 
-        if (rotate) {
-            Inferno.rotationManager.look(neighbor);
-        }
-
         Vec3d hitVec = new Vec3d(neighbor.x + 0.5, neighbor.y + 0.5, neighbor.z + 0.5).add(new Vec3d(facing.getOpposite().getDirectionVec()).scale(0.5));
+
+        if (rotate) {
+            Inferno.rotationManager.look(hitVec);
+        }
 
         if (packet) {
             mc.player.connection.sendPacket(new CPacketPlayerTryUseItemOnBlock(neighbor, facing.getOpposite(), hand, (float) (hitVec.x - pos.x), (float) (hitVec.y - pos.y), (float) (hitVec.z - pos.z)));
@@ -50,7 +50,7 @@ public class BlockUtil implements Wrapper {
     public static EnumFacing getFacing(BlockPos pos) {
         for (EnumFacing facing : EnumFacing.values()) {
             BlockPos neighbor = pos.offset(facing);
-            if (mc.world.isAirBlock(neighbor) || BlockUtil.intersects(neighbor)) {
+            if (mc.world.isAirBlock(neighbor) || BlockUtil.intersects(neighbor) || !canSeePos(neighbor, 0.5)) {
                 continue;
             }
 
