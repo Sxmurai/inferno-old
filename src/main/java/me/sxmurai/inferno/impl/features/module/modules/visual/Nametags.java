@@ -13,6 +13,9 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.Vec3d;
 
+import java.util.ArrayList;
+import java.util.Collections;
+
 @Module.Define(name = "Nametags", category = Module.Category.Visual)
 @Module.Info(description = "Shows custom nametags, overriding the vanilla ones")
 public class Nametags extends Module {
@@ -94,16 +97,55 @@ public class Nametags extends Module {
 
         Inferno.fontManager.drawCorrectString(name.toString(), -width, -(Inferno.fontManager.getHeight() - 1.0), -1);
 
-        if (mainhand.getValue()) {
+        int xOffset = -24 / 2 * player.inventory.armorInventory.size();
 
+        if (mainhand.getValue()) {
+            if (!player.getHeldItemMainhand().isEmpty()) {
+                GlStateManager.pushMatrix();
+                renderItemStack(player.getHeldItemMainhand(), xOffset, -26);
+                GlStateManager.popMatrix();
+
+                if (enchants.getValue()) {
+                    renderEnchantments(player.getHeldItemMainhand());
+                }
+            }
         }
 
-        if (armor.getValue()) {
+        xOffset += 16;
 
+        if (armor.getValue()) {
+            ArrayList<ItemStack> armor = new ArrayList<>(player.inventory.armorInventory);
+            if (reversed.getValue()) {
+                Collections.reverse(armor);
+            }
+
+            for (ItemStack stack : armor) {
+                if (stack.isEmpty()) {
+                    continue;
+                }
+
+                GlStateManager.pushMatrix();
+                renderItemStack(stack, xOffset, -26);
+                GlStateManager.popMatrix();
+
+                if (enchants.getValue()) {
+                    renderEnchantments(stack);
+                }
+
+                xOffset += 16;
+            }
         }
 
         if (offhand.getValue()) {
+            if (!player.getHeldItemOffhand().isEmpty()) {
+                GlStateManager.pushMatrix();
+                renderItemStack(player.getHeldItemOffhand(), xOffset, -26);
+                GlStateManager.popMatrix();
 
+                if (enchants.getValue()) {
+                    renderEnchantments(player.getHeldItemOffhand());
+                }
+            }
         }
 
         GlStateManager.enableDepth();
@@ -114,7 +156,7 @@ public class Nametags extends Module {
         GlStateManager.popMatrix();
     }
 
-    private void renderItemStack(ItemStack stack, int x, int y) {
+    private static void renderItemStack(ItemStack stack, int x, int y) {
         GlStateManager.pushMatrix();
         GlStateManager.depthMask(true);
         RenderHelper.enableStandardItemLighting();
@@ -132,6 +174,10 @@ public class Nametags extends Module {
         GlStateManager.enableAlpha();
         GlStateManager.enableDepth();
         GlStateManager.popMatrix();
+    }
+
+    private static void renderEnchantments(ItemStack stack) {
+        // oh no cringe
     }
 
     private static void drawShape(double width) {
