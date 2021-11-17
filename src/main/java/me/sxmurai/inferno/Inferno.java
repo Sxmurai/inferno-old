@@ -23,6 +23,7 @@ public class Inferno {
 
     public static ConfigManager configManager;
     public static ModuleManager moduleManager;
+    public static CommandManager commandManager;
     public static NotificationManager notificationManager;
     public static RotationManager rotationManager;
     public static TotemPopManager totemPopManager;
@@ -47,6 +48,7 @@ public class Inferno {
         Display.setTitle(Inferno.NAME + " " + Inferno.VERSION);
 
         moduleManager = new ModuleManager();
+        commandManager = new CommandManager();
         notificationManager = new NotificationManager();
         configManager = ConfigManager.getInstance();
         rotationManager = new RotationManager();
@@ -57,6 +59,7 @@ public class Inferno {
 
         MinecraftForge.EVENT_BUS.register(new EventManager());
         MinecraftForge.EVENT_BUS.register(moduleManager);
+        MinecraftForge.EVENT_BUS.register(commandManager);
         MinecraftForge.EVENT_BUS.register(notificationManager);
         MinecraftForge.EVENT_BUS.register(rotationManager);
         MinecraftForge.EVENT_BUS.register(totemPopManager);
