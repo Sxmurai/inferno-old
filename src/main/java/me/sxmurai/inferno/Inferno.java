@@ -28,6 +28,7 @@ public class Inferno {
     public static TotemPopManager totemPopManager;
     public static FontManager fontManager;
     public static ServerManager serverManager;
+    public static HoleManager holeManager;
 
     @SubscribeEvent
     public void onPreInit(FMLPreInitializationEvent event) {
@@ -52,6 +53,7 @@ public class Inferno {
         totemPopManager = new TotemPopManager();
         fontManager = new FontManager();
         serverManager = new ServerManager();
+        holeManager = new HoleManager();
 
         MinecraftForge.EVENT_BUS.register(new EventManager());
         MinecraftForge.EVENT_BUS.register(moduleManager);

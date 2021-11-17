@@ -34,6 +34,8 @@ public class EventManager implements Wrapper {
 
                 module.onUpdate();
             }
+
+            Inferno.holeManager.onUpdate();
         }
     }
 
