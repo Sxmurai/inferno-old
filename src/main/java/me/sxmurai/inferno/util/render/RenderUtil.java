@@ -252,7 +252,12 @@ public class RenderUtil implements Util {
     }
 
     public static Vec3d getScreen() {
-        return new Vec3d(-mc.renderManager.renderPosX, -mc.renderManager.renderPosY, -mc.renderManager.renderPosZ);
+        Vec3d vec = renderPositions();
+        return new Vec3d(-vec.x, -vec.y, -vec.z);
+    }
+
+    public static Vec3d renderPositions() {
+        return new Vec3d(mc.renderManager.renderPosX, mc.renderManager.renderPosY, mc.renderManager.renderPosZ);
     }
 
     public static AxisAlignedBB toScreen(AxisAlignedBB box) {

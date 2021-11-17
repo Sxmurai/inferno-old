@@ -2,6 +2,7 @@ package me.sxmurai.inferno.asm.mixins.render;
 
 import me.sxmurai.inferno.Inferno;
 import me.sxmurai.inferno.impl.features.Wrapper;
+import me.sxmurai.inferno.impl.features.module.modules.visual.Nametags;
 import me.sxmurai.inferno.impl.features.module.modules.visual.PopChams;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.renderer.entity.RenderPlayer;
@@ -63,6 +64,11 @@ public class MixinRenderPlayer {
         if (PopChams.INSTANCE.isOn() && PopChams.INSTANCE.pops.containsKey(entityIn.entityId)) {
             info.cancel();
             return;
+        }
+
+        if (Nametags.INSTANCE.isOn()) {
+            Nametags.renderNametag(entityIn, x, y, z);
+            info.cancel();
         }
     }
 }

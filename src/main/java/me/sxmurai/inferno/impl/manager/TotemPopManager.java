@@ -68,4 +68,8 @@ public class TotemPopManager implements Wrapper {
     public void onClientDisconnect(FMLNetworkEvent.ClientDisconnectionFromServerEvent event) {
         this.pops.clear();
     }
+
+    public int getPops(EntityPlayer player) {
+        return this.pops.getOrDefault(player, 0);
+    }
 }

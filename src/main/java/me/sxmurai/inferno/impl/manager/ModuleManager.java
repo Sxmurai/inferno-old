@@ -62,6 +62,7 @@ public class ModuleManager {
                 // visual
                 new Brightness(),
                 new Chams(),
+                new Nametags(),
                 new NoRender(),
                 new PopChams(),
                 new ViewClip(),
