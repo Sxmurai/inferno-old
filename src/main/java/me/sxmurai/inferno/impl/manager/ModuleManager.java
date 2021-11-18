@@ -28,6 +28,7 @@ public class ModuleManager {
 
                 // combat
                 new Aura(),
+                new AutoArmor(),
                 new AutoBowRelease(),
                 new AutoCrystal(),
                 new AutoObsidian(),
