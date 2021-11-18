@@ -16,26 +16,6 @@ import java.util.function.Predicate;
 public class EntityUtil implements Wrapper {
     private static final Frustum frustum = new Frustum();
 
-    public static List<Entity> getEntities(double range, double raytrace, boolean frustumCheck, Predicate<Entity> predicate) {
-        ArrayList<Entity> entities = new ArrayList<>();
-        for (Entity entity : mc.world.loadedEntityList) {
-            if (entity == null || entity == mc.player || (frustumCheck && !isInFrustum(entity))) {
-                continue;
-            }
-
-            double dist = mc.player.getDistance(entity);
-            if (dist > range || !mc.player.canEntityBeSeen(entity) && dist > raytrace) {
-                continue;
-            }
-
-            if (predicate.test(entity)) {
-                entities.add(entity);
-            }
-        }
-
-        return entities;
-    }
-
     public static boolean isInFrustum(Entity entity) {
         Entity view = mc.renderViewEntity;
         if (view == null) {
