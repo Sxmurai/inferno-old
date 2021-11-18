@@ -54,6 +54,7 @@ public class ModuleManager {
 
                 // player
                 new AntiVoid(),
+                new AutoRespawn(),
                 new FastUse(),
                 new HotbarRefill(),
                 new MultiTask(),
