@@ -16,6 +16,7 @@ public class HoleManager implements Wrapper {
 
     public void onUpdate() {
         if (this.timer.passed(2)) {
+            this.holes.clear();
             this.timer.reset();
 
             for (BlockPos blockPos : BlockUtil.getSphere(mc.player.getPosition(), 5, 5, false, true, 0)) {
