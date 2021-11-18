@@ -31,7 +31,7 @@ public class Velocity extends Module {
                     return;
                 }
 
-                SPacketEntityVelocity packet = (SPacketEntityVelocity) event.getPacket();
+                SPacketEntityVelocity packet = event.getPacket();
                 if (packet.getEntityID() == mc.player.entityId) {
                     packet.motionX *= this.horizontal.getValue().intValue();
                     packet.motionY *= this.vertical.getValue().intValue();
@@ -42,7 +42,7 @@ public class Velocity extends Module {
                     return;
                 }
 
-                SPacketExplosion packet = (SPacketExplosion) event.getPacket();
+                SPacketExplosion packet = event.getPacket();
                 packet.motionX *= this.horizontal.getValue();
                 packet.motionY *= this.vertical.getValue();
                 packet.motionZ *= this.horizontal.getValue();
@@ -51,7 +51,7 @@ public class Velocity extends Module {
                     return;
                 }
 
-                SPacketEntityStatus packet = (SPacketEntityStatus) event.getPacket();
+                SPacketEntityStatus packet = event.getPacket();
                 if (packet.getEntity(mc.world) instanceof EntityFishHook && packet.getOpCode() == 31) {
                     EntityFishHook hook = (EntityFishHook) packet.getEntity(mc.world);
                     if (hook.caughtEntity == mc.player) {
@@ -65,25 +65,28 @@ public class Velocity extends Module {
     @SubscribeEvent
     public void onPush(PushEvent event) {
         if (event.getEntity() == mc.player) {
-            if (event.getMaterial() == PushEvent.Type.ENTITY) {
-                if (!this.push.getValue()) {
-                    return;
-                }
-
-                PushEvent.Entity actualEvent = (PushEvent.Entity) event;
-                if (this.vertical.getValue() == 0.0f && this.horizontal.getValue() == 0.0f) {
-                    actualEvent.setCanceled(true);
-                    return;
-                }
-
-                actualEvent.setX(actualEvent.getX() * this.horizontal.getValue().doubleValue());
-                actualEvent.setY(actualEvent.getY() * this.vertical.getValue().doubleValue());
-                actualEvent.setZ(actualEvent.getZ() * this.horizontal.getValue().doubleValue());
-            } else {
-                if (event.getMaterial() == PushEvent.Type.BLOCKS) {
+            switch (event.getMaterial()) {
+                case BLOCKS:
                     event.setCanceled(this.blocks.getValue());
-                } else if (event.getMaterial() == PushEvent.Type.LIQUID) {
+                    break;
+
+                case LIQUID:
                     event.setCanceled(this.liquid.getValue());
+                    break;
+
+                case ENTITY: {
+                    if (this.push.getValue()) {
+                        PushEvent.Entity evt = (PushEvent.Entity) event;
+                        if (this.vertical.getValue() == 0.0f && this.horizontal.getValue() == 0.0f) {
+                            evt.setCanceled(true);
+                            return;
+                        }
+
+                        evt.setX(evt.getX() * this.horizontal.getValue().doubleValue());
+                        evt.setY(evt.getY() * this.vertical.getValue().doubleValue());
+                        evt.setZ(evt.getZ() * this.horizontal.getValue().doubleValue());
+                        break;
+                    }
                 }
             }
         }
