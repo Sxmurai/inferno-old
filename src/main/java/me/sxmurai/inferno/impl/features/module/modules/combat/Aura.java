@@ -8,6 +8,7 @@ import me.sxmurai.inferno.util.timing.TickTimer;
 import me.sxmurai.inferno.impl.features.module.Module;
 import me.sxmurai.inferno.impl.option.Option;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemSword;
 import net.minecraft.network.play.client.CPacketEntityAction;
 import net.minecraft.network.play.client.CPacketPlayer;
@@ -115,6 +116,10 @@ public class Aura extends Module {
         }
 
         if ((!this.invisible.getValue() && EntityUtil.isInvisible(target)) || (!this.players.getValue() && EntityUtil.isPlayer(target)) || (!this.passive.getValue() && EntityUtil.isPassive(target)) || (!this.mobs.getValue() && EntityUtil.isHostile(target))) {
+            return true;
+        }
+
+        if (target instanceof EntityPlayer && Inferno.friendManager.isFriend(target.getUniqueID())) {
             return true;
         }
 

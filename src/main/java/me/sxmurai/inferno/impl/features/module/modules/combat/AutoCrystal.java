@@ -291,6 +291,10 @@ public class AutoCrystal extends Module {
                             continue;
                         }
 
+                        if (Inferno.friendManager.isFriend(player.getUniqueID())) {
+                            continue;
+                        }
+
                         if (t == null) {
                             t = player;
                             continue;
