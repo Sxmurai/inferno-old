@@ -16,6 +16,8 @@ For the commands below: If you are on MacOS or Linux, add a `./` in front of the
 
 Once that is all completed successfully and done, your jar file will be under `build/libs/inferno-b1.1.0-release.jar`.
 
+To clarify: the client is still in the development process and probably shouldn't be used in actual pvp justttt yet. By you building this, you agree that you are downloading and using an unfinished project. You may report bugs. I highly advise using the released JARs in the releases tab. They're all __**super**__ outdated
+
 ---
 
 ## Notable Mentions
