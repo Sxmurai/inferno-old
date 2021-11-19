@@ -43,6 +43,18 @@ public class Nametags extends Module {
         INSTANCE = this;
     }
 
+    @Override
+    public void onRenderWorld() {
+        for (EntityPlayer player : mc.world.playerEntities) {
+            if (player == null || (player == mc.player && !self.getValue()) || (!invisible.getValue() && EntityUtil.isInvisible(player))) {
+                continue;
+            }
+
+            Vec3d pos = new Vec3d(player.posX, player.posY, player.posZ).subtract(RenderUtil.renderPositions());
+            Nametags.renderNametag(player, pos.x, pos.y, pos.z);
+        }
+    }
+
     public static void renderNametag(EntityPlayer player, double x, double y, double z) {
         if (player == null || (player == mc.player && !self.getValue()) || (!invisible.getValue() && EntityUtil.isInvisible(player))) {
             return;
@@ -62,6 +74,7 @@ public class Nametags extends Module {
         GlStateManager.rotate(-mc.renderManager.playerViewY, 0.0f, 1.0f, 0.0f);
         GlStateManager.rotate(mc.renderManager.playerViewX, mc.gameSettings.thirdPersonView == 2 ? -1.0f : 1.0f, 0.0f, 0.0f);
         GlStateManager.scale(-scale, -scale, scale);
+        GlStateManager.depthMask(false);
         GlStateManager.disableDepth();
         GlStateManager.enableBlend();
 
@@ -149,6 +162,7 @@ public class Nametags extends Module {
         }
 
         GlStateManager.enableDepth();
+        GlStateManager.depthMask(true);
         GlStateManager.enableLighting();
         GlStateManager.disableBlend();
         GlStateManager.disablePolygonOffset();
@@ -158,11 +172,11 @@ public class Nametags extends Module {
 
     private static void renderItemStack(ItemStack stack, int x, int y) {
         GlStateManager.pushMatrix();
-        GlStateManager.depthMask(true);
+        GlStateManager.depthMask(false);
         RenderHelper.enableStandardItemLighting();
         mc.renderItem.zLevel = -150.0f;
         GlStateManager.disableAlpha();
-        GlStateManager.enableDepth();
+        GlStateManager.disableDepth();
         GlStateManager.disableCull();
 
         mc.renderItem.renderItemAndEffectIntoGUI(stack, x, y);

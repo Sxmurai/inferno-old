@@ -67,7 +67,6 @@ public class MixinRenderPlayer {
         }
 
         if (Nametags.INSTANCE.isOn()) {
-            Nametags.renderNametag(entityIn, x, y, z);
             info.cancel();
         }
     }
