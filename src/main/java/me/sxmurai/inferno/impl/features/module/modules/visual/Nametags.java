@@ -84,8 +84,22 @@ public class Nametags extends Module {
             name.append(Inferno.serverManager.getLatency(player)).append("ms").append(" ");
         }
 
-        name.append(player.isSneaking() ? ChatFormatting.YELLOW : ChatFormatting.WHITE)
-                .append(nameProtect.getValue() ? ("Player" + player.hashCode()) : player.getName())
+
+        String username = player.getName();
+        if (nameProtect.getValue()) {
+            if (Inferno.friendManager.isFriend(player.getUniqueID())) {
+                username = Inferno.friendManager.getFriend(player.getUniqueID()).getAlias();
+            } else {
+                username = ("Player" + player.hashCode());
+            }
+        }
+
+        name.append(player.isSneaking() ?
+                ChatFormatting.YELLOW :
+                Inferno.friendManager.isFriend(player.getUniqueID()) ?
+                        ChatFormatting.BLUE :
+                        ChatFormatting.WHITE
+        ).append(username)
                 .append(ChatFormatting.RESET)
                 .append(" ");
 
