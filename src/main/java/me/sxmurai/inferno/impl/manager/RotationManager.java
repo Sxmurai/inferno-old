@@ -2,6 +2,7 @@ package me.sxmurai.inferno.impl.manager;
 
 import me.sxmurai.inferno.impl.event.entity.UpdateWalkingPlayerEvent;
 import me.sxmurai.inferno.impl.event.network.PacketEvent;
+import me.sxmurai.inferno.util.entity.MovementUtil;
 import me.sxmurai.inferno.util.entity.RotationUtil;
 import me.sxmurai.inferno.util.timing.Timer;
 import me.sxmurai.inferno.impl.features.Wrapper;
