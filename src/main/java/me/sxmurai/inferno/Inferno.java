@@ -1,6 +1,7 @@
 package me.sxmurai.inferno;
 
 import me.sxmurai.inferno.impl.manager.*;
+import me.sxmurai.inferno.impl.manager.friend.FriendManager;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -30,6 +31,7 @@ public class Inferno {
     public static FontManager fontManager;
     public static ServerManager serverManager;
     public static HoleManager holeManager;
+    public static FriendManager friendManager;
 
     @SubscribeEvent
     public void onPreInit(FMLPreInitializationEvent event) {
@@ -56,6 +58,7 @@ public class Inferno {
         fontManager = new FontManager();
         serverManager = new ServerManager();
         holeManager = new HoleManager();
+        friendManager = new FriendManager();
 
         MinecraftForge.EVENT_BUS.register(new EventManager());
         MinecraftForge.EVENT_BUS.register(moduleManager);
