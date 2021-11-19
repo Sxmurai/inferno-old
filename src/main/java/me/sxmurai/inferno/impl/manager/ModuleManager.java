@@ -57,6 +57,7 @@ public class ModuleManager {
                 new AutoRespawn(),
                 new FastUse(),
                 new HotbarRefill(),
+                new MiddleClick(),
                 new MultiTask(),
                 new Reach(),
                 new Scaffold(),
