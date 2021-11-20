@@ -1,9 +1,12 @@
 package me.sxmurai.inferno.util.world;
 
+import com.google.common.collect.Lists;
 import me.sxmurai.inferno.Inferno;
 import me.sxmurai.inferno.impl.features.Wrapper;
+import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
+import net.minecraft.init.Blocks;
 import net.minecraft.network.play.client.CPacketEntityAction;
 import net.minecraft.network.play.client.CPacketPlayerTryUseItemOnBlock;
 import net.minecraft.util.EnumFacing;
@@ -13,8 +16,11 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class BlockUtil implements Wrapper {
+    private static List<Block> needToShiftBlocks = Lists.newArrayList(Blocks.CRAFTING_TABLE, Blocks.FURNACE, Blocks.BED, Blocks.ENDER_CHEST, Blocks.TRAPPED_CHEST, Blocks.CHEST, Blocks.TRAPDOOR, Blocks.BLACK_SHULKER_BOX, Blocks.BLUE_SHULKER_BOX, Blocks.BROWN_SHULKER_BOX, Blocks.CYAN_SHULKER_BOX, Blocks.GRAY_SHULKER_BOX, Blocks.GREEN_SHULKER_BOX, Blocks.LIGHT_BLUE_SHULKER_BOX, Blocks.LIME_SHULKER_BOX, Blocks.MAGENTA_SHULKER_BOX, Blocks.ORANGE_SHULKER_BOX, Blocks.PINK_SHULKER_BOX, Blocks.PURPLE_SHULKER_BOX, Blocks.RED_SHULKER_BOX, Blocks.SILVER_SHULKER_BOX, Blocks.WHITE_SHULKER_BOX, Blocks.YELLOW_SHULKER_BOX);
+
     public static void place(BlockPos pos, EnumHand hand, boolean packet, boolean sneak, boolean swing, boolean rotate) {
         EnumFacing facing = BlockUtil.getFacing(pos);
         if (facing == null) {
@@ -23,7 +29,8 @@ public class BlockUtil implements Wrapper {
 
         BlockPos neighbor = pos.offset(facing);
 
-        if (sneak) {
+        boolean shouldSneak = sneak || needToShiftBlocks.contains(mc.world.getBlockState(neighbor).getBlock());
+        if (shouldSneak) {
             mc.player.connection.sendPacket(new CPacketEntityAction(mc.player, CPacketEntityAction.Action.START_SNEAKING));
         }
 
@@ -43,7 +50,7 @@ public class BlockUtil implements Wrapper {
             mc.player.swingArm(hand);
         }
 
-        if (sneak) {
+        if (shouldSneak) {
             mc.player.connection.sendPacket(new CPacketEntityAction(mc.player, CPacketEntityAction.Action.STOP_SNEAKING));
         }
     }
