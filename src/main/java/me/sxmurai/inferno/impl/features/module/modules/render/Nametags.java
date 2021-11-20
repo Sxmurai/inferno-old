@@ -132,9 +132,7 @@ public class Nametags extends Module {
 
         if (mainhand.getValue()) {
             if (!player.getHeldItemMainhand().isEmpty()) {
-                GlStateManager.pushMatrix();
                 renderItemStack(player.getHeldItemMainhand(), xOffset, -26);
-                GlStateManager.popMatrix();
 
                 if (enchants.getValue() != Enchants.None) {
                     renderEnchantments(player.getHeldItemMainhand(), xOffset, -26);
@@ -155,9 +153,7 @@ public class Nametags extends Module {
                     continue;
                 }
 
-                GlStateManager.pushMatrix();
                 renderItemStack(stack, xOffset, -26);
-                GlStateManager.popMatrix();
 
                 if (enchants.getValue() != Enchants.None) {
                     renderEnchantments(stack, xOffset, -26);
@@ -169,9 +165,7 @@ public class Nametags extends Module {
 
         if (offhand.getValue()) {
             if (!player.getHeldItemOffhand().isEmpty()) {
-                GlStateManager.pushMatrix();
                 renderItemStack(player.getHeldItemOffhand(), xOffset, -26);
-                GlStateManager.popMatrix();
 
                 if (enchants.getValue() != Enchants.None) {
                     renderEnchantments(player.getHeldItemOffhand(), xOffset, -26);
@@ -190,11 +184,11 @@ public class Nametags extends Module {
 
     private static void renderItemStack(ItemStack stack, int x, int y) {
         GlStateManager.pushMatrix();
-        GlStateManager.depthMask(false);
+        GlStateManager.depthMask(true);
         RenderHelper.enableStandardItemLighting();
         mc.renderItem.zLevel = -150.0f;
         GlStateManager.disableAlpha();
-        GlStateManager.disableDepth();
+        GlStateManager.enableDepth();
         GlStateManager.disableCull();
 
         mc.renderItem.renderItemAndEffectIntoGUI(stack, x, y);
