@@ -1,4 +1,4 @@
-package me.sxmurai.inferno.impl.features.module.modules.visual;
+package me.sxmurai.inferno.impl.features.module.modules.render;
 
 import me.sxmurai.inferno.impl.event.entity.TotemPopEvent;
 import me.sxmurai.inferno.impl.settings.Setting;
@@ -13,7 +13,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-@Module.Define(name = "PopChams", category = Module.Category.Visual)
+@Module.Define(name = "PopChams", category = Module.Category.Render)
 @Module.Info(description = "https://www.youtube.com/watch?v=gjAnN4cdVNg")
 public class PopChams extends Module {
     public static PopChams INSTANCE;

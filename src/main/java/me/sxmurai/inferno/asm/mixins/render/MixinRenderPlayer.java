@@ -2,8 +2,8 @@ package me.sxmurai.inferno.asm.mixins.render;
 
 import me.sxmurai.inferno.Inferno;
 import me.sxmurai.inferno.impl.features.Wrapper;
-import me.sxmurai.inferno.impl.features.module.modules.visual.Nametags;
-import me.sxmurai.inferno.impl.features.module.modules.visual.PopChams;
+import me.sxmurai.inferno.impl.features.module.modules.render.Nametags;
+import me.sxmurai.inferno.impl.features.module.modules.render.PopChams;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.renderer.entity.RenderPlayer;
 import org.spongepowered.asm.mixin.Mixin;

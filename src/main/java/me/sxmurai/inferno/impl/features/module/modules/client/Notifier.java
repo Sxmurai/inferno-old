@@ -78,7 +78,7 @@ public class Notifier extends Module {
     public void onEntitySpawnEvent(EntitySpawnEvent event) {
         if (event.getEntity() instanceof EntityPlayer) {
             if (this.visualRange.getValue()) {
-                Inferno.notificationManager.notifyNoEdit(event.getEntity().getName() + " has entered your visual range.");
+                Inferno.notificationManager.notifyNoEdit(event.getEntity().getName() + " has entered your render range.");
             }
         } else if (event.getEntity() instanceof EntityEnderPearl) {
             // @todo: this for some reason also notifies when the pearl hits the ground. i dont know why it does this
@@ -94,7 +94,7 @@ public class Notifier extends Module {
     @SubscribeEvent
     public void onEntityRemove(EntityRemoveEvent event) {
         if (event.getEntity() instanceof EntityPlayer && this.visualRange.getValue()) {
-            Inferno.notificationManager.notifyNoEdit(event.getEntity().getName() + " has left your visual range.");
+            Inferno.notificationManager.notifyNoEdit(event.getEntity().getName() + " has left your render range.");
         }
     }
 

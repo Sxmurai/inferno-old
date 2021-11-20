@@ -1,6 +1,6 @@
 package me.sxmurai.inferno.asm.mixins.world.blocks;
 
-import me.sxmurai.inferno.impl.features.module.modules.visual.Wallhack;
+import me.sxmurai.inferno.impl.features.module.modules.render.Wallhack;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.BlockRenderLayer;

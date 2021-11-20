@@ -1,6 +1,6 @@
 package me.sxmurai.inferno.asm.mixins.render;
 
-import me.sxmurai.inferno.impl.features.module.modules.visual.NoRender;
+import me.sxmurai.inferno.impl.features.module.modules.render.NoRender;
 import net.minecraft.client.gui.GuiIngame;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.scoreboard.ScoreObjective;

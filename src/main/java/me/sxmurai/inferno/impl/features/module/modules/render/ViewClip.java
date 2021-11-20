@@ -1,9 +1,9 @@
-package me.sxmurai.inferno.impl.features.module.modules.visual;
+package me.sxmurai.inferno.impl.features.module.modules.render;
 
 import me.sxmurai.inferno.impl.features.module.Module;
 import me.sxmurai.inferno.impl.settings.Setting;
 
-@Module.Define(name = "ViewClip", category = Module.Category.Visual)
+@Module.Define(name = "ViewClip", category = Module.Category.Render)
 @Module.Info(description = "Clips your third person camera through blocks")
 public class ViewClip extends Module {
     public static ViewClip INSTANCE;

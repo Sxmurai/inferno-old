@@ -1,8 +1,8 @@
 package me.sxmurai.inferno.asm.mixins.render;
 
 import me.sxmurai.inferno.util.render.ColorUtil;
-import me.sxmurai.inferno.impl.features.module.modules.visual.Chams;
-import me.sxmurai.inferno.impl.features.module.modules.visual.PopChams;
+import me.sxmurai.inferno.impl.features.module.modules.render.Chams;
+import me.sxmurai.inferno.impl.features.module.modules.render.PopChams;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.Render;

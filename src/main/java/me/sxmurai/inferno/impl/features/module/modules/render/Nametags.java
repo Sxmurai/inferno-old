@@ -1,4 +1,4 @@
-package me.sxmurai.inferno.impl.features.module.modules.visual;
+package me.sxmurai.inferno.impl.features.module.modules.render;
 
 import com.mojang.realmsclient.gui.ChatFormatting;
 import me.sxmurai.inferno.Inferno;
@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Map;
 
-@Module.Define(name = "Nametags", category = Module.Category.Visual)
+@Module.Define(name = "Nametags", category = Module.Category.Render)
 @Module.Info(description = "Shows custom nametags, overriding the vanilla ones")
 public class Nametags extends Module {
     public static Nametags INSTANCE;

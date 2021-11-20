@@ -9,7 +9,7 @@ import me.sxmurai.inferno.impl.features.module.modules.combat.*;
 import me.sxmurai.inferno.impl.features.module.modules.miscellaneous.*;
 import me.sxmurai.inferno.impl.features.module.modules.movement.*;
 import me.sxmurai.inferno.impl.features.module.modules.player.*;
-import me.sxmurai.inferno.impl.features.module.modules.visual.*;
+import me.sxmurai.inferno.impl.features.module.modules.render.*;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
 import org.lwjgl.input.Keyboard;
@@ -62,7 +62,7 @@ public class ModuleManager {
                 new Speedmine(),
                 new Timer(),
 
-                // visual
+                // render
                 new Brightness(),
                 new Chams(),
                 new Nametags(),

@@ -1,4 +1,4 @@
-package me.sxmurai.inferno.impl.features.module.modules.visual;
+package me.sxmurai.inferno.impl.features.module.modules.render;
 
 import com.google.common.collect.Lists;
 import me.sxmurai.inferno.impl.event.inferno.OptionChangeEvent;
@@ -12,7 +12,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.util.ArrayList;
 
-@Module.Define(name = "Wallhack", category = Module.Category.Visual)
+@Module.Define(name = "Wallhack", category = Module.Category.Render)
 @Module.Info(description = "omg guys im a hacker look i can download an xray texture pack!!111!!")
 public class Wallhack extends Module {
     public static Wallhack INSTANCE;

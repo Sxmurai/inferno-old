@@ -144,6 +144,6 @@ public class Module implements Wrapper {
     }
 
     public enum Category {
-        Combat, Miscellaneous, Movement, Player, Visual, Client
+        Combat, Miscellaneous, Movement, Player, Render, Client
     }
 }

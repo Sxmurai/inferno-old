@@ -1,4 +1,4 @@
-package me.sxmurai.inferno.impl.features.module.modules.visual;
+package me.sxmurai.inferno.impl.features.module.modules.render;
 
 import me.sxmurai.inferno.impl.features.module.Module;
 import me.sxmurai.inferno.impl.settings.Setting;
@@ -6,7 +6,7 @@ import me.sxmurai.inferno.impl.ui.Animation;
 import net.minecraft.init.MobEffects;
 import net.minecraft.potion.PotionEffect;
 
-@Module.Define(name = "Brightness", category = Module.Category.Visual)
+@Module.Define(name = "Brightness", category = Module.Category.Render)
 @Module.Info(description = "Makes the game brighter.")
 public class Brightness extends Module {
     public final Setting<Mode> mode = new Setting<>("Mode", Mode.Gamma);

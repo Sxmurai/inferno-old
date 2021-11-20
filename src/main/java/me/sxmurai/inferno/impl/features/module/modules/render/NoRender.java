@@ -1,9 +1,9 @@
-package me.sxmurai.inferno.impl.features.module.modules.visual;
+package me.sxmurai.inferno.impl.features.module.modules.render;
 
 import me.sxmurai.inferno.impl.features.module.Module;
 import me.sxmurai.inferno.impl.settings.Setting;
 
-@Module.Define(name = "NoRender", category = Module.Category.Visual)
+@Module.Define(name = "NoRender", category = Module.Category.Render)
 @Module.Info(description = "Stops things from rendering")
 public class NoRender extends Module {
     public static NoRender INSTANCE;

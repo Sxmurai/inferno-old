@@ -1,7 +1,7 @@
 package me.sxmurai.inferno.asm.mixins.render;
 
-import me.sxmurai.inferno.impl.features.module.modules.visual.NoRender;
-import me.sxmurai.inferno.impl.features.module.modules.visual.ViewClip;
+import me.sxmurai.inferno.impl.features.module.modules.render.NoRender;
+import me.sxmurai.inferno.impl.features.module.modules.render.ViewClip;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.EntityRenderer;
 import net.minecraft.init.Items;

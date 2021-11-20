@@ -1,6 +1,6 @@
 package me.sxmurai.inferno.asm.mixins.render;
 
-import me.sxmurai.inferno.impl.features.module.modules.visual.Wallhack;
+import me.sxmurai.inferno.impl.features.module.modules.render.Wallhack;
 import net.minecraft.client.renderer.BufferBuilder;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;

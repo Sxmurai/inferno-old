@@ -1,6 +1,6 @@
 package me.sxmurai.inferno.asm.mixins.render;
 
-import me.sxmurai.inferno.impl.features.module.modules.visual.NoRender;
+import me.sxmurai.inferno.impl.features.module.modules.render.NoRender;
 import net.minecraft.client.renderer.entity.RenderXPOrb;
 import net.minecraft.entity.item.EntityXPOrb;
 import org.spongepowered.asm.mixin.Mixin;
