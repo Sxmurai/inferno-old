@@ -13,7 +13,7 @@ import java.awt.*;
 public class CustomFont extends Module {
     public static CustomFont INSTANCE;
 
-    public static Setting<String> font = new Setting<>("Font", "Verdana");
+    public static Setting<String> font = new Setting<>("Font", "Product Sans");
     public static Setting<Style> style = new Setting<>("Style", Style.Plain);
     public static Setting<Boolean> shadow = new Setting<>("Shadow", true);
     public static Setting<Integer> size = new Setting<>("Size", 18, 6, 26);
@@ -25,9 +25,16 @@ public class CustomFont extends Module {
         INSTANCE = this;
     }
 
+    @Override
+    protected void onActivated() {
+        if (Inferno.fontManager != null) {
+            Inferno.fontManager.resetCustomFont();
+        }
+    }
+
     @SubscribeEvent
     public void onOptionChange(OptionChangeEvent event) {
-        if (this.getSettings().stream().anyMatch((o) -> event.getOption().equals(o))) {
+        if (Inferno.fontManager != null && this.getSettings().stream().anyMatch((o) -> event.getOption().equals(o))) {
             Inferno.fontManager.resetCustomFont();
         }
     }

@@ -23,13 +23,13 @@ public class Inferno {
     public static Inferno INSTANCE;
     public static Logger LOGGER = LogManager.getLogger(Inferno.class);
 
+    public static FontManager fontManager;
     public static ConfigManager configManager;
     public static ModuleManager moduleManager;
     public static CommandManager commandManager;
     public static NotificationManager notificationManager;
     public static RotationManager rotationManager;
     public static TotemPopManager totemPopManager;
-    public static FontManager fontManager;
     public static ServerManager serverManager;
     public static HoleManager holeManager;
     public static FriendManager friendManager;
@@ -50,13 +50,14 @@ public class Inferno {
 
         Display.setTitle(Inferno.NAME + " " + Inferno.VERSION);
 
+        fontManager = new FontManager();
+        fontManager.resetCustomFont();
         moduleManager = new ModuleManager();
         commandManager = new CommandManager();
         notificationManager = new NotificationManager();
         configManager = ConfigManager.getInstance();
         rotationManager = new RotationManager();
         totemPopManager = new TotemPopManager();
-        fontManager = new FontManager();
         serverManager = new ServerManager();
         holeManager = new HoleManager();
         friendManager = new FriendManager();
