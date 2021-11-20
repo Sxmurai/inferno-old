@@ -8,7 +8,6 @@ import me.sxmurai.inferno.impl.event.entity.UpdateWalkingPlayerEvent;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.entity.EntityPlayerSP;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.MoverType;
 import net.minecraft.network.play.client.CPacketEntityAction;
 import net.minecraft.network.play.client.CPacketPlayer;
