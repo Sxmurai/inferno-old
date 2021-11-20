@@ -43,7 +43,7 @@ public class FontManager implements Wrapper {
     }
 
     public void resetCustomFont() {
-        this.customFontRender = new CFontRenderer(new Font(CustomFont.font.getName(), CustomFont.style.getValue().getStyle(), CustomFont.size.getValue()), CustomFont.antiAlias.getValue(), CustomFont.fractionalMetrics.getValue());
+        this.customFontRender = new CFontRenderer(new Font(CustomFont.font.getValue(), CustomFont.style.getValue().getStyle(), CustomFont.size.getValue()), CustomFont.antiAlias.getValue(), CustomFont.fractionalMetrics.getValue());
     }
 
     public void drawString(String text, double x, double y, int color) {
