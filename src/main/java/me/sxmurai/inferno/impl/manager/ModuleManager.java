@@ -34,6 +34,7 @@ public class ModuleManager {
                 new AutoBowRelease(),
                 new AutoCrystal(),
                 new Critcals(),
+                new FastProjectile(),
                 new HoleFiller(),
                 new Offhand(),
                 new Quiver(),
