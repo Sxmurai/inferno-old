@@ -90,7 +90,6 @@ public class Nametags extends Module {
             name.append(Inferno.serverManager.getLatency(player)).append("ms").append(" ");
         }
 
-
         String username = player.getName();
         if (nameProtect.getValue()) {
             if (Inferno.friendManager.isFriend(player.getUniqueID())) {
