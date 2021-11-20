@@ -115,6 +115,7 @@ public class Module implements Wrapper {
     public void onUpdate() { }
     public void onTick() { }
     public void onRenderWorld() { }
+    public void onRenderHud() { }
 
     public Setting getSetting(String name) {
         for (Setting setting : this.settings) {

@@ -14,6 +14,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.network.play.server.SPacketEntityMetadata;
 import net.minecraft.network.play.server.SPacketEntityStatus;
 import net.minecraft.network.play.server.SPacketPlayerListItem;
+import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingEvent;
@@ -118,5 +119,16 @@ public class EventManager implements Wrapper {
         GlStateManager.enableTexture2D();
         GlStateManager.enableDepth();
         GlStateManager.enableCull();
+    }
+
+    @SubscribeEvent
+    public void onRenderHud(RenderGameOverlayEvent.Text event) {
+        for (Module module : Inferno.moduleManager.getModules()) {
+            if (module.isOn()) {
+                mc.profiler.startSection("renderhud_" + module.getName());
+                module.onRenderHud();
+                mc.profiler.endSection();
+            }
+        }
     }
 }

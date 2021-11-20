@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import me.sxmurai.inferno.impl.features.module.Module;
 import me.sxmurai.inferno.impl.features.module.modules.client.CustomFont;
 import me.sxmurai.inferno.impl.features.module.modules.client.GUI;
+import me.sxmurai.inferno.impl.features.module.modules.client.HUD;
 import me.sxmurai.inferno.impl.features.module.modules.client.Notifier;
 import me.sxmurai.inferno.impl.features.module.modules.combat.*;
 import me.sxmurai.inferno.impl.features.module.modules.miscellaneous.*;
@@ -24,6 +25,7 @@ public class ModuleManager {
                 // client
                 new CustomFont(),
                 new GUI(),
+                new HUD(),
                 new Notifier(),
 
                 // combat
