@@ -41,9 +41,7 @@ public class ModuleManager {
                 // miscellaneous
                 new FakePlayer(),
                 new NoHandshake(),
-                new NoRotate(),
                 new Suffix(),
-                new TickShift(),
 
                 // movement
                 new FastFall(),
