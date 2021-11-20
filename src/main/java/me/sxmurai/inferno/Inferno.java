@@ -2,6 +2,7 @@ package me.sxmurai.inferno;
 
 import me.sxmurai.inferno.impl.manager.*;
 import me.sxmurai.inferno.impl.manager.friend.FriendManager;
+import me.sxmurai.inferno.impl.manager.notification.NotificationManager;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;

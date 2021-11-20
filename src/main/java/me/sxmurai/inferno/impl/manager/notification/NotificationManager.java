@@ -1,8 +1,7 @@
-package me.sxmurai.inferno.impl.manager;
+package me.sxmurai.inferno.impl.manager.notification;
 
 import me.sxmurai.inferno.impl.features.Wrapper;
 import me.sxmurai.inferno.impl.features.command.Command;
-import me.sxmurai.inferno.impl.features.notification.Notification;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;

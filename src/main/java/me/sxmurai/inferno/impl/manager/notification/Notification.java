@@ -1,4 +1,4 @@
-package me.sxmurai.inferno.impl.features.notification;
+package me.sxmurai.inferno.impl.manager.notification;
 
 import me.sxmurai.inferno.util.timing.Timer;
 
