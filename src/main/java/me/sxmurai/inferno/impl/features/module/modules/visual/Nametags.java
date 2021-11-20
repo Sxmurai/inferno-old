@@ -112,7 +112,7 @@ public class Nametags extends Module {
             float health = EntityUtil.getHealth(player);
 
             name.append(getHealthColor(health))
-                    .append(health)
+                    .append(Math.round(health * 10.0) / 10.0)
                     .append(ChatFormatting.RESET)
                     .append(" ");
         }
