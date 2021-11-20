@@ -2,8 +2,8 @@ package me.sxmurai.inferno.impl.features.module;
 
 import me.sxmurai.inferno.impl.event.inferno.ModuleToggledEvent;
 import me.sxmurai.inferno.impl.features.Wrapper;
-import me.sxmurai.inferno.impl.option.Bind;
-import me.sxmurai.inferno.impl.option.Option;
+import me.sxmurai.inferno.impl.settings.Bind;
+import me.sxmurai.inferno.impl.settings.Setting;
 import net.minecraftforge.common.MinecraftForge;
 
 import java.lang.annotation.Retention;
@@ -18,9 +18,9 @@ public class Module implements Wrapper {
     private final String description;
 
     private final Bind bind = new Bind("Bind", -1);
-    private final Option<Boolean> drawn = new Option<>("Drawn", true);
+    private final Setting<Boolean> drawn = new Setting<>("Drawn", true);
 
-    private final ArrayList<Option> options = new ArrayList<>();
+    private final ArrayList<Setting> settings = new ArrayList<>();
 
     private boolean toggled = false;
 
@@ -36,17 +36,17 @@ public class Module implements Wrapper {
         this.bind.setValue(info == null ? -1 : info.bind());
         this.drawn.setValue(info == null || info.drawn());
 
-        this.options.add(this.bind);
-        this.options.add(this.drawn);
+        this.settings.add(this.bind);
+        this.settings.add(this.drawn);
     }
 
-    public void registerAllOptions() {
+    public void registerAllSettings() {
         Arrays.stream(this.getClass().getDeclaredFields())
-                .filter((field) -> Option.class.isAssignableFrom(field.getType()))
+                .filter((field) -> Setting.class.isAssignableFrom(field.getType()))
                 .forEach((field) -> {
                     try {
                         field.setAccessible(true);
-                        this.options.add((Option) field.get(this));
+                        this.settings.add((Setting) field.get(this));
                     } catch (IllegalAccessException e) {
                         e.printStackTrace();
                     }
@@ -116,18 +116,18 @@ public class Module implements Wrapper {
     public void onTick() { }
     public void onRenderWorld() { }
 
-    public Option getOption(String name) {
-        for (Option option : this.options) {
-            if (option.getName().equalsIgnoreCase(name)) {
-                return option;
+    public Setting getSetting(String name) {
+        for (Setting setting : this.settings) {
+            if (setting.getName().equalsIgnoreCase(name)) {
+                return setting;
             }
         }
 
         return null;
     }
 
-    public ArrayList<Option> getOptions() {
-        return options;
+    public ArrayList<Setting> getSettings() {
+        return settings;
     }
 
     @Retention(RetentionPolicy.RUNTIME)

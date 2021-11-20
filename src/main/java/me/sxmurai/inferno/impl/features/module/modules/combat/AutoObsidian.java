@@ -1,11 +1,11 @@
 package me.sxmurai.inferno.impl.features.module.modules.combat;
 
 import me.sxmurai.inferno.impl.event.entity.JumpEvent;
+import me.sxmurai.inferno.impl.settings.Setting;
 import me.sxmurai.inferno.util.world.BlockUtil;
 import me.sxmurai.inferno.util.entity.InventoryUtil;
 import me.sxmurai.inferno.util.timing.TickTimer;
 import me.sxmurai.inferno.impl.features.module.Module;
-import me.sxmurai.inferno.impl.option.Option;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -19,16 +19,16 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 @Module.Define(name = "AutoObsidian", category = Module.Category.Combat)
 @Module.Info(description = "Automatically surrounds you in obsidian")
 public class AutoObsidian extends Module {
-    public final Option<Integer> blocks = new Option<>("Blocks", 1, 1, 5);
-    public final Option<Integer> delay = new Option<>("Delay", 2, 0, 10);
-    public final Option<Boolean> bottom = new Option<>("Bottom", true);
-    public final Option<Place> place = new Option<>("Place", Place.Vanilla);
-    public final Option<Toggle> toggle = new Option<>("Toggle", Toggle.Finished);
-    public final Option<Boolean> offhand = new Option<>("Offhand", true);
-    public final Option<InventoryUtil.Swap> swap = new Option<>("Swap", InventoryUtil.Swap.Legit);
-    public final Option<Boolean> rotate = new Option<>("Rotate", true);
-    public final Option<Boolean> swing = new Option<>("Swing", true);
-    public final Option<Boolean> sneak = new Option<>("Sneak", false);
+    public final Setting<Integer> blocks = new Setting<>("Blocks", 1, 1, 5);
+    public final Setting<Integer> delay = new Setting<>("Delay", 2, 0, 10);
+    public final Setting<Boolean> bottom = new Setting<>("Bottom", true);
+    public final Setting<Place> place = new Setting<>("Place", Place.Vanilla);
+    public final Setting<Toggle> toggle = new Setting<>("Toggle", Toggle.Finished);
+    public final Setting<Boolean> offhand = new Setting<>("Offhand", true);
+    public final Setting<InventoryUtil.Swap> swap = new Setting<>("Swap", InventoryUtil.Swap.Legit);
+    public final Setting<Boolean> rotate = new Setting<>("Rotate", true);
+    public final Setting<Boolean> swing = new Setting<>("Swing", true);
+    public final Setting<Boolean> sneak = new Setting<>("Sneak", false);
 
     // timing
     private int placed = 0;

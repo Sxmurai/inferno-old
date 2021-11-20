@@ -1,4 +1,4 @@
-package me.sxmurai.inferno.impl.option;
+package me.sxmurai.inferno.impl.settings;
 
 public class EnumConverter {
     private final Class<? extends Enum> clazz;

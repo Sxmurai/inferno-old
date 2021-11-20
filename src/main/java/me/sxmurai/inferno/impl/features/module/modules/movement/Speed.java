@@ -1,11 +1,11 @@
 package me.sxmurai.inferno.impl.features.module.modules.movement;
 
+import me.sxmurai.inferno.impl.settings.Setting;
 import me.sxmurai.inferno.util.entity.MovementUtil;
 import me.sxmurai.inferno.impl.event.entity.MoveEvent;
 import me.sxmurai.inferno.impl.event.entity.UpdateWalkingPlayerEvent;
 import me.sxmurai.inferno.impl.event.network.PacketEvent;
 import me.sxmurai.inferno.impl.features.module.Module;
-import me.sxmurai.inferno.impl.option.Option;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.init.MobEffects;
 import net.minecraft.network.play.server.SPacketPlayerPosLook;
@@ -15,10 +15,10 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 @Module.Define(name = "Speed", category = Module.Category.Movement)
 @Module.Info(description = "vroom vroom skadadle skadoodle your dick is now a noodle")
 public class Speed extends Module {
-    public final Option<Mode> mode = new Option<>("Mode", Mode.Strafe);
-    public final Option<Float> timer = new Option<>("Timer", 1.0f, 1.0f, 2.0f);
+    public final Setting<Mode> mode = new Setting<>("Mode", Mode.Strafe);
+    public final Setting<Float> timer = new Setting<>("Timer", 1.0f, 1.0f, 2.0f);
 
-    public final Option<Double> speed = new Option<>("Speed", 1.2, 0.1, 5.0, () -> this.mode.getValue() == Mode.Vanilla || this.mode.getValue() == Mode.BHop);
+    public final Setting<Double> speed = new Setting<>("Speed", 1.2, 0.1, 5.0, () -> this.mode.getValue() == Mode.Vanilla || this.mode.getValue() == Mode.BHop);
 
     // strafe/strictstrafe
     private int stage = 2;

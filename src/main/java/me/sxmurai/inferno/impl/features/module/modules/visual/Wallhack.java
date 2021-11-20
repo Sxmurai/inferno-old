@@ -3,7 +3,7 @@ package me.sxmurai.inferno.impl.features.module.modules.visual;
 import com.google.common.collect.Lists;
 import me.sxmurai.inferno.impl.event.inferno.OptionChangeEvent;
 import me.sxmurai.inferno.impl.features.module.Module;
-import me.sxmurai.inferno.impl.option.Option;
+import me.sxmurai.inferno.impl.settings.Setting;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.Vec3d;
@@ -18,9 +18,9 @@ public class Wallhack extends Module {
     public static Wallhack INSTANCE;
     public static ArrayList<Block> blocks = new ArrayList<>();
 
-    public static final Option<Integer> opacity = new Option<>("Opacity", 120, 0, 255);
-    public static final Option<Integer> light = new Option<>("Light", 100, 0, 100);
-    public final Option<Reload> reload = new Option<>("Reload", Reload.Soft);
+    public static final Setting<Integer> opacity = new Setting<>("Opacity", 120, 0, 255);
+    public static final Setting<Integer> light = new Setting<>("Light", 100, 0, 100);
+    public final Setting<Reload> reload = new Setting<>("Reload", Reload.Soft);
 
     private boolean needsReload = false;
 
@@ -83,7 +83,7 @@ public class Wallhack extends Module {
 
     @SubscribeEvent
     public void onOptionChange(OptionChangeEvent event) {
-        if (this.getOptions().stream().anyMatch((e) -> event.getOption().equals(e))) {
+        if (this.getSettings().stream().anyMatch((e) -> event.getOption().equals(e))) {
             this.reload();
         }
     }

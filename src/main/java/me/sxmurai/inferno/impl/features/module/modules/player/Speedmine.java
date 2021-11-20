@@ -2,12 +2,12 @@ package me.sxmurai.inferno.impl.features.module.modules.player;
 
 import me.sxmurai.inferno.impl.event.world.DamageBlockEvent;
 import me.sxmurai.inferno.impl.event.world.DestroyBlockEvent;
+import me.sxmurai.inferno.impl.settings.Setting;
 import me.sxmurai.inferno.util.render.ColorUtil;
 import me.sxmurai.inferno.util.entity.InventoryUtil;
 import me.sxmurai.inferno.util.render.RenderUtil;
 import me.sxmurai.inferno.util.timing.Timer;
 import me.sxmurai.inferno.impl.features.module.Module;
-import me.sxmurai.inferno.impl.option.Option;
 import net.minecraft.item.ItemPickaxe;
 import net.minecraft.network.play.client.CPacketPlayerDigging;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -17,16 +17,16 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 @Module.Define(name = "Speedmine", category = Module.Category.Player)
 @Module.Info(description = "Mines things faster")
 public class Speedmine extends Module {
-    public final Option<Mode> mode = new Option<>("Mode", Mode.Packet);
-    public final Option<Float> damage = new Option<>("Damage", 1.0f, 0.1f, 1.0f, () -> mode.getValue() == Mode.Damage);
-    public final Option<Boolean> reset = new Option<>("Reset", false);
-    public final Option<Boolean> doublePacket = new Option<>("Double", false);
-    public final Option<Float> range = new Option<>("Range", 5.0f, 1.0f, 10.0f);
-    public final Option<InventoryUtil.Swap> swap = new Option<>("Swap", InventoryUtil.Swap.None);
-    public final Option<Boolean> render = new Option<>("Render", true);
-    public final Option<Boolean> filled = new Option<>("Filled", true, render::getValue);
-    public final Option<Boolean> outlined = new Option<>("Outlined", true, render::getValue);
-    public final Option<Float> lineWidth = new Option<>("Width", 1.0f, 0.1f, 5.0f, () -> render.getValue() && outlined.getValue());
+    public final Setting<Mode> mode = new Setting<>("Mode", Mode.Packet);
+    public final Setting<Float> damage = new Setting<>("Damage", 1.0f, 0.1f, 1.0f, () -> mode.getValue() == Mode.Damage);
+    public final Setting<Boolean> reset = new Setting<>("Reset", false);
+    public final Setting<Boolean> doublePacket = new Setting<>("Double", false);
+    public final Setting<Float> range = new Setting<>("Range", 5.0f, 1.0f, 10.0f);
+    public final Setting<InventoryUtil.Swap> swap = new Setting<>("Swap", InventoryUtil.Swap.None);
+    public final Setting<Boolean> render = new Setting<>("Render", true);
+    public final Setting<Boolean> filled = new Setting<>("Filled", true, render::getValue);
+    public final Setting<Boolean> outlined = new Setting<>("Outlined", true, render::getValue);
+    public final Setting<Float> lineWidth = new Setting<>("Width", 1.0f, 0.1f, 5.0f, () -> render.getValue() && outlined.getValue());
 
     private final Timer timer = new Timer();
     private BlockPos current = null;

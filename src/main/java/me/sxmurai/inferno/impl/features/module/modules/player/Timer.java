@@ -2,13 +2,13 @@ package me.sxmurai.inferno.impl.features.module.modules.player;
 
 import me.sxmurai.inferno.Inferno;
 import me.sxmurai.inferno.impl.features.module.Module;
-import me.sxmurai.inferno.impl.option.Option;
+import me.sxmurai.inferno.impl.settings.Setting;
 
 @Module.Define(name = "Timer", category = Module.Category.Player)
 @Module.Info(description = "Changes the game's tick rate")
 public class Timer extends Module {
-    public final Option<Boolean> sync = new Option<>("Sync", false);
-    public final Option<Float> speed = new Option<>("Speed", 1.0f, 0.1f, 20.0f, () -> !this.sync.getValue());
+    public final Setting<Boolean> sync = new Setting<>("Sync", false);
+    public final Setting<Float> speed = new Setting<>("Speed", 1.0f, 0.1f, 20.0f, () -> !this.sync.getValue());
 
     @Override
     protected void onDeactivated() {

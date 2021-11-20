@@ -2,7 +2,7 @@ package me.sxmurai.inferno.impl.features.module.modules.combat;
 
 import me.sxmurai.inferno.impl.event.network.PacketEvent;
 import me.sxmurai.inferno.impl.features.module.Module;
-import me.sxmurai.inferno.impl.option.Option;
+import me.sxmurai.inferno.impl.settings.Setting;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.network.play.client.CPacketPlayer;
 import net.minecraft.network.play.client.CPacketUseEntity;
@@ -11,7 +11,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 @Module.Define(name = "Criticals", category = Module.Category.Combat)
 @Module.Info(description = "Scores some critical hits for you")
 public class Critcals extends Module {
-    public final Option<Mode> mode = new Option<>("Mode", Mode.Packet);
+    public final Setting<Mode> mode = new Setting<>("Mode", Mode.Packet);
 
     @SubscribeEvent
     public void onPacketSend(PacketEvent.Send event) {

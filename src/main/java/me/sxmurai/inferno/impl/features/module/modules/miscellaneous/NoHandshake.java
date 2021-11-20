@@ -3,7 +3,7 @@ package me.sxmurai.inferno.impl.features.module.modules.miscellaneous;
 import io.netty.buffer.Unpooled;
 import me.sxmurai.inferno.impl.event.network.PacketEvent;
 import me.sxmurai.inferno.impl.features.module.Module;
-import me.sxmurai.inferno.impl.option.Option;
+import me.sxmurai.inferno.impl.settings.Setting;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.play.client.CPacketCustomPayload;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -12,7 +12,7 @@ import net.minecraftforge.fml.common.network.internal.FMLProxyPacket;
 @Module.Define(name = "NoHandshake")
 @Module.Info(description = "Stops forge from being a cunt")
 public class NoHandshake extends Module {
-    public final Option<Brand> brand = new Option<>("Brand", Brand.Forge);
+    public final Setting<Brand> brand = new Setting<>("Brand", Brand.Forge);
 
     @SubscribeEvent
     public void onPacketSend(PacketEvent.Send event) {

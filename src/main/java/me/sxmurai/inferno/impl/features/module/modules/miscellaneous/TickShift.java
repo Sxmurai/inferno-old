@@ -2,7 +2,7 @@ package me.sxmurai.inferno.impl.features.module.modules.miscellaneous;
 
 import me.sxmurai.inferno.impl.event.network.PacketEvent;
 import me.sxmurai.inferno.impl.features.module.Module;
-import me.sxmurai.inferno.impl.option.Option;
+import me.sxmurai.inferno.impl.settings.Setting;
 import net.minecraft.network.play.client.CPacketPlayer;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -12,9 +12,9 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 @Module.Define(name = "TickShift")
 @Module.Info(description = "Shifts around your ticks xd")
 public class TickShift extends Module {
-    public final Option<Float> rate = new Option<>("Rate", 2.0f, 1.1f, 20.0f);
-    public final Option<Integer> ticks = new Option<>("Ticks", 10, 1, 100);
-    public final Option<Boolean> autoDisable = new Option<>("AutoDisable", true);
+    public final Setting<Float> rate = new Setting<>("Rate", 2.0f, 1.1f, 20.0f);
+    public final Setting<Integer> ticks = new Setting<>("Ticks", 10, 1, 100);
+    public final Setting<Boolean> autoDisable = new Setting<>("AutoDisable", true);
 
     private final Queue<CPacketPlayer> packets = new ConcurrentLinkedQueue<>();
     private boolean stop = false; // this is because of my autism

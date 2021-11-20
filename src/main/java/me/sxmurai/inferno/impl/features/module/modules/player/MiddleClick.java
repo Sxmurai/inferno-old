@@ -4,7 +4,7 @@ import me.sxmurai.inferno.Inferno;
 import me.sxmurai.inferno.impl.features.command.Command;
 import me.sxmurai.inferno.impl.features.module.Module;
 import me.sxmurai.inferno.impl.manager.friend.Friend;
-import me.sxmurai.inferno.impl.option.Option;
+import me.sxmurai.inferno.impl.settings.Setting;
 import me.sxmurai.inferno.util.entity.InventoryUtil;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -18,8 +18,8 @@ import org.lwjgl.input.Mouse;
 @Module.Define(name = "MiddleClick", category = Module.Category.Player)
 @Module.Info(description = "Does things upon a middle click")
 public class MiddleClick extends Module {
-    public final Option<Pearl> pearl = new Option<>("Pearl", Pearl.None);
-    public final Option<Boolean> friend = new Option<>("Friend", true);
+    public final Setting<Pearl> pearl = new Setting<>("Pearl", Pearl.None);
+    public final Setting<Boolean> friend = new Setting<>("Friend", true);
 
     @SubscribeEvent
     public void onMouseInput(InputEvent.MouseInputEvent event) {

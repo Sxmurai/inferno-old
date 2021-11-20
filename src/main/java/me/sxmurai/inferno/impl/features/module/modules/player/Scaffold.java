@@ -1,7 +1,7 @@
 package me.sxmurai.inferno.impl.features.module.modules.player;
 
 import me.sxmurai.inferno.impl.features.module.Module;
-import me.sxmurai.inferno.impl.option.Option;
+import me.sxmurai.inferno.impl.settings.Setting;
 import me.sxmurai.inferno.util.entity.InventoryUtil;
 import me.sxmurai.inferno.util.timing.Timer;
 import me.sxmurai.inferno.util.world.BlockUtil;
@@ -13,12 +13,12 @@ import net.minecraft.util.math.BlockPos;
 @Module.Define(name = "Scaffold", category = Module.Category.Player)
 @Module.Info(description = "Places blocks under your feet")
 public class Scaffold extends Module {
-    public final Option<Boolean> tower = new Option<>("Tower", true);
-    public final Option<InventoryUtil.Swap> swap = new Option<>("Swap", InventoryUtil.Swap.Legit);
-    public final Option<Place> place = new Option<>("Place", Place.Vanilla);
-    public final Option<Boolean> rotate = new Option<>("Rotate", true);
-    public final Option<Boolean> swing = new Option<>("Swing", true);
-    public final Option<Boolean> sneak = new Option<>("Sneak", false);
+    public final Setting<Boolean> tower = new Setting<>("Tower", true);
+    public final Setting<InventoryUtil.Swap> swap = new Setting<>("Swap", InventoryUtil.Swap.Legit);
+    public final Setting<Place> place = new Setting<>("Place", Place.Vanilla);
+    public final Setting<Boolean> rotate = new Setting<>("Rotate", true);
+    public final Setting<Boolean> swing = new Setting<>("Swing", true);
+    public final Setting<Boolean> sneak = new Setting<>("Sneak", false);
 
     private final Timer towerTimer = new Timer();
 

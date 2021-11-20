@@ -2,7 +2,7 @@ package me.sxmurai.inferno.impl.features.module.modules.movement;
 
 import me.sxmurai.inferno.impl.event.network.PacketEvent;
 import me.sxmurai.inferno.impl.features.module.Module;
-import me.sxmurai.inferno.impl.option.Option;
+import me.sxmurai.inferno.impl.settings.Setting;
 import net.minecraft.client.gui.GuiChat;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.network.play.client.CPacketEntityAction;
@@ -30,11 +30,11 @@ public class NoSlow extends Module {
             mc.gameSettings.keyBindSprint
     };
 
-    public final Option<Bypass> bypass = new Option<>("Bypass", Bypass.NCP);
-    public final Option<Boolean> items = new Option<>("Items", true);
-    public final Option<Boolean> guiMove = new Option<>("GuiMove", true);
-    public static final Option<Boolean> soulSand = new Option<>("Soulsand", false);
-    public static final Option<Boolean> slime = new Option<>("Slime", false);
+    public final Setting<Bypass> bypass = new Setting<>("Bypass", Bypass.NCP);
+    public final Setting<Boolean> items = new Setting<>("Items", true);
+    public final Setting<Boolean> guiMove = new Setting<>("GuiMove", true);
+    public static final Setting<Boolean> soulSand = new Setting<>("Soulsand", false);
+    public static final Setting<Boolean> slime = new Setting<>("Slime", false);
 
     private boolean sneaking = false;
 

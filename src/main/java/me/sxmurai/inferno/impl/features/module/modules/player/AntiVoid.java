@@ -1,13 +1,13 @@
 package me.sxmurai.inferno.impl.features.module.modules.player;
 
 import me.sxmurai.inferno.impl.features.module.Module;
-import me.sxmurai.inferno.impl.option.Option;
+import me.sxmurai.inferno.impl.settings.Setting;
 import net.minecraft.network.play.client.CPacketPlayer;
 
 @Module.Define(name = "AntiVoid", category = Module.Category.Player)
 @Module.Info(description = "Stops you from falling into the void")
 public class AntiVoid extends Module {
-    public final Option<Mode> mode = new Option<>("Mode", Mode.Suspend);
+    public final Setting<Mode> mode = new Setting<>("Mode", Mode.Suspend);
 
     @Override
     public void onUpdate() {

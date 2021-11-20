@@ -1,9 +1,9 @@
 package me.sxmurai.inferno.impl.features.module.modules.visual;
 
 import me.sxmurai.inferno.impl.event.entity.TotemPopEvent;
+import me.sxmurai.inferno.impl.settings.Setting;
 import me.sxmurai.inferno.util.render.ColorUtil;
 import me.sxmurai.inferno.impl.features.module.Module;
-import me.sxmurai.inferno.impl.option.Option;
 import me.sxmurai.inferno.impl.ui.Animation;
 import net.minecraft.client.entity.EntityOtherPlayerMP;
 import net.minecraft.entity.Entity;
@@ -18,10 +18,10 @@ import java.util.concurrent.ConcurrentHashMap;
 public class PopChams extends Module {
     public static PopChams INSTANCE;
 
-    public final Option<Float> range = new Option<>("Range", 50.0f, 1.0f, 100.0f);
-    public final Option<Float> speed = new Option<>("Speed", 1.0f, 0.1f, 5.0f);
-    public final Option<Integer> delay = new Option<>("Delay", 5, 1, 15);
-    public final Option<ColorUtil.Color> color = new Option<>("Color", new ColorUtil.Color(138, 66, 245, 120.0f));
+    public final Setting<Float> range = new Setting<>("Range", 50.0f, 1.0f, 100.0f);
+    public final Setting<Float> speed = new Setting<>("Speed", 1.0f, 0.1f, 5.0f);
+    public final Setting<Integer> delay = new Setting<>("Delay", 5, 1, 15);
+    public final Setting<ColorUtil.Color> color = new Setting<>("Color", new ColorUtil.Color(138, 66, 245, 120.0f));
 
     public final Map<Integer, Animation> pops = new ConcurrentHashMap<>();
 

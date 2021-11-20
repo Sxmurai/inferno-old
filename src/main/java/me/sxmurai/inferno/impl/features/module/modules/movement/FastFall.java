@@ -3,16 +3,16 @@ package me.sxmurai.inferno.impl.features.module.modules.movement;
 import me.sxmurai.inferno.util.world.BlockUtil;
 import me.sxmurai.inferno.util.timing.TickTimer;
 import me.sxmurai.inferno.impl.features.module.Module;
-import me.sxmurai.inferno.impl.option.Option;
+import me.sxmurai.inferno.impl.settings.Setting;
 import net.minecraft.network.play.client.CPacketEntityAction;
 
 @Module.Define(name = "FastFall", category = Module.Category.Movement)
 @Module.Info(description = "Makes you fall faster")
 public class FastFall extends Module {
-    public final Option<Mode> mode = new Option<>("Mode", Mode.Motion);
-    public final Option<Double> speed = new Option<>("Speed", 1.0, 0.1, 5.0);
-    public final Option<Double> height = new Option<>("Height", 2.0, 1.0, 10.0);
-    public final Option<Boolean> liquids = new Option<>("Liquids", false);
+    public final Setting<Mode> mode = new Setting<>("Mode", Mode.Motion);
+    public final Setting<Double> speed = new Setting<>("Speed", 1.0, 0.1, 5.0);
+    public final Setting<Double> height = new Setting<>("Height", 2.0, 1.0, 10.0);
+    public final Setting<Boolean> liquids = new Setting<>("Liquids", false);
 
     private final TickTimer timer = new TickTimer();
     private boolean sneaking = false;

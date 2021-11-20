@@ -9,7 +9,7 @@ import me.sxmurai.inferno.impl.event.inferno.ModuleToggledEvent;
 import me.sxmurai.inferno.impl.event.network.PacketEvent;
 import me.sxmurai.inferno.impl.features.command.Command;
 import me.sxmurai.inferno.impl.features.module.Module;
-import me.sxmurai.inferno.impl.option.Option;
+import me.sxmurai.inferno.impl.settings.Setting;
 import net.minecraft.entity.item.EntityEnderPearl;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
@@ -26,13 +26,13 @@ import java.util.Set;
 public class Notifier extends Module {
     public static Notifier INSTANCE;
 
-    public final Option<Boolean> modules = new Option<>("Modules", true);
-    public static final Option<Boolean> totems = new Option<>("Totems", false);
-    public final Option<Boolean> pearl = new Option<>("Pearl", false);
-    public final Option<Boolean> chorus = new Option<>("Chorus", false);
-    public final Option<Boolean> visualRange = new Option<>("VisualRange", false);
-    public final Option<Boolean> friends = new Option<>("Friends", false, this.visualRange::getValue);
-    public final Option<Boolean> strength = new Option<>("Strength", false);
+    public final Setting<Boolean> modules = new Setting<>("Modules", true);
+    public static final Setting<Boolean> totems = new Setting<>("Totems", false);
+    public final Setting<Boolean> pearl = new Setting<>("Pearl", false);
+    public final Setting<Boolean> chorus = new Setting<>("Chorus", false);
+    public final Setting<Boolean> visualRange = new Setting<>("VisualRange", false);
+    public final Setting<Boolean> friends = new Setting<>("Friends", false, this.visualRange::getValue);
+    public final Setting<Boolean> strength = new Setting<>("Strength", false);
 
     private final Set<EntityPlayer> strengthCunts = new ConcurrentSet<>();
 

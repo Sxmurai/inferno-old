@@ -1,13 +1,13 @@
 package me.sxmurai.inferno.impl.features.module.modules.movement;
 
 import me.sxmurai.inferno.impl.features.module.Module;
-import me.sxmurai.inferno.impl.option.Option;
+import me.sxmurai.inferno.impl.settings.Setting;
 import net.minecraft.client.settings.KeyBinding;
 
 @Module.Define(name = "Sprint", category = Module.Category.Movement)
 @Module.Info(description = "Makes you automatically sprint")
 public class Sprint extends Module {
-    public final Option<Mode> mode = new Option<>("Mode", Mode.Legit);
+    public final Setting<Mode> mode = new Setting<>("Mode", Mode.Legit);
 
     @Override
     public void onUpdate() {

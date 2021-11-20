@@ -1,6 +1,7 @@
 package me.sxmurai.inferno.impl.features.module.modules.combat;
 
 import me.sxmurai.inferno.Inferno;
+import me.sxmurai.inferno.impl.settings.Setting;
 import me.sxmurai.inferno.util.entity.DamageUtil;
 import me.sxmurai.inferno.util.entity.EntityUtil;
 import me.sxmurai.inferno.util.entity.InventoryUtil;
@@ -12,7 +13,6 @@ import me.sxmurai.inferno.util.world.BlockUtil;
 import me.sxmurai.inferno.impl.event.entity.EntityRemoveEvent;
 import me.sxmurai.inferno.impl.event.network.PacketEvent;
 import me.sxmurai.inferno.impl.features.module.Module;
-import me.sxmurai.inferno.impl.option.Option;
 import me.sxmurai.inferno.util.world.CrystalUtil;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityEnderCrystal;
@@ -37,40 +37,40 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 @Module.Define(name = "AutoCrystal", category = Module.Category.Combat)
 @Module.Info(description = "Automatically breaks and destroys end crystals")
 public class AutoCrystal extends Module {
-    public final Option<Boolean> place = new Option<>("Place", true);
-    public final Option<Float> placeRange = new Option<>("PlaceRange", 4.5f, 1.0f, 6.0f);
-    public final Option<Float> placeTrace = new Option<>("PlaceTrace", 3.0f, 1.0f, 6.0f);
-    public final Option<Integer> placeDelay = new Option<>("PlaceDelay", 3, 0, 20);
-    public final Option<Float> placeMin = new Option<>("PlaceMin", 4.0f, 1.0f, 36.0f);
-    public final Option<Placements> placements = new Option<>("Placements", Placements.Native);
-    public final Option<CrystalUtil.Placement> direction = new Option<>("Direction", CrystalUtil.Placement.Normal);
-    public final Option<Float> faceplace = new Option<>("Faceplace", 16.0f, 1.0f, 36.0f);
-    public final Option<Float> faceplaceDamage = new Option<>("FaceplaceDamage", 2.0f, 1.0f, 6.0f);
+    public final Setting<Boolean> place = new Setting<>("Place", true);
+    public final Setting<Float> placeRange = new Setting<>("PlaceRange", 4.5f, 1.0f, 6.0f);
+    public final Setting<Float> placeTrace = new Setting<>("PlaceTrace", 3.0f, 1.0f, 6.0f);
+    public final Setting<Integer> placeDelay = new Setting<>("PlaceDelay", 3, 0, 20);
+    public final Setting<Float> placeMin = new Setting<>("PlaceMin", 4.0f, 1.0f, 36.0f);
+    public final Setting<Placements> placements = new Setting<>("Placements", Placements.Native);
+    public final Setting<CrystalUtil.Placement> direction = new Setting<>("Direction", CrystalUtil.Placement.Normal);
+    public final Setting<Float> faceplace = new Setting<>("Faceplace", 16.0f, 1.0f, 36.0f);
+    public final Setting<Float> faceplaceDamage = new Setting<>("FaceplaceDamage", 2.0f, 1.0f, 6.0f);
 
-    public final Option<Boolean> destroy = new Option<>("Destroy", true);
-    public final Option<Float> destroyRange = new Option<>("DestroyRange", 4.5f, 1.0f, 6.0f);
-    public final Option<Float> destroyTrace = new Option<>("DestroyTrace", 3.0f, 1.0f, 6.0f);
-    public final Option<Integer> destroyDelay = new Option<>("DestroyDelay", 2, 0, 20);
-    public final Option<Float> destroyMin = new Option<>("DestroyMin", 4.0f, 1.0f, 36.0f);
-    public final Option<Boolean> inhibit = new Option<>("Inhibit", true);
-    public final Option<Integer> ticksExisted = new Option<>("TicksExisted", 2, 0, 20);
-    public final Option<Boolean> destroyPacket = new Option<>("DestroyPacket", true);
+    public final Setting<Boolean> destroy = new Setting<>("Destroy", true);
+    public final Setting<Float> destroyRange = new Setting<>("DestroyRange", 4.5f, 1.0f, 6.0f);
+    public final Setting<Float> destroyTrace = new Setting<>("DestroyTrace", 3.0f, 1.0f, 6.0f);
+    public final Setting<Integer> destroyDelay = new Setting<>("DestroyDelay", 2, 0, 20);
+    public final Setting<Float> destroyMin = new Setting<>("DestroyMin", 4.0f, 1.0f, 36.0f);
+    public final Setting<Boolean> inhibit = new Setting<>("Inhibit", true);
+    public final Setting<Integer> ticksExisted = new Setting<>("TicksExisted", 2, 0, 20);
+    public final Setting<Boolean> destroyPacket = new Setting<>("DestroyPacket", true);
 
-    public final Option<Boolean> await = new Option<>("Await", true);
-    public final Option<InventoryUtil.Swap> swap = new Option<>("Swap", InventoryUtil.Swap.Legit);
-    public final Option<Integer> swapDelay = new Option<>("SwapDelay", 2, 0, 12, () -> this.swap.getValue() != InventoryUtil.Swap.None);
-    public final Option<Raytrace> raytrace = new Option<>("Raytrace", Raytrace.Base);
-    public final Option<Boolean> sync = new Option<>("Sync", true);
-    public final Option<Boolean> safe = new Option<>("Safe", true);
-    public final Option<Float> maxLocal = new Option<>("MaxLocal", 12.0f, 1.0f, 36.0f);
-    public final Option<Boolean> swing = new Option<>("Swing", true);
-    public final Option<Boolean> rotate = new Option<>("Rotate", true);
-    public final Option<YawStep> yawStep = new Option<>("YawStep", YawStep.Semi);
-    public final Option<Float> yawStepThreshold = new Option<>("YawStepThreshold", 20.0f, 1.0f, 100.0f);
-    public final Option<Integer> yawSteps = new Option<>("YawSteps", 6, 1, 16);
-    public final Option<Integer> yawStepTicks = new Option<>("YawStepTicks", 2, 1, 10);
-    public final Option<Targeting> targeting = new Option<>("Targeting", Targeting.Damage);
-    public final Option<Float> targetRange = new Option<>("TargetRange", 10.0f, 1.0f, 16.0f);
+    public final Setting<Boolean> await = new Setting<>("Await", true);
+    public final Setting<InventoryUtil.Swap> swap = new Setting<>("Swap", InventoryUtil.Swap.Legit);
+    public final Setting<Integer> swapDelay = new Setting<>("SwapDelay", 2, 0, 12, () -> this.swap.getValue() != InventoryUtil.Swap.None);
+    public final Setting<Raytrace> raytrace = new Setting<>("Raytrace", Raytrace.Base);
+    public final Setting<Boolean> sync = new Setting<>("Sync", true);
+    public final Setting<Boolean> safe = new Setting<>("Safe", true);
+    public final Setting<Float> maxLocal = new Setting<>("MaxLocal", 12.0f, 1.0f, 36.0f);
+    public final Setting<Boolean> swing = new Setting<>("Swing", true);
+    public final Setting<Boolean> rotate = new Setting<>("Rotate", true);
+    public final Setting<YawStep> yawStep = new Setting<>("YawStep", YawStep.Semi);
+    public final Setting<Float> yawStepThreshold = new Setting<>("YawStepThreshold", 20.0f, 1.0f, 100.0f);
+    public final Setting<Integer> yawSteps = new Setting<>("YawSteps", 6, 1, 16);
+    public final Setting<Integer> yawStepTicks = new Setting<>("YawStepTicks", 2, 1, 10);
+    public final Setting<Targeting> targeting = new Setting<>("Targeting", Targeting.Damage);
+    public final Setting<Float> targetRange = new Setting<>("TargetRange", 10.0f, 1.0f, 16.0f);
 
     private final TickTimer placeTimer = new TickTimer();
     private final TickTimer destroyTimer = new TickTimer();

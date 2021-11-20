@@ -74,7 +74,7 @@ public class ModuleManager {
                 new Wallhack()
         );
 
-        this.modules.forEach(Module::registerAllOptions);
+        this.modules.forEach(Module::registerAllSettings);
     }
 
     @SubscribeEvent

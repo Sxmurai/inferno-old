@@ -3,7 +3,7 @@ package me.sxmurai.inferno.impl.features.module.modules.visual;
 import com.mojang.realmsclient.gui.ChatFormatting;
 import me.sxmurai.inferno.Inferno;
 import me.sxmurai.inferno.impl.features.module.Module;
-import me.sxmurai.inferno.impl.option.Option;
+import me.sxmurai.inferno.impl.settings.Setting;
 import me.sxmurai.inferno.util.entity.EntityUtil;
 import me.sxmurai.inferno.util.render.ColorUtil;
 import me.sxmurai.inferno.util.render.RenderUtil;
@@ -19,7 +19,6 @@ import net.minecraft.util.math.Vec3d;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Locale;
 import java.util.Map;
 
 @Module.Define(name = "Nametags", category = Module.Category.Visual)
@@ -27,23 +26,23 @@ import java.util.Map;
 public class Nametags extends Module {
     public static Nametags INSTANCE;
 
-    public static final Option<Boolean> self = new Option<>("Self", true);
-    public static final Option<Shape> shape = new Option<>("Shape", Shape.Rectangle);
-    public static final Option<Boolean> outline = new Option<>("Outline", true);
-    public static final Option<Double> scaling = new Option<>("Scaling", 0.3, 0.1, 3.9);
-    public static final Option<Double> opacity = new Option<>("Opacity", 0.7, 0.0, 1.0);
+    public static final Setting<Boolean> self = new Setting<>("Self", true);
+    public static final Setting<Shape> shape = new Setting<>("Shape", Shape.Rectangle);
+    public static final Setting<Boolean> outline = new Setting<>("Outline", true);
+    public static final Setting<Double> scaling = new Setting<>("Scaling", 0.3, 0.1, 3.9);
+    public static final Setting<Double> opacity = new Setting<>("Opacity", 0.7, 0.0, 1.0);
 
-    public static final Option<Boolean> invisible = new Option<>("Invisible", true);
-    public static final Option<Boolean> nameProtect = new Option<>("NameProtect", false);
+    public static final Setting<Boolean> invisible = new Setting<>("Invisible", true);
+    public static final Setting<Boolean> nameProtect = new Setting<>("NameProtect", false);
 
-    public static final Option<Boolean> mainhand = new Option<>("Mainhand", true);
-    public static final Option<Boolean> offhand = new Option<>("Offhand", true);
-    public static final Option<Boolean> armor = new Option<>("Armor", true);
-    public static final Option<Boolean> reversed = new Option<>("Reversed", true, armor::getValue);
-    public static final Option<Enchants> enchants = new Option<>("Enchants", Enchants.All, () -> mainhand.getValue() || offhand.getValue() || armor.getValue());
-    public static final Option<Boolean> health = new Option<>("Health", true);
-    public static final Option<Boolean> pops = new Option<>("Pops", false);
-    public static final Option<Boolean> ping = new Option<>("Ping", false);
+    public static final Setting<Boolean> mainhand = new Setting<>("Mainhand", true);
+    public static final Setting<Boolean> offhand = new Setting<>("Offhand", true);
+    public static final Setting<Boolean> armor = new Setting<>("Armor", true);
+    public static final Setting<Boolean> reversed = new Setting<>("Reversed", true, armor::getValue);
+    public static final Setting<Enchants> enchants = new Setting<>("Enchants", Enchants.All, () -> mainhand.getValue() || offhand.getValue() || armor.getValue());
+    public static final Setting<Boolean> health = new Setting<>("Health", true);
+    public static final Setting<Boolean> pops = new Setting<>("Pops", false);
+    public static final Setting<Boolean> ping = new Setting<>("Ping", false);
 
     public Nametags() {
         INSTANCE = this;

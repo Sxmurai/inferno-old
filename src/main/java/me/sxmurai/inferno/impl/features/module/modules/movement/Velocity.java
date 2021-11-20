@@ -3,7 +3,7 @@ package me.sxmurai.inferno.impl.features.module.modules.movement;
 import me.sxmurai.inferno.impl.event.entity.PushEvent;
 import me.sxmurai.inferno.impl.event.network.PacketEvent;
 import me.sxmurai.inferno.impl.features.module.Module;
-import me.sxmurai.inferno.impl.option.Option;
+import me.sxmurai.inferno.impl.settings.Setting;
 import net.minecraft.entity.projectile.EntityFishHook;
 import net.minecraft.network.play.server.SPacketEntityStatus;
 import net.minecraft.network.play.server.SPacketEntityVelocity;
@@ -13,15 +13,15 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 @Module.Define(name = "Velocity", category = Module.Category.Movement)
 @Module.Info(description = "Modifies the velocity you take")
 public class Velocity extends Module {
-    public final Option<Float> vertical = new Option<>("Vertical", 0.0f, 0.0f, 100.0f);
-    public final Option<Float> horizontal = new Option<>("Horizontal", 0.0f, 0.0f, 100.0f);
+    public final Setting<Float> vertical = new Setting<>("Vertical", 0.0f, 0.0f, 100.0f);
+    public final Setting<Float> horizontal = new Setting<>("Horizontal", 0.0f, 0.0f, 100.0f);
 
-    public final Option<Boolean> knockback = new Option<>("Knockback", true);
-    public final Option<Boolean> explosions = new Option<>("Explosions", true);
-    public final Option<Boolean> blocks = new Option<>("Blocks", false);
-    public final Option<Boolean> liquid = new Option<>("Liquid", false);
-    public final Option<Boolean> push = new Option<>("NoPush", true);
-    public final Option<Boolean> bobbers = new Option<>("Bobbers", false);
+    public final Setting<Boolean> knockback = new Setting<>("Knockback", true);
+    public final Setting<Boolean> explosions = new Setting<>("Explosions", true);
+    public final Setting<Boolean> blocks = new Setting<>("Blocks", false);
+    public final Setting<Boolean> liquid = new Setting<>("Liquid", false);
+    public final Setting<Boolean> push = new Setting<>("NoPush", true);
+    public final Setting<Boolean> bobbers = new Setting<>("Bobbers", false);
 
     @SubscribeEvent
     public void onPacketReceive(PacketEvent.Receive event) {

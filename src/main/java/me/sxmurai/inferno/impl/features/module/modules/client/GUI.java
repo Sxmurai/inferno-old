@@ -1,7 +1,7 @@
 package me.sxmurai.inferno.impl.features.module.modules.client;
 
 import me.sxmurai.inferno.impl.features.module.Module;
-import me.sxmurai.inferno.impl.option.Option;
+import me.sxmurai.inferno.impl.settings.Setting;
 import me.sxmurai.inferno.impl.ui.InfernoGUI;
 import org.lwjgl.input.Keyboard;
 
@@ -10,7 +10,7 @@ import org.lwjgl.input.Keyboard;
 public class GUI extends Module {
     public static GUI INSTANCE;
 
-    public static Option<Boolean> pause = new Option<>("Pause", false);
+    public static Setting<Boolean> pause = new Setting<>("Pause", false);
 
     public GUI() {
         INSTANCE = this;

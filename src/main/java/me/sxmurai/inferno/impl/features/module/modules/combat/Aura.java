@@ -1,12 +1,12 @@
 package me.sxmurai.inferno.impl.features.module.modules.combat;
 
 import me.sxmurai.inferno.Inferno;
+import me.sxmurai.inferno.impl.settings.Setting;
 import me.sxmurai.inferno.util.entity.DamageUtil;
 import me.sxmurai.inferno.util.entity.EntityUtil;
 import me.sxmurai.inferno.util.entity.InventoryUtil;
 import me.sxmurai.inferno.util.timing.TickTimer;
 import me.sxmurai.inferno.impl.features.module.Module;
-import me.sxmurai.inferno.impl.option.Option;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemSword;
@@ -21,21 +21,21 @@ import java.util.List;
 @Module.Define(name = "Aura", category = Module.Category.Combat)
 @Module.Info(description = "Attacks entities around you")
 public class Aura extends Module {
-    public final Option<Priority> priority = new Option<>("Priority", Priority.Closest);
-    public final Option<Timing> timing = new Option<>("Timing", Timing.Vanilla);
-    public final Option<Weapon> weapon = new Option<>("Weapon", Weapon.Require);
-    public final Option<Boolean> fov = new Option<>("FOV", false);
-    public final Option<Double> range = new Option<>("Range", 4.5, 1.0, 6.0);
-    public final Option<Double> raytrace = new Option<>("Raytrace", 2.0, 1.0, 6.0);
-    public final Option<Boolean> rotate = new Option<>("Rotate", true);
-    public final Option<Boolean> swing = new Option<>("Swing", true);
-    public final Option<Boolean> teleport = new Option<>("Teleport", false);
-    public final Option<Sprint> sprint = new Option<>("Sprint", Sprint.Start);
+    public final Setting<Priority> priority = new Setting<>("Priority", Priority.Closest);
+    public final Setting<Timing> timing = new Setting<>("Timing", Timing.Vanilla);
+    public final Setting<Weapon> weapon = new Setting<>("Weapon", Weapon.Require);
+    public final Setting<Boolean> fov = new Setting<>("FOV", false);
+    public final Setting<Double> range = new Setting<>("Range", 4.5, 1.0, 6.0);
+    public final Setting<Double> raytrace = new Setting<>("Raytrace", 2.0, 1.0, 6.0);
+    public final Setting<Boolean> rotate = new Setting<>("Rotate", true);
+    public final Setting<Boolean> swing = new Setting<>("Swing", true);
+    public final Setting<Boolean> teleport = new Setting<>("Teleport", false);
+    public final Setting<Sprint> sprint = new Setting<>("Sprint", Sprint.Start);
 
-    public final Option<Boolean> players = new Option<>("Players", true);
-    public final Option<Boolean> invisible = new Option<>("Invisible", true);
-    public final Option<Boolean> mobs = new Option<>("Mobs", true);
-    public final Option<Boolean> passive = new Option<>("Passive", true);
+    public final Setting<Boolean> players = new Setting<>("Players", true);
+    public final Setting<Boolean> invisible = new Setting<>("Invisible", true);
+    public final Setting<Boolean> mobs = new Setting<>("Mobs", true);
+    public final Setting<Boolean> passive = new Setting<>("Passive", true);
 
     private final TickTimer timer = new TickTimer();
     private EntityLivingBase target = null;

@@ -1,24 +1,24 @@
 package me.sxmurai.inferno.impl.features.module.modules.player;
 
+import me.sxmurai.inferno.impl.settings.Setting;
 import me.sxmurai.inferno.util.entity.InventoryUtil;
 import me.sxmurai.inferno.util.timing.TickTimer;
 import me.sxmurai.inferno.impl.features.module.Module;
-import me.sxmurai.inferno.impl.option.Option;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemBlock;
 
 @Module.Define(name = "FastUse", category = Module.Category.Player)
 @Module.Info(description = "Uses items faster")
 public class FastUse extends Module {
-    public final Option<Integer> speed = new Option<>("Speed", 0, 0, 4);
-    public final Option<Integer> delay = new Option<>("Delay", 0, 0, 10);
-    public final Option<Boolean> offhand = new Option<>("Offhand", true);
-    public final Option<Boolean> everything = new Option<>("Everything", false);
+    public final Setting<Integer> speed = new Setting<>("Speed", 0, 0, 4);
+    public final Setting<Integer> delay = new Setting<>("Delay", 0, 0, 10);
+    public final Setting<Boolean> offhand = new Setting<>("Offhand", true);
+    public final Setting<Boolean> everything = new Setting<>("Everything", false);
 
-    public final Option<Boolean> exp = new Option<>("Exp", false, () -> !this.everything.getValue());
-    public final Option<Boolean> crystals = new Option<>("Crystals", false, () -> !this.everything.getValue());
-    public final Option<Boolean> blocks = new Option<>("Blocks", false, () -> !this.everything.getValue());
-    public final Option<Boolean> fireworks = new Option<>("Fireworks", false, () -> !this.everything.getValue());
+    public final Setting<Boolean> exp = new Setting<>("Exp", false, () -> !this.everything.getValue());
+    public final Setting<Boolean> crystals = new Setting<>("Crystals", false, () -> !this.everything.getValue());
+    public final Setting<Boolean> blocks = new Setting<>("Blocks", false, () -> !this.everything.getValue());
+    public final Setting<Boolean> fireworks = new Setting<>("Fireworks", false, () -> !this.everything.getValue());
 
     private final TickTimer timer = new TickTimer();
 

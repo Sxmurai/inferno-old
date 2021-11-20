@@ -2,7 +2,7 @@ package me.sxmurai.inferno.impl.features.module.modules.combat;
 
 import me.sxmurai.inferno.Inferno;
 import me.sxmurai.inferno.impl.features.module.Module;
-import me.sxmurai.inferno.impl.option.Option;
+import me.sxmurai.inferno.impl.settings.Setting;
 import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
 import net.minecraft.inventory.ClickType;
@@ -18,10 +18,10 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 @Module.Define(name = "Quiver", category = Module.Category.Combat)
 @Module.Info(description = "Shoots positive arrow effects at you")
 public class Quiver extends Module {
-    public final Option<Effect> primary = new Option<>("Primary", Effect.Speed);
-    public final Option<Effect> secondary = new Option<>("Secondary", Effect.Strength);
-    public final Option<Boolean> update = new Option<>("Update", true);
-    public final Option<Integer> amount = new Option<>("Amount", 4, 0, 20);
+    public final Setting<Effect> primary = new Setting<>("Primary", Effect.Speed);
+    public final Setting<Effect> secondary = new Setting<>("Secondary", Effect.Strength);
+    public final Setting<Boolean> update = new Setting<>("Update", true);
+    public final Setting<Integer> amount = new Setting<>("Amount", 4, 0, 20);
 
     private boolean forceRotate = false;
 

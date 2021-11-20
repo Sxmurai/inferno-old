@@ -1,7 +1,7 @@
 package me.sxmurai.inferno.impl.features.module.modules.player;
 
 import me.sxmurai.inferno.impl.features.module.Module;
-import me.sxmurai.inferno.impl.option.Option;
+import me.sxmurai.inferno.impl.settings.Setting;
 import net.minecraft.network.play.client.CPacketPlayerTryUseItemOnBlock;
 import net.minecraft.util.math.RayTraceResult;
 
@@ -10,7 +10,7 @@ import net.minecraft.util.math.RayTraceResult;
 public class MultiTask extends Module {
     public static MultiTask INSTANCE;
 
-    public final Option<Boolean> bypass = new Option<>("Bypass", false);
+    public final Setting<Boolean> bypass = new Setting<>("Bypass", false);
 
     public MultiTask() {
         INSTANCE = this;

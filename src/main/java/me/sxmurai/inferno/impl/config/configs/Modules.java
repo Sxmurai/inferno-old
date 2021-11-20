@@ -4,8 +4,8 @@ import me.sxmurai.inferno.Inferno;
 import me.sxmurai.inferno.util.render.ColorUtil;
 import me.sxmurai.inferno.impl.config.Config;
 import me.sxmurai.inferno.impl.features.module.Module;
-import me.sxmurai.inferno.impl.option.EnumConverter;
-import me.sxmurai.inferno.impl.option.Option;
+import me.sxmurai.inferno.impl.settings.EnumConverter;
+import me.sxmurai.inferno.impl.settings.Setting;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -16,9 +16,9 @@ public class Modules extends Config {
         JSONArray json = new JSONArray();
         for (Module module : Inferno.moduleManager.getModules()) {
             JSONObject options = new JSONObject();
-            for (Option option : module.getOptions()) {
-                if (option.getValue() instanceof ColorUtil.Color) {
-                    ColorUtil.Color color = (ColorUtil.Color) option.getValue();
+            for (Setting setting : module.getSettings()) {
+                if (setting.getValue() instanceof ColorUtil.Color) {
+                    ColorUtil.Color color = (ColorUtil.Color) setting.getValue();
                     options.put(module.getName(), new JSONObject()
                             .put("r", color.getRed())
                             .put("g", color.getGreen())
@@ -26,7 +26,7 @@ public class Modules extends Config {
                             .put("a", color.getAlpha())
                     );
                 } else {
-                    options.put(option.getName(), option.getValue());
+                    options.put(setting.getName(), setting.getValue());
                 }
             }
 
@@ -63,9 +63,9 @@ public class Modules extends Config {
 
             JSONObject options = object.getJSONObject("options");
             for (String key : options.keySet()) {
-                Option opt = module.getOption(key);
+                Setting opt = module.getSetting(key);
                 if (opt == null) {
-                    Inferno.LOGGER.debug("Module {} did not have option {} present.", module.getName(), key);
+                    Inferno.LOGGER.debug("Module {} did not have settings {} present.", module.getName(), key);
                     continue;
                 }
 

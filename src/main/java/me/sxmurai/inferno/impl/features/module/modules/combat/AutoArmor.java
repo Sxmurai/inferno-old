@@ -1,7 +1,7 @@
 package me.sxmurai.inferno.impl.features.module.modules.combat;
 
 import me.sxmurai.inferno.impl.features.module.Module;
-import me.sxmurai.inferno.impl.option.Option;
+import me.sxmurai.inferno.impl.settings.Setting;
 import me.sxmurai.inferno.util.entity.InventoryUtil;
 import me.sxmurai.inferno.util.timing.TickTimer;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -17,11 +17,11 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 @Module.Define(name = "AutoArmor", category = Module.Category.Combat)
 @Module.Info(description = "Automatically equips the best pieces of armor")
 public class AutoArmor extends Module {
-    public final Option<Priority> priority = new Option<>("Priority", Priority.Blast);
-    public final Option<Boolean> noBinding = new Option<>("NoBinding", true);
-    public final Option<Integer> delay = new Option<>("Delay", 2, 0, 10);
-    public final Option<Integer> actions = new Option<>("Actions", 3, 1, 10);
-    public final Option<Boolean> update = new Option<>("Update", true);
+    public final Setting<Priority> priority = new Setting<>("Priority", Priority.Blast);
+    public final Setting<Boolean> noBinding = new Setting<>("NoBinding", true);
+    public final Setting<Integer> delay = new Setting<>("Delay", 2, 0, 10);
+    public final Setting<Integer> actions = new Setting<>("Actions", 3, 1, 10);
+    public final Setting<Boolean> update = new Setting<>("Update", true);
 
     private final TickTimer timer = new TickTimer();
     private final Queue<InventoryUtil.Task> tasks = new ConcurrentLinkedQueue<>();

@@ -1,10 +1,10 @@
 package me.sxmurai.inferno.impl.features.module.modules.combat;
 
+import me.sxmurai.inferno.impl.settings.Setting;
 import me.sxmurai.inferno.util.entity.EntityUtil;
 import me.sxmurai.inferno.util.entity.InventoryUtil;
 import me.sxmurai.inferno.util.timing.TickTimer;
 import me.sxmurai.inferno.impl.features.module.Module;
-import me.sxmurai.inferno.impl.option.Option;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -17,13 +17,13 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 @Module.Define(name = "Offhand", category = Module.Category.Combat)
 @Module.Info(description = "Puts things in your offhand")
 public class Offhand extends Module {
-    public final Option<Mode> mode = new Option<>("Mode", Mode.Crystal);
-    public final Option<Float> health = new Option<>("Health", 16.0f, 1.0f, 20.0f);
-    public final Option<Float> fallDistance = new Option<>("FallDistance", 10.0f, 3.0f, 256.0f);
-    public final Option<Gap> offhandGap = new Option<>("OffhandGap", Gap.Always);
-    public final Option<Integer> delay = new Option<>("Delay", 2, 0, 10);
-    public final Option<Integer> actions = new Option<>("Actions", 3, 1, 10);
-    public final Option<Boolean> update = new Option<>("Update", true);
+    public final Setting<Mode> mode = new Setting<>("Mode", Mode.Crystal);
+    public final Setting<Float> health = new Setting<>("Health", 16.0f, 1.0f, 20.0f);
+    public final Setting<Float> fallDistance = new Setting<>("FallDistance", 10.0f, 3.0f, 256.0f);
+    public final Setting<Gap> offhandGap = new Setting<>("OffhandGap", Gap.Always);
+    public final Setting<Integer> delay = new Setting<>("Delay", 2, 0, 10);
+    public final Setting<Integer> actions = new Setting<>("Actions", 3, 1, 10);
+    public final Setting<Boolean> update = new Setting<>("Update", true);
 
     private final Queue<InventoryUtil.Task> tasks = new ConcurrentLinkedQueue<>();
     private final TickTimer timer = new TickTimer();

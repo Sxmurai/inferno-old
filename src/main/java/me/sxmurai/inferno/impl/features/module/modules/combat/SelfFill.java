@@ -1,9 +1,9 @@
 package me.sxmurai.inferno.impl.features.module.modules.combat;
 
+import me.sxmurai.inferno.impl.settings.Setting;
 import me.sxmurai.inferno.util.world.BlockUtil;
 import me.sxmurai.inferno.util.entity.InventoryUtil;
 import me.sxmurai.inferno.impl.features.module.Module;
-import me.sxmurai.inferno.impl.option.Option;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
@@ -16,13 +16,13 @@ import net.minecraft.util.math.BlockPos;
 @Module.Define(name = "SelfFill", category = Module.Category.Combat)
 @Module.Info(description = "Lags you back into a block")
 public class SelfFill extends Module {
-    public final Option<Type> type = new Option<>("Type", Type.Obsidian);
-    public final Option<Boolean> offhand = new Option<>("Offhand", true);
-    public final Option<InventoryUtil.Swap> swap = new Option<>("Swap", InventoryUtil.Swap.Legit);
-    public final Option<Double> rubberband = new Option<>("Rubberband", 3.0, -5.0, 5.0);
-    public final Option<Boolean> rotate = new Option<>("Rotate", true);
-    public final Option<Boolean> swing = new Option<>("Swing", true);
-    public final Option<Boolean> sneak = new Option<>("Sneak", false);
+    public final Setting<Type> type = new Setting<>("Type", Type.Obsidian);
+    public final Setting<Boolean> offhand = new Setting<>("Offhand", true);
+    public final Setting<InventoryUtil.Swap> swap = new Setting<>("Swap", InventoryUtil.Swap.Legit);
+    public final Setting<Double> rubberband = new Setting<>("Rubberband", 3.0, -5.0, 5.0);
+    public final Setting<Boolean> rotate = new Setting<>("Rotate", true);
+    public final Setting<Boolean> swing = new Setting<>("Swing", true);
+    public final Setting<Boolean> sneak = new Setting<>("Sneak", false);
 
     private BlockPos origin = null;
     private EnumHand hand;

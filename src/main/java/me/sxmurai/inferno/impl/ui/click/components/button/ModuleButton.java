@@ -1,10 +1,10 @@
 package me.sxmurai.inferno.impl.ui.click.components.button;
 
 import me.sxmurai.inferno.Inferno;
+import me.sxmurai.inferno.impl.settings.Setting;
 import me.sxmurai.inferno.util.render.ScaleUtil;
 import me.sxmurai.inferno.impl.features.module.Module;
-import me.sxmurai.inferno.impl.option.Bind;
-import me.sxmurai.inferno.impl.option.Option;
+import me.sxmurai.inferno.impl.settings.Bind;
 import me.sxmurai.inferno.impl.ui.click.components.other.Slider;
 import me.sxmurai.inferno.impl.ui.components.Component;
 import me.sxmurai.inferno.impl.ui.components.widgets.button.Button;
@@ -27,22 +27,22 @@ public class ModuleButton extends Button {
     }
 
     private void init() {
-        for (Option option : this.module.getOptions()) {
-            if (option instanceof Bind && option.getName().equals("Bind")) {
+        for (Setting setting : this.module.getSettings()) {
+            if (setting instanceof Bind && setting.getName().equals("Bind")) {
                 this.components.add(new BindButton(this.module));
                 continue;
             }
 
-            if (option.getValue() instanceof Boolean) {
-                this.components.add(new BooleanButton(option));
-            } else if (option.getValue() instanceof Enum) {
-                this.components.add(new EnumButton(option));
-            } else if (option.getValue() instanceof Number) {
-                if (!option.isNumberSetting()) {
+            if (setting.getValue() instanceof Boolean) {
+                this.components.add(new BooleanButton(setting));
+            } else if (setting.getValue() instanceof Enum) {
+                this.components.add(new EnumButton(setting));
+            } else if (setting.getValue() instanceof Number) {
+                if (!setting.isNumberSetting()) {
                     continue;
                 }
 
-                this.components.add(new Slider(option));
+                this.components.add(new Slider(setting));
             }
         }
     }
@@ -51,7 +51,7 @@ public class ModuleButton extends Button {
     public void render(int mouseX, int mouseY) {
         Inferno.fontManager.drawCorrectString(this.name, ((float) this.x) + 2.3f, ScaleUtil.centerTextY((float) this.y, (float) this.height), this.module.isOn() ? -1 : -5592406);
 
-        if (this.module.getOptions().size() > 2) { // has more than the two default already added settings
+        if (this.module.getSettings().size() > 2) { // has more than the two default already added settings
             int width = Inferno.fontManager.getWidth("...");
             Inferno.fontManager.drawCorrectString("...", (float) (this.x + this.width - 2.0) - width, ScaleUtil.centerTextY((float) this.y, (float) this.height), -1);
         }

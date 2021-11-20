@@ -1,9 +1,9 @@
 package me.sxmurai.inferno.impl.features.module.modules.player;
 
+import me.sxmurai.inferno.impl.settings.Setting;
 import me.sxmurai.inferno.util.entity.InventoryUtil;
 import me.sxmurai.inferno.util.timing.TickTimer;
 import me.sxmurai.inferno.impl.features.module.Module;
-import me.sxmurai.inferno.impl.option.Option;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 
@@ -15,11 +15,11 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 @Module.Define(name = "HotbarRefill", category = Module.Category.Player)
 @Module.Info(description = "Refills slots in your hotbar")
 public class HotbarRefill extends Module {
-    public final Option<Integer> delay = new Option<>("Delay", 2, 0, 16);
-    public final Option<Integer> actions = new Option<>("Actions", 3, 1, 10);
-    public final Option<Integer> threshold = new Option<>("Threshold", 45, 0, 63);
-    public final Option<Boolean> shiftClick = new Option<>("ShiftClick", false);
-    public final Option<Boolean> update = new Option<>("Update", true);
+    public final Setting<Integer> delay = new Setting<>("Delay", 2, 0, 16);
+    public final Setting<Integer> actions = new Setting<>("Actions", 3, 1, 10);
+    public final Setting<Integer> threshold = new Setting<>("Threshold", 45, 0, 63);
+    public final Setting<Boolean> shiftClick = new Setting<>("ShiftClick", false);
+    public final Setting<Boolean> update = new Setting<>("Update", true);
 
     private final Map<Integer, ItemStack> hotbar = new HashMap<>();
     private final Queue<InventoryUtil.Task> tasks = new ConcurrentLinkedQueue<>();

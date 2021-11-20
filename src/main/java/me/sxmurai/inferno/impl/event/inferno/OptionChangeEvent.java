@@ -1,16 +1,16 @@
 package me.sxmurai.inferno.impl.event.inferno;
 
-import me.sxmurai.inferno.impl.option.Option;
+import me.sxmurai.inferno.impl.settings.Setting;
 import net.minecraftforge.fml.common.eventhandler.Event;
 
 public class OptionChangeEvent extends Event {
-    private final Option option;
+    private final Setting setting;
 
-    public OptionChangeEvent(Option option) {
-        this.option = option;
+    public OptionChangeEvent(Setting setting) {
+        this.setting = setting;
     }
 
-    public Option getOption() {
-        return option;
+    public Setting getOption() {
+        return setting;
     }
 }

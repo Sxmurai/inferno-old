@@ -2,17 +2,17 @@ package me.sxmurai.inferno.impl.features.module.modules.miscellaneous;
 
 import me.sxmurai.inferno.impl.event.network.PacketEvent;
 import me.sxmurai.inferno.impl.features.module.Module;
-import me.sxmurai.inferno.impl.option.Option;
+import me.sxmurai.inferno.impl.settings.Setting;
 import net.minecraft.network.play.client.CPacketChatMessage;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 @Module.Define(name = "Suffix")
 @Module.Info(description = "Adds a nice little suffix at the end of your message")
 public class Suffix extends Module {
-    public final Option<Mode> mode = new Option<>("Mode", Mode.Inferno);
-    public final Option<String> custom = new Option<>("Custom", "FuckYou.com", () -> this.mode.getValue() == Mode.Custom);
-    public final Option<Separator> separator = new Option<>("Separator", Separator.Line);
-    public final Option<Boolean> unicode = new Option<>("Unicode", true);
+    public final Setting<Mode> mode = new Setting<>("Mode", Mode.Inferno);
+    public final Setting<String> custom = new Setting<>("Custom", "FuckYou.com", () -> this.mode.getValue() == Mode.Custom);
+    public final Setting<Separator> separator = new Setting<>("Separator", Separator.Line);
+    public final Setting<Boolean> unicode = new Setting<>("Unicode", true);
 
     @SubscribeEvent
     public void onPacketSend(PacketEvent.Send event) {

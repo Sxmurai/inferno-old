@@ -3,7 +3,7 @@ package me.sxmurai.inferno.impl.features.module.modules.combat;
 import me.sxmurai.inferno.Inferno;
 import me.sxmurai.inferno.impl.features.module.Module;
 import me.sxmurai.inferno.impl.manager.HoleManager;
-import me.sxmurai.inferno.impl.option.Option;
+import me.sxmurai.inferno.impl.settings.Setting;
 import me.sxmurai.inferno.util.entity.InventoryUtil;
 import me.sxmurai.inferno.util.timing.TickTimer;
 import me.sxmurai.inferno.util.world.BlockUtil;
@@ -22,15 +22,15 @@ import java.util.stream.Collectors;
 @Module.Define(name = "HoleFiller", category = Module.Category.Combat)
 @Module.Info(description = "Fills in safe holes for those shitters")
 public class HoleFiller extends Module {
-    public final Option<Mode> mode = new Option<>("Mode", Mode.Normal);
-    public final Option<Type> type = new Option<>("Type", Type.Obsidian);
-    public final Option<InventoryUtil.Swap> swap = new Option<>("Swap", InventoryUtil.Swap.Legit);
-    public final Option<Double> range = new Option<>("Range", 4.0, 1.0, 6.0);
-    public final Option<Integer> blocks = new Option<>("Blocks", 1, 1, 5);
-    public final Option<Integer> delay = new Option<>("Delay", 1, 0, 20);
-    public final Option<Boolean> packet = new Option<>("Packet", false);
-    public final Option<Boolean> swing = new Option<>("Swing", true);
-    public final Option<Boolean> rotate = new Option<>("Rotate", true);
+    public final Setting<Mode> mode = new Setting<>("Mode", Mode.Normal);
+    public final Setting<Type> type = new Setting<>("Type", Type.Obsidian);
+    public final Setting<InventoryUtil.Swap> swap = new Setting<>("Swap", InventoryUtil.Swap.Legit);
+    public final Setting<Double> range = new Setting<>("Range", 4.0, 1.0, 6.0);
+    public final Setting<Integer> blocks = new Setting<>("Blocks", 1, 1, 5);
+    public final Setting<Integer> delay = new Setting<>("Delay", 1, 0, 20);
+    public final Setting<Boolean> packet = new Setting<>("Packet", false);
+    public final Setting<Boolean> swing = new Setting<>("Swing", true);
+    public final Setting<Boolean> rotate = new Setting<>("Rotate", true);
 
     private final Queue<BlockPos> positions = new ConcurrentLinkedQueue<>();
     private final TickTimer timer = new TickTimer();
