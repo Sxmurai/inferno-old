@@ -31,12 +31,12 @@ public class ModuleManager {
                 new AutoArmor(),
                 new AutoBowRelease(),
                 new AutoCrystal(),
-                new AutoObsidian(),
                 new Critcals(),
                 new HoleFiller(),
                 new Offhand(),
                 new Quiver(),
                 new SelfFill(),
+                new Surround(),
 
                 // miscellaneous
                 new FakePlayer(),

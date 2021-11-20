@@ -58,7 +58,7 @@ public class BlockUtil implements Wrapper {
     public static EnumFacing getFacing(BlockPos pos) {
         for (EnumFacing facing : EnumFacing.values()) {
             BlockPos neighbor = pos.offset(facing);
-            if (BlockUtil.isClickable(neighbor)) {
+            if (!mc.world.getBlockState(neighbor).getMaterial().isReplaceable() && !BlockUtil.intersects(neighbor)) {
                 return facing;
             }
         }
@@ -68,7 +68,7 @@ public class BlockUtil implements Wrapper {
 
     public static boolean isClickable(BlockPos pos) {
         IBlockState state = mc.world.getBlockState(pos);
-        return !state.getMaterial().isReplaceable() && state.getBlock().canCollideCheck(state, false) && !BlockUtil.intersects(pos);
+        return state.getMaterial().isReplaceable() && !BlockUtil.intersects(pos);
     }
 
     public static boolean intersects(BlockPos pos) {
