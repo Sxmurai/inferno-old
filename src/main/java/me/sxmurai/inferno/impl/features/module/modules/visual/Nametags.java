@@ -9,12 +9,18 @@ import me.sxmurai.inferno.util.render.ColorUtil;
 import me.sxmurai.inferno.util.render.RenderUtil;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.Vec3d;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Locale;
+import java.util.Map;
 
 @Module.Define(name = "Nametags", category = Module.Category.Visual)
 @Module.Info(description = "Shows custom nametags, overriding the vanilla ones")
@@ -34,7 +40,7 @@ public class Nametags extends Module {
     public static final Option<Boolean> offhand = new Option<>("Offhand", true);
     public static final Option<Boolean> armor = new Option<>("Armor", true);
     public static final Option<Boolean> reversed = new Option<>("Reversed", true, armor::getValue);
-    public static final Option<Boolean> enchants = new Option<>("Enchants", true, () -> mainhand.getValue() || offhand.getValue() || armor.getValue());
+    public static final Option<Enchants> enchants = new Option<>("Enchants", Enchants.All, () -> mainhand.getValue() || offhand.getValue() || armor.getValue());
     public static final Option<Boolean> health = new Option<>("Health", true);
     public static final Option<Boolean> pops = new Option<>("Pops", false);
     public static final Option<Boolean> ping = new Option<>("Ping", false);
@@ -132,8 +138,8 @@ public class Nametags extends Module {
                 renderItemStack(player.getHeldItemMainhand(), xOffset, -26);
                 GlStateManager.popMatrix();
 
-                if (enchants.getValue()) {
-                    renderEnchantments(player.getHeldItemMainhand());
+                if (enchants.getValue() != Enchants.None) {
+                    renderEnchantments(player.getHeldItemMainhand(), xOffset, -26);
                 }
             }
         }
@@ -155,8 +161,8 @@ public class Nametags extends Module {
                 renderItemStack(stack, xOffset, -26);
                 GlStateManager.popMatrix();
 
-                if (enchants.getValue()) {
-                    renderEnchantments(stack);
+                if (enchants.getValue() != Enchants.None) {
+                    renderEnchantments(stack, xOffset, -26);
                 }
 
                 xOffset += 16;
@@ -169,8 +175,8 @@ public class Nametags extends Module {
                 renderItemStack(player.getHeldItemOffhand(), xOffset, -26);
                 GlStateManager.popMatrix();
 
-                if (enchants.getValue()) {
-                    renderEnchantments(player.getHeldItemOffhand());
+                if (enchants.getValue() != Enchants.None) {
+                    renderEnchantments(player.getHeldItemOffhand(), xOffset, -26);
                 }
             }
         }
@@ -204,8 +210,63 @@ public class Nametags extends Module {
         GlStateManager.popMatrix();
     }
 
-    private static void renderEnchantments(ItemStack stack) {
-        // oh no cringe
+    // this looks like shit, please rewrite @todo
+    private static void renderEnchantments(ItemStack stack, double x, double y) {
+        // god i hate myself
+        Map<Enchantment, Integer> enchants = EnchantmentHelper.getEnchantments(stack);
+
+        ArrayList<String> text = new ArrayList<>();
+        if (stack.getItem() == Items.GOLDEN_APPLE && stack.hasEffect()) {
+            text.add(ChatFormatting.RED + "god");
+        }
+
+        if (enchants.isEmpty() && text.isEmpty()) {
+            return;
+        }
+
+        if (enchants.size() >= 4 && Nametags.enchants.getValue() == Enchants.Simplified) { // i could make a better way of detecting if its max armor, but meh
+            text.add(ChatFormatting.RED + "max");
+        } else {
+            for (Map.Entry<Enchantment, Integer> entry : enchants.entrySet()) {
+                text.add(shortenEnchantName(entry.getKey(), entry.getValue()));
+            }
+        }
+
+        if (!text.isEmpty()) {
+            double scaling = 0.5;
+            if (y < text.size() * ((Inferno.fontManager.getHeight() + 1) * scaling)) {
+                y -= (text.size() * ((Inferno.fontManager.getHeight() + 1) * scaling) + 16.0);
+            }
+
+            for (String str : text) {
+                GlStateManager.pushMatrix();
+                GlStateManager.enableBlend();
+                GlStateManager.disableDepth();
+                GlStateManager.depthMask(false);
+                GlStateManager.scale(scaling, scaling, scaling);
+
+                Inferno.fontManager.drawCorrectString(str, x * 2.0, y, -1);
+                y += (Inferno.fontManager.getHeight() + 1);
+
+                GlStateManager.scale(2.0, 2.0, 0.0);
+                GlStateManager.depthMask(true);
+                GlStateManager.enableDepth();
+                GlStateManager.popMatrix();
+            }
+        }
+    }
+
+    // taken from https://github.com/IUDevman/gamesense-client/blob/62061a43fea311f42c64ea2b1dbbb56599c32295/src/main/java/com/gamesense/client/module/modules/render/Nametags.java#L352
+    private static String shortenEnchantName(Enchantment enchantment, int level) {
+        ResourceLocation location = Enchantment.REGISTRY.getNameForObject(enchantment);
+        String str = location == null ? enchantment.getName() : location.toString();
+
+        int length = (level > 1) ? 12 : 15;
+        if (str.length() > length) {
+            str = str.substring(10, length);
+        }
+
+        return str.substring(0, 1).toUpperCase() + str.substring(1) + (level > 1 ? level : "");
     }
 
     private static void drawShape(double width) {
@@ -235,5 +296,9 @@ public class Nametags extends Module {
 
     public enum Shape {
         None, Rectangle, Rounded
+    }
+
+    public enum Enchants {
+        None, All, Simplified
     }
 }
