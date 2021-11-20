@@ -1,7 +1,9 @@
 package me.sxmurai.inferno.impl.event.entity;
 
+import net.minecraftforge.fml.common.eventhandler.Cancelable;
 import net.minecraftforge.fml.common.eventhandler.Event;
 
+@Cancelable
 public class UpdateWalkingPlayerEvent extends Event {
     private final Era era;
 
