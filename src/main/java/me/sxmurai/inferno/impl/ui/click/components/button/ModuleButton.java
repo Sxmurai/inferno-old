@@ -122,4 +122,8 @@ public class ModuleButton extends Button {
 
         return h + 1.0;
     }
+
+    public Module getModule() {
+        return module;
+    }
 }

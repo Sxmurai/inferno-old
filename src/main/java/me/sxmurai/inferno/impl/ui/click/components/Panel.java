@@ -130,4 +130,8 @@ public class Panel extends Component {
     private boolean isMouseWithinBounds(int mouseX, int mouseY, double x, double y, double w, double h) {
         return mouseX >= x && mouseX <= x + w && mouseY >= y && mouseY <= y + h;
     }
+
+    public ArrayList<ModuleButton> getButtons() {
+        return buttons;
+    }
 }

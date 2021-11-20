@@ -11,6 +11,7 @@ public class GUI extends Module {
     public static GUI INSTANCE;
 
     public static Setting<Boolean> pause = new Setting<>("Pause", false);
+    public static Setting<Boolean> tooltips = new Setting<>("Tooltips", true);
 
     public GUI() {
         INSTANCE = this;

@@ -1,11 +1,16 @@
 package me.sxmurai.inferno.impl.ui.click;
 
+import com.google.common.collect.Lists;
 import me.sxmurai.inferno.Inferno;
 import me.sxmurai.inferno.impl.features.module.Module;
+import me.sxmurai.inferno.impl.features.module.modules.client.GUI;
 import me.sxmurai.inferno.impl.ui.click.components.Panel;
 import me.sxmurai.inferno.impl.ui.click.components.button.ModuleButton;
 import me.sxmurai.inferno.impl.ui.components.Component;
+import me.sxmurai.inferno.util.render.RenderUtil;
+import net.minecraft.client.gui.ScaledResolution;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -39,6 +44,30 @@ public class ClickGUIComponent extends Component {
     public void render(int mouseX, int mouseY) {
         super.render(mouseX, mouseY);
         this.panels.forEach((panel) -> panel.render(mouseX, mouseY));
+
+        if (GUI.tooltips.getValue()) {
+            for (Panel panel : this.panels) {
+                for (ModuleButton button : panel.getButtons()) {
+                    if (button.isMouseInBounds(mouseX, mouseY)) {
+                        Module module = button.getModule();
+                        this.renderTooltip(module, mouseX + 5.0, mouseY - 5.0);
+                    }
+                }
+            }
+        }
+    }
+
+    private void renderTooltip(Module module, double x, double y) {
+        int screenWidth = new ScaledResolution(mc).getScaledWidth();
+        String text = module.getDescription();
+
+        double width = Inferno.fontManager.getWidth(text) + 4.0;
+        if (x + width > screenWidth) {
+            x = screenWidth - width;
+        }
+
+        RenderUtil.drawRoundedRectangle(x, y, width, Inferno.fontManager.getHeight() + 4.0, 10.0, new Color(35, 39, 42).darker().getRGB());
+        Inferno.fontManager.drawCorrectString(text, x + 2.3, y + 2.0, -1);
     }
 
     @Override
