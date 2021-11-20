@@ -58,7 +58,7 @@ public abstract class MixinEntityPlayerSP extends AbstractClientPlayer {
         MinecraftForge.EVENT_BUS.post(event);
         if (event.isCanceled()) {
             info.cancel();
-            handlePositioning();
+            this.handlePositioning();
         }
     }
 
@@ -69,7 +69,7 @@ public abstract class MixinEntityPlayerSP extends AbstractClientPlayer {
 
     @Inject(method = "pushOutOfBlocks", at = @At("HEAD"), cancellable = true)
     public void onPushOutOfBlocks(double x, double y, double z, CallbackInfoReturnable<Boolean> info) {
-        PushEvent event = new PushEvent(PushEvent.Type.BLOCKS, (Entity) (Object) this);
+        PushEvent event = new PushEvent(PushEvent.Type.BLOCKS, this);
         MinecraftForge.EVENT_BUS.post(event);
         if (event.isCanceled()) {
             info.setReturnValue(false);
