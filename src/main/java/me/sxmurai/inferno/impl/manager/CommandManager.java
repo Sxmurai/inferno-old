@@ -3,6 +3,7 @@ package me.sxmurai.inferno.impl.manager;
 import me.sxmurai.inferno.impl.event.network.PacketEvent;
 import me.sxmurai.inferno.impl.features.command.Command;
 import me.sxmurai.inferno.impl.features.command.commands.Font;
+import me.sxmurai.inferno.impl.features.command.commands.Help;
 import me.sxmurai.inferno.impl.features.command.commands.LoggedInUser;
 import net.minecraft.network.play.client.CPacketChatMessage;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
@@ -18,6 +19,7 @@ public class CommandManager {
 
     public CommandManager() {
         this.commands.add(new Font());
+        this.commands.add(new Help());
         this.commands.add(new LoggedInUser());
     }
 
@@ -56,6 +58,20 @@ public class CommandManager {
         }
 
         Command.send("That was an invalid command. Please run the help command.");
+    }
+
+    public <T extends Command> T getCommand(String name) {
+        for (Command command : this.commands) {
+            if (command.getTriggers().stream().anyMatch((trigger) -> trigger.equalsIgnoreCase(name))) {
+                return (T) command;
+            }
+        }
+
+        return null;
+    }
+
+    public ArrayList<Command> getCommands() {
+        return commands;
     }
 
     public void setPrefix(String prefix) {
