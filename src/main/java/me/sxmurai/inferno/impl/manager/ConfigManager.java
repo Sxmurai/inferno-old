@@ -4,6 +4,8 @@ import me.sxmurai.inferno.Inferno;
 import me.sxmurai.inferno.impl.config.Config;
 import me.sxmurai.inferno.impl.config.configs.Friends;
 import me.sxmurai.inferno.impl.config.configs.Modules;
+import me.sxmurai.inferno.impl.event.network.SelfConnectionEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.apache.commons.lang3.time.StopWatch;
 
 import java.nio.file.Path;
@@ -43,6 +45,13 @@ public class ConfigManager {
                 Inferno.LOGGER.error("Error loading {} config. \n\n{}", name, e.toString());
             }
         });
+    }
+
+    @SubscribeEvent
+    public void onSelfDisconnect(SelfConnectionEvent event) {
+        if (event.getType() == SelfConnectionEvent.Type.Disconnect) {
+            this.saveConfigs();
+        }
     }
 
     public <T extends Config> T getConfig(String name) {

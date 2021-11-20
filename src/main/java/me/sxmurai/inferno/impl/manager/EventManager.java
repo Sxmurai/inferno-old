@@ -6,6 +6,7 @@ import me.sxmurai.inferno.impl.event.entity.DeathEvent;
 import me.sxmurai.inferno.impl.event.entity.TotemPopEvent;
 import me.sxmurai.inferno.impl.event.network.ConnectionEvent;
 import me.sxmurai.inferno.impl.event.network.PacketEvent;
+import me.sxmurai.inferno.impl.event.network.SelfConnectionEvent;
 import me.sxmurai.inferno.impl.features.Wrapper;
 import me.sxmurai.inferno.impl.features.module.Module;
 import net.minecraft.client.renderer.GlStateManager;
@@ -20,11 +21,22 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
+import net.minecraftforge.fml.common.network.FMLNetworkEvent;
 import org.lwjgl.opengl.GL11;
 
 import java.util.UUID;
 
 public class EventManager implements Wrapper {
+    @SubscribeEvent
+    public void onClientConnection(FMLNetworkEvent.ClientConnectedToServerEvent event) {
+        MinecraftForge.EVENT_BUS.post(new SelfConnectionEvent(SelfConnectionEvent.Type.Connect));
+    }
+
+    @SubscribeEvent
+    public void onClientDisconnection(FMLNetworkEvent.ClientDisconnectionFromServerEvent event) {
+        MinecraftForge.EVENT_BUS.post(new SelfConnectionEvent(SelfConnectionEvent.Type.Disconnect));
+    }
+
     @SubscribeEvent
     public void onUpdate(LivingEvent.LivingUpdateEvent event) {
         if (fullNullCheck() && event.getEntityLiving() == mc.player) {
