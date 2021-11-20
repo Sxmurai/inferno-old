@@ -30,7 +30,7 @@ public class RotationManager implements Wrapper {
     @SubscribeEvent
     public void onUpdateWalkingPlayerPre(UpdateWalkingPlayerEvent event) {
         if (event.getEra() == UpdateWalkingPlayerEvent.Era.PRE) {
-            if (this.timer.passedMs(250L)) {
+            if (this.timer.passedMs(375L)) {
                 this.reset();
             } else {
                 event.setCanceled(true);
