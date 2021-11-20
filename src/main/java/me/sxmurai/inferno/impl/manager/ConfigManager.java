@@ -2,6 +2,7 @@ package me.sxmurai.inferno.impl.manager;
 
 import me.sxmurai.inferno.Inferno;
 import me.sxmurai.inferno.impl.config.Config;
+import me.sxmurai.inferno.impl.config.configs.Friends;
 import me.sxmurai.inferno.impl.config.configs.Modules;
 import org.apache.commons.lang3.time.StopWatch;
 
@@ -22,6 +23,8 @@ public class ConfigManager {
         }
 
         this.configs.put("modules", new Modules());
+        this.configs.put("friends", new Friends());
+
         this.saveConfigs();
     }
 
