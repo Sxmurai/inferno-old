@@ -78,6 +78,8 @@ public abstract class MixinEntityPlayerSP extends AbstractClientPlayer {
     // this is taken exactly from the minecraft code, just the variables are renamed to more human-readable names.
     // this is because we cancel onUpdateWalkingPlayer in our RotationManager, so we want to make sure to sync our states with the server.
     private void handlePositioning() {
+        ++this.positionUpdateTicks;
+
         if (this.isSprinting() != this.serverSprintState) {
             mc.player.connection.sendPacket(new CPacketEntityAction(mc.player, this.isSprinting() ? CPacketEntityAction.Action.START_SPRINTING : CPacketEntityAction.Action.STOP_SPRINTING));
             this.serverSprintState = this.isSprinting();
@@ -89,7 +91,6 @@ public abstract class MixinEntityPlayerSP extends AbstractClientPlayer {
         }
 
         if (this.isCurrentViewEntity()) {
-            ++this.positionUpdateTicks;
             boolean moved = this.hasMoved();
             boolean rotated = this.hasRotated();
 

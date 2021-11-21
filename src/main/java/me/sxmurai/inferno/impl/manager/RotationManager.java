@@ -48,7 +48,7 @@ public class RotationManager implements Wrapper {
         this.rotation.setYaw(yaw);
         this.rotation.setPitch(pitch);
 
-        mc.player.connection.sendPacket(new CPacketPlayer.Rotation(yaw, pitch, mc.player.onGround));
+        //mc.player.connection.sendPacket(new CPacketPlayer.Rotation(yaw, pitch, mc.player.onGround));
     }
 
     public void look(Entity entity) {
