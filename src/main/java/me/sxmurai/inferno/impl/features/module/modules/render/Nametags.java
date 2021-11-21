@@ -26,7 +26,7 @@ import java.util.Map;
 public class Nametags extends Module {
     public static Nametags INSTANCE;
 
-    public static final Setting<Boolean> self = new Setting<>("Self", true);
+    public static final Setting<Boolean> self = new Setting<>("Self", false);
     public static final Setting<Shape> shape = new Setting<>("Shape", Shape.Rectangle);
     public static final Setting<Boolean> outline = new Setting<>("Outline", true);
     public static final Setting<Double> scaling = new Setting<>("Scaling", 0.3, 0.1, 3.9);
