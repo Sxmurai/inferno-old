@@ -288,7 +288,7 @@ public class Nametags extends Module {
             return ChatFormatting.YELLOW.toString();
         } else if (health >= 10.0f) {
             return ChatFormatting.RED.toString();
-        } else if (health <= 6.0f) {
+        } else if (health <= 10.0f) {
             return ChatFormatting.DARK_RED.toString();
         }
 
