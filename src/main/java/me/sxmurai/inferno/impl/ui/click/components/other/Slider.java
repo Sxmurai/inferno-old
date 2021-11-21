@@ -28,12 +28,14 @@ public class Slider extends Component {
 
         float center = ScaleUtil.centerTextY((float) this.y, (float) this.height);
 
-        Inferno.fontManager.drawCorrectString(this.name + ": " + this.setting.getValue(), (float) (this.x) + 2.3f, center - 2.0f, -1);
+        Inferno.fontManager.drawCorrectString(this.name, (float) (this.x) + 2.3f, center - 2.0f, -1);
+        String val = String.valueOf(this.setting.getValue());
+        Inferno.fontManager.drawCorrectString(val, (this.x + this.width) - Inferno.fontManager.getWidth(val) - 2.3f, center - 2.0f, -1);
 
         double endX = this.x + (this.setting.getValue().floatValue() <= this.setting.getMin().floatValue() ? 0.0 : this.width * this.partialMultiplier());
         double posY = this.y + Inferno.fontManager.getHeight() + 2.0;
 
-        RenderUtil.drawLine(this.x + 2.3, posY, endX - 1.0, posY,1.55f, new Color(253, 31, 31).getRGB());
+        RenderUtil.drawLine(this.x - 0.5, posY, endX - 1.0, posY,1.55f, new Color(253, 31, 31).getRGB());
         RenderUtil.drawCircle(endX, posY, 1.55, new Color(253, 31, 31).getRGB());
     }
 
