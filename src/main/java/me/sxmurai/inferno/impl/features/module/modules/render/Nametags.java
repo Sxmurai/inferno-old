@@ -30,6 +30,7 @@ public class Nametags extends Module {
     public static final Setting<Shape> shape = new Setting<>("Shape", Shape.Rectangle);
     public static final Setting<Boolean> outline = new Setting<>("Outline", true);
     public static final Setting<Double> scaling = new Setting<>("Scaling", 0.3, 0.1, 3.9);
+    public static final Setting<Integer> smartScale = new Setting<>("SmartScale", 3, 1, 10);
     public static final Setting<Double> opacity = new Setting<>("Opacity", 0.7, 0.0, 1.0);
 
     public static final Setting<Boolean> invisible = new Setting<>("Invisible", true);
@@ -70,8 +71,8 @@ public class Nametags extends Module {
 
         double dist = mc.renderViewEntity.getDistance(x + camera.x, y + camera.y, z + camera.z);
         double scale = (scaling.getValue() * dist) / 50.0;
-        if (dist <= 3.0) {
-            scale = (scaling.getValue() * 3.0) / 50.0;
+        if (dist <= smartScale.getValue()) {
+            scale = (scaling.getValue() * smartScale.getValue().doubleValue()) / 50.0;
         }
 
         GlStateManager.pushMatrix();
