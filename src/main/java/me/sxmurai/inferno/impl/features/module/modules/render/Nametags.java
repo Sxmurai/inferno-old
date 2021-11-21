@@ -123,7 +123,9 @@ public class Nametags extends Module {
 
         if (pops.getValue()) {
             int pops = Inferno.totemPopManager.getPops(player);
-            name.append("[").append(pops).append("]");
+            if (pops > 0) {
+                name.append("-").append(pops);
+            }
         }
 
         double width = Inferno.fontManager.getWidth(name.toString()) / 2.0;
