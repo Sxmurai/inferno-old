@@ -33,12 +33,22 @@ public class Velocity extends Module {
 
                 SPacketEntityVelocity packet = event.getPacket();
                 if (packet.getEntityID() == mc.player.entityId) {
+                    if (this.horizontal.getValue() == 0.0f && this.vertical.getValue() == 0.0f) {
+                        event.setCanceled(true);
+                        return;
+                    }
+
                     packet.motionX *= this.horizontal.getValue().intValue();
                     packet.motionY *= this.vertical.getValue().intValue();
                     packet.motionZ *= this.horizontal.getValue().intValue();
                 }
             } else if (event.getPacket() instanceof SPacketExplosion) {
                 if (!this.explosions.getValue()) {
+                    return;
+                }
+
+                if (this.horizontal.getValue() == 0.0f && this.vertical.getValue() == 0.0f) {
+                    event.setCanceled(true);
                     return;
                 }
 
