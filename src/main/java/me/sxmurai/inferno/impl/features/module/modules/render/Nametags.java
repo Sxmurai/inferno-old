@@ -283,11 +283,15 @@ public class Nametags extends Module {
     private static String getHealthColor(float health) {
         if (health >= 20.0f) {
             return ChatFormatting.GREEN.toString();
-        } else if (health <= 17.0f) {
+        } else if (health >= 17.0f) {
             return ChatFormatting.YELLOW.toString();
+        } else if (health >= 10.0f) {
+            return ChatFormatting.RED.toString();
+        } else if (health <= 6.0f) {
+            return ChatFormatting.DARK_RED.toString();
         }
 
-        return ChatFormatting.RED.toString();
+        return ChatFormatting.WHITE.toString();
     }
 
     public enum Shape {
