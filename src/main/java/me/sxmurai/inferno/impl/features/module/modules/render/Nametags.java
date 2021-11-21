@@ -68,7 +68,11 @@ public class Nametags extends Module {
         double head = y + (player.isSneaking() ? 0.5 : 0.7);
         Vec3d camera = RenderUtil.renderPositions();
 
-        double scale = (scaling.getValue() * mc.renderViewEntity.getDistance(x + camera.x, y + camera.y, z + camera.z)) / 50.0;
+        double dist = mc.renderViewEntity.getDistance(x + camera.x, y + camera.y, z + camera.z);
+        double scale = (scaling.getValue() * dist) / 50.0;
+        if (dist <= 3.0) {
+            scale = (scaling.getValue() * 3.0) / 50.0;
+        }
 
         GlStateManager.pushMatrix();
         RenderHelper.enableStandardItemLighting();
