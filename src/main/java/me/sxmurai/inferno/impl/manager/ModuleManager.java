@@ -62,6 +62,7 @@ public class ModuleManager {
                 new HotbarRefill(),
                 new MiddleClick(),
                 new MultiTask(),
+                new Portal(),
                 new Reach(),
                 new Scaffold(),
                 new Speedmine(),
