@@ -27,6 +27,7 @@
     "render.MixinRenderPlayer",
     "render.MixinRenderXPOrb",
 
+    "world.blocks.state.MixinStateImplementation",
     "world.blocks.MixinBlock",
     "world.blocks.MixinBlockSlime",
     "world.blocks.MixinBlockSoulSand",
