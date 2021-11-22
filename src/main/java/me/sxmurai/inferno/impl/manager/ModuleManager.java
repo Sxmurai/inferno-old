@@ -49,6 +49,7 @@ public class ModuleManager {
                 // movement
                 new FastFall(),
                 new NoSlow(),
+                new PacketFly(),
                 new Speed(),
                 new Sprint(),
                 new Velocity(),
