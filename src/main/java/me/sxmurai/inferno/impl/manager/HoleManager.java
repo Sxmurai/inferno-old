@@ -6,6 +6,7 @@ import me.sxmurai.inferno.util.world.BlockUtil;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 
 import java.util.ArrayList;
@@ -45,6 +46,10 @@ public class HoleManager implements Wrapper {
                 this.holes.add(new Hole(safe == 5 ? Rating.Safe : Rating.Unsafe, blockPos));
             }
         }
+    }
+
+    public boolean isInHole() {
+        return this.holes.stream().anyMatch((hole) -> new AxisAlignedBB(hole.getPos()).intersects(mc.player.getEntityBoundingBox()));
     }
 
     public ArrayList<Hole> getHoles() {
