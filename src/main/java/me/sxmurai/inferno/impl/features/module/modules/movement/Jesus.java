@@ -9,7 +9,6 @@ import net.minecraft.block.BlockLiquid;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.init.Blocks;
 import net.minecraft.network.play.client.CPacketPlayer;
-import net.minecraft.network.play.server.SPacketPlayerPosLook;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -17,15 +16,15 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 @Module.Define(name = "Jesus", category = Module.Category.Movement)
 @Module.Info(description = "Walks on liquids like Jesus Christ himself")
 public class Jesus extends Module {
-    private static final AxisAlignedBB LIQUID_FULL_BLOCK_AABB = new AxisAlignedBB(0.0, 0.0, 0.0, 1.0, 0.899, 1.0);
+    private static final AxisAlignedBB LIQUID_FULL_BLOCK_AABB = new AxisAlignedBB(0.0, 0.0, 0.0, 1.0, 0.99, 1.0);
 
     public final Setting<Mode> mode = new Setting<>("Mode", Mode.Solid);
     public final Setting<Boolean> flowing = new Setting<>("Flowing", true);
     public final Setting<Boolean> lava = new Setting<>("Lava", true);
     public final Setting<Boolean> dip = new Setting<>("Dip", true);
 
+    private double yOffset = 0.0;
     private int floatUpTimer = 0;
-    private double lastOffset = 0.0;
 
     @Override
     public void onUpdate() {
@@ -68,27 +67,17 @@ public class Jesus extends Module {
         if (event.getPacket() instanceof CPacketPlayer && !this.isInLiquid() && this.isAboveLiquid()) {
             CPacketPlayer packet = event.getPacket();
             if (packet.moving && this.floatUpTimer != 0) {
-                // i give up, i cant fucking figure this out
-                if (mc.player.ticksExisted % 2 == 0) {
-                    if (this.mode.getValue() == Mode.NCPStrict) {
-                        this.lastOffset += 0.012;
-                        if (this.lastOffset > 0.04) {
-                            this.lastOffset = 0.02;
-                        }
-
-                        packet.y -= this.lastOffset;
-                    } else {
-                        packet.y -= 0.05;
+                if (this.mode.getValue() == Mode.NCPStrict) {
+                    this.yOffset += (mc.player.ticksExisted % 4 == 2 ? 0.12 : 0.08);
+                    if (this.yOffset > 0.3) {
+                        this.yOffset = 0.1;
                     }
+
+                    packet.y -= this.yOffset;
+                } else {
+                    packet.y -= (mc.player.ticksExisted % 2 == 0 ? 0.05 : 0.0);
                 }
             }
-        }
-    }
-
-    @SubscribeEvent
-    public void onPacketReceive(PacketEvent.Receive event) {
-        if (event.getPacket() instanceof SPacketPlayerPosLook && this.mode.getValue() == Mode.NCPStrict) {
-            this.lastOffset = 0.11;
         }
     }
 
