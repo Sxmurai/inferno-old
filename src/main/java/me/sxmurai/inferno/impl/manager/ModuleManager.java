@@ -47,6 +47,7 @@ public class ModuleManager {
                 new Suffix(),
 
                 // movement
+                new ElytraFly(),
                 new FastFall(),
                 new Jesus(),
                 new NoSlow(),
