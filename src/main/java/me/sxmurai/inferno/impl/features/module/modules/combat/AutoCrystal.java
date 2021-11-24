@@ -1,9 +1,6 @@
 package me.sxmurai.inferno.impl.features.module.modules.combat;
 
 import me.sxmurai.inferno.Inferno;
-import me.sxmurai.inferno.impl.event.entity.EntityRemoveEvent;
-import me.sxmurai.inferno.impl.event.network.PacketEvent;
-import me.sxmurai.inferno.impl.features.module.Module;
 import me.sxmurai.inferno.impl.manager.InventoryManager;
 import me.sxmurai.inferno.impl.settings.Setting;
 import me.sxmurai.inferno.util.entity.DamageUtil;
@@ -14,6 +11,9 @@ import me.sxmurai.inferno.util.render.ColorUtil;
 import me.sxmurai.inferno.util.render.RenderUtil;
 import me.sxmurai.inferno.util.timing.TickTimer;
 import me.sxmurai.inferno.util.world.BlockUtil;
+import me.sxmurai.inferno.impl.event.entity.EntityRemoveEvent;
+import me.sxmurai.inferno.impl.event.network.PacketEvent;
+import me.sxmurai.inferno.impl.features.module.Module;
 import me.sxmurai.inferno.util.world.CrystalUtil;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityEnderCrystal;
@@ -44,7 +44,7 @@ public class AutoCrystal extends Module {
     public final Setting<Integer> placeDelay = new Setting<>("PlaceDelay", 3, 0, 20);
     public final Setting<Float> placeMin = new Setting<>("PlaceMin", 4.0f, 1.0f, 36.0f);
     public final Setting<Placements> placements = new Setting<>("Placements", Placements.Native);
-    public final Setting<CrystalUtil.Placement> direction = new Setting<>("Direction", CrystalUtil.Placement.Normal);
+    public final Setting<CrystalUtil.Direction> direction = new Setting<>("Direction", CrystalUtil.Direction.Normal);
     public final Setting<Float> faceplace = new Setting<>("Faceplace", 16.0f, 1.0f, 36.0f);
     public final Setting<Float> faceplaceDamage = new Setting<>("FaceplaceDamage", 2.0f, 1.0f, 6.0f);
 

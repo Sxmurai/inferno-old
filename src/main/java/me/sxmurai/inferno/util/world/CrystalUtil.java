@@ -12,10 +12,10 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 
 public class CrystalUtil implements Wrapper {
-    public static void place(BlockPos pos, EnumHand hand, Placement placement, boolean swing, double boost) {
+    public static void place(BlockPos pos, EnumHand hand, Direction direction, boolean swing, double boost) {
         EnumFacing facing = EnumFacing.UP;
 
-        if (placement == Placement.Strict) {
+        if (direction == Direction.Strict) {
             if (pos.getY() > mc.player.getEntityBoundingBox().minY + mc.player.getEyeHeight()) {
                 RayTraceResult result = mc.world.rayTraceBlocks(mc.player.getPositionEyes(1.0f), new Vec3d(pos.x + 0.5, pos.y + (boost == -1.0 ? 0.5 : boost), pos.z + 0.5));
                 facing = (result == null || result.sideHit == null) ? EnumFacing.DOWN : result.sideHit;
@@ -47,7 +47,7 @@ public class CrystalUtil implements Wrapper {
         }
     }
 
-    public enum Placement {
+    public enum Direction {
         Normal, Strict
     }
 }
