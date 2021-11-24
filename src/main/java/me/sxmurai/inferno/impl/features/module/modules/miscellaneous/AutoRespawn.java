@@ -1,4 +1,4 @@
-package me.sxmurai.inferno.impl.features.module.modules.player;
+package me.sxmurai.inferno.impl.features.module.modules.miscellaneous;
 
 import me.sxmurai.inferno.impl.features.module.Module;
 import me.sxmurai.inferno.impl.settings.Setting;
@@ -8,7 +8,7 @@ import net.minecraft.client.gui.GuiGameOver;
 import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-@Module.Define(name = "AutoRespawn", category = Module.Category.Player)
+@Module.Define(name = "AutoRespawn")
 @Module.Info(description = "Automatically respawns you")
 public class AutoRespawn extends Module {
     public final Setting<Float> delay = new Setting<>("Delay", 0.0f, 0.0f, 5.0f);

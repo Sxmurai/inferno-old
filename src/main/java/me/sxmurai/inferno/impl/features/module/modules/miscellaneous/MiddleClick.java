@@ -1,4 +1,4 @@
-package me.sxmurai.inferno.impl.features.module.modules.player;
+package me.sxmurai.inferno.impl.features.module.modules.miscellaneous;
 
 import me.sxmurai.inferno.Inferno;
 import me.sxmurai.inferno.impl.features.command.Command;
@@ -16,7 +16,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
 import org.lwjgl.input.Mouse;
 
-@Module.Define(name = "MiddleClick", category = Module.Category.Player)
+@Module.Define(name = "MiddleClick")
 @Module.Info(description = "Does things upon a middle click")
 public class MiddleClick extends Module {
     public final Setting<Pearl> pearl = new Setting<>("Pearl", Pearl.None);
