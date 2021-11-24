@@ -62,6 +62,7 @@ public class ModuleManager {
                 new ChorusControl(),
                 new FastUse(),
                 new HotbarRefill(),
+                new Interact(),
                 new MiddleClick(),
                 new MultiTask(),
                 new Portal(),

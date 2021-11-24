@@ -29,6 +29,7 @@
 
     "world.blocks.state.MixinStateImplementation",
     "world.blocks.MixinBlock",
+    "world.blocks.MixinBlockLiquid",
     "world.blocks.MixinBlockSlime",
     "world.blocks.MixinBlockSoulSand",
     "world.MixinWorldClient",
