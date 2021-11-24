@@ -35,6 +35,7 @@ public class Inferno {
     public static FriendManager friendManager;
     public static HudManager hudManager;
     public static InteractionManager interactionManager;
+    public static InventoryManager inventoryManager;
 
     @SubscribeEvent
     public void onPreInit(FMLPreInitializationEvent event) {
@@ -65,6 +66,7 @@ public class Inferno {
         friendManager = new FriendManager();
         hudManager = new HudManager();
         interactionManager = new InteractionManager();
+        inventoryManager = new InventoryManager();
 
         MinecraftForge.EVENT_BUS.register(new EventManager());
         MinecraftForge.EVENT_BUS.register(moduleManager);

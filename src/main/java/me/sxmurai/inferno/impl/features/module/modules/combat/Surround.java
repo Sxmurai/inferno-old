@@ -4,6 +4,7 @@ import me.sxmurai.inferno.Inferno;
 import me.sxmurai.inferno.impl.event.entity.JumpEvent;
 import me.sxmurai.inferno.impl.features.module.Module;
 import me.sxmurai.inferno.impl.manager.InteractionManager;
+import me.sxmurai.inferno.impl.manager.InventoryManager;
 import me.sxmurai.inferno.impl.settings.Setting;
 import me.sxmurai.inferno.util.entity.InventoryUtil;
 import me.sxmurai.inferno.util.entity.MovementUtil;
@@ -24,7 +25,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 public class Surround extends Module {
     public final Setting<Pattern> pattern = new Setting<>("Pattern", Pattern.Normal);
     public final Setting<MovementUtil.Center> center = new Setting<>("Center", MovementUtil.Center.Teleport);
-    public final Setting<InventoryUtil.Swap> swap = new Setting<>("Swap", InventoryUtil.Swap.Legit);
+    public final Setting<InventoryManager.Swap> swap = new Setting<>("Swap", InventoryManager.Swap.Legit);
     public final Setting<Disable> disable = new Setting<>("Disable", Disable.Finished);
     public final Setting<InteractionManager.Placement> place = new Setting<>("Place", InteractionManager.Placement.Legit);
     public final Setting<Boolean> rotate = new Setting<>("Rotate", true);
@@ -42,7 +43,7 @@ public class Surround extends Module {
     @Override
     protected void onDeactivated() {
         if (fullNullCheck() && this.oldSlot != -1) {
-            InventoryUtil.swap(this.oldSlot, this.swap.getValue());
+            Inferno.inventoryManager.swap(this.oldSlot, this.swap.getValue());
             this.oldSlot = -1;
             this.hand = null;
         }
@@ -79,12 +80,12 @@ public class Surround extends Module {
                 }
 
                 if (this.oldSlot != -1) {
-                    InventoryUtil.swap(this.oldSlot, this.swap.getValue());
+                    Inferno.inventoryManager.swap(this.oldSlot, this.swap.getValue());
                     this.oldSlot = -1;
                 }
             }
         } else {
-            if (this.swap.getValue() != InventoryUtil.Swap.None) {
+            if (this.swap.getValue() != InventoryManager.Swap.None) {
                 int slot = InventoryUtil.getHotbarBlockSlot(Blocks.OBSIDIAN, true);
                 if (slot == -1) {
                     this.toggle();
@@ -94,7 +95,7 @@ public class Surround extends Module {
                 this.hand = slot == 45 ? EnumHand.OFF_HAND : EnumHand.MAIN_HAND;
                 if (this.hand == EnumHand.MAIN_HAND) {
                     this.oldSlot = mc.player.inventory.currentItem;
-                    InventoryUtil.swap(slot, this.swap.getValue());
+                    Inferno.inventoryManager.swap(slot, this.swap.getValue());
                 }
             } else {
                 if (mc.player.getHeldItemMainhand().getItem() instanceof ItemBlock && ((ItemBlock) mc.player.getHeldItemMainhand().getItem()).getBlock() == Blocks.OBSIDIAN) {

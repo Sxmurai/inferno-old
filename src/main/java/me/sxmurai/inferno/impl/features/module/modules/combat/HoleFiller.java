@@ -4,6 +4,7 @@ import me.sxmurai.inferno.Inferno;
 import me.sxmurai.inferno.impl.features.module.Module;
 import me.sxmurai.inferno.impl.manager.HoleManager;
 import me.sxmurai.inferno.impl.manager.InteractionManager;
+import me.sxmurai.inferno.impl.manager.InventoryManager;
 import me.sxmurai.inferno.impl.settings.Setting;
 import me.sxmurai.inferno.util.entity.InventoryUtil;
 import me.sxmurai.inferno.util.timing.TickTimer;
@@ -25,7 +26,7 @@ import java.util.stream.Collectors;
 public class HoleFiller extends Module {
     public final Setting<Mode> mode = new Setting<>("Mode", Mode.Normal);
     public final Setting<Type> type = new Setting<>("Type", Type.Obsidian);
-    public final Setting<InventoryUtil.Swap> swap = new Setting<>("Swap", InventoryUtil.Swap.Legit);
+    public final Setting<InventoryManager.Swap> swap = new Setting<>("Swap", InventoryManager.Swap.Legit);
     public final Setting<Double> range = new Setting<>("Range", 4.0, 1.0, 6.0);
     public final Setting<Integer> blocks = new Setting<>("Blocks", 1, 1, 5);
     public final Setting<Integer> delay = new Setting<>("Delay", 1, 0, 20);
@@ -49,7 +50,7 @@ public class HoleFiller extends Module {
     @Override
     public void onTick() {
         if (this.hand == null) {
-            if (this.swap.getValue() != InventoryUtil.Swap.None) {
+            if (this.swap.getValue() != InventoryManager.Swap.None) {
                 int slot = InventoryUtil.getHotbarBlockSlot(this.type.getValue().block, true);
                 if (slot == -1) {
                     this.toggle();
@@ -59,7 +60,7 @@ public class HoleFiller extends Module {
                 this.hand = slot == 45 ? EnumHand.OFF_HAND : EnumHand.MAIN_HAND;
                 if (this.hand == EnumHand.MAIN_HAND) {
                     this.oldSlot = mc.player.inventory.currentItem;
-                    InventoryUtil.swap(slot, this.swap.getValue());
+                    Inferno.inventoryManager.swap(slot, this.swap.getValue());
                 }
 
                 return; // wait a tick
@@ -120,7 +121,7 @@ public class HoleFiller extends Module {
 
     private void swapBack() {
         if (this.oldSlot != -1) {
-            InventoryUtil.swap(this.oldSlot, this.swap.getValue());
+            Inferno.inventoryManager.swap(this.oldSlot, this.swap.getValue());
             this.oldSlot = -1;
         }
 

@@ -20,7 +20,6 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 public class Quiver extends Module {
     public final Setting<Effect> primary = new Setting<>("Primary", Effect.Speed);
     public final Setting<Effect> secondary = new Setting<>("Secondary", Effect.Strength);
-    public final Setting<Boolean> update = new Setting<>("Update", true);
     public final Setting<Integer> amount = new Setting<>("Amount", 4, 0, 20);
 
     private boolean forceRotate = false;
@@ -103,10 +102,7 @@ public class Quiver extends Module {
     }
 
     private void click(int id) {
-        mc.playerController.windowClick(0, id, 0, ClickType.PICKUP, mc.player);
-        if (this.update.getValue()) {
-            mc.playerController.updateController();
-        }
+        Inferno.inventoryManager.click(id, ClickType.PICKUP);
     }
 
     public enum Effect {

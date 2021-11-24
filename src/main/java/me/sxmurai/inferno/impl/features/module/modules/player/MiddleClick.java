@@ -3,6 +3,7 @@ package me.sxmurai.inferno.impl.features.module.modules.player;
 import me.sxmurai.inferno.Inferno;
 import me.sxmurai.inferno.impl.features.command.Command;
 import me.sxmurai.inferno.impl.features.module.Module;
+import me.sxmurai.inferno.impl.manager.InventoryManager;
 import me.sxmurai.inferno.impl.manager.friend.Friend;
 import me.sxmurai.inferno.impl.settings.Setting;
 import me.sxmurai.inferno.util.entity.InventoryUtil;
@@ -37,13 +38,13 @@ public class MiddleClick extends Module {
 
                 int oldSlot = mc.player.inventory.currentItem;
                 if (slot != 45) {
-                    InventoryUtil.swap(slot, this.pearl.getValue().swap);
+                    Inferno.inventoryManager.swap(slot, this.pearl.getValue().swap);
                 }
 
                 mc.playerController.processRightClick(mc.player, mc.world, slot == 45 ? EnumHand.OFF_HAND : EnumHand.MAIN_HAND);
 
                 if (slot != 45) {
-                    InventoryUtil.swap(oldSlot, this.pearl.getValue().swap);
+                    Inferno.inventoryManager.swap(oldSlot, this.pearl.getValue().swap);
                 }
             } else if (result.typeOfHit == RayTraceResult.Type.ENTITY) {
                 if (!friend.getValue()) {
@@ -74,11 +75,11 @@ public class MiddleClick extends Module {
 
     public enum Pearl {
         None(null),
-        Legit(InventoryUtil.Swap.Legit),
-        Silent(InventoryUtil.Swap.Silent);
+        Legit(InventoryManager.Swap.Legit),
+        Silent(InventoryManager.Swap.Silent);
 
-        private final InventoryUtil.Swap swap;
-        Pearl(InventoryUtil.Swap swap) {
+        private final InventoryManager.Swap swap;
+        Pearl(InventoryManager.Swap swap) {
             this.swap = swap;
         }
     }

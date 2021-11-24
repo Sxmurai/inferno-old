@@ -2,6 +2,7 @@ package me.sxmurai.inferno.impl.features.module.modules.combat;
 
 import me.sxmurai.inferno.Inferno;
 import me.sxmurai.inferno.impl.features.module.Module;
+import me.sxmurai.inferno.impl.manager.InventoryManager;
 import me.sxmurai.inferno.impl.settings.Setting;
 import me.sxmurai.inferno.util.entity.DamageUtil;
 import me.sxmurai.inferno.util.entity.EntityUtil;
@@ -52,7 +53,7 @@ public class Aura extends Module {
             }
 
             if (this.target == null && this.oldSlot != -1) {
-                InventoryUtil.swap(this.oldSlot, InventoryUtil.Swap.Legit);
+                Inferno.inventoryManager.swap(this.oldSlot, InventoryManager.Swap.Legit);
                 this.oldSlot = -1;
             }
         } else {
@@ -63,7 +64,7 @@ public class Aura extends Module {
                     int slot = InventoryUtil.getHotbarItemSlot(ItemSword.class, false);
                     if (slot != -1) {
                         this.oldSlot = mc.player.inventory.currentItem;
-                        InventoryUtil.swap(slot, InventoryUtil.Swap.Legit);
+                        Inferno.inventoryManager.swap(slot, InventoryManager.Swap.Legit);
                     }
                 }
             }

@@ -3,6 +3,7 @@ package me.sxmurai.inferno.impl.features.module.modules.player;
 import me.sxmurai.inferno.Inferno;
 import me.sxmurai.inferno.impl.features.module.Module;
 import me.sxmurai.inferno.impl.manager.InteractionManager;
+import me.sxmurai.inferno.impl.manager.InventoryManager;
 import me.sxmurai.inferno.impl.settings.Setting;
 import me.sxmurai.inferno.util.entity.InventoryUtil;
 import me.sxmurai.inferno.util.timing.Timer;
@@ -16,7 +17,7 @@ import net.minecraft.util.math.BlockPos;
 @Module.Info(description = "Places blocks under your feet")
 public class Scaffold extends Module {
     public final Setting<Boolean> tower = new Setting<>("Tower", true);
-    public final Setting<InventoryUtil.Swap> swap = new Setting<>("Swap", InventoryUtil.Swap.Legit);
+    public final Setting<InventoryManager.Swap> swap = new Setting<>("Swap", InventoryManager.Swap.Legit);
     public final Setting<InteractionManager.Placement> place = new Setting<>("Place", InteractionManager.Placement.Legit);
     public final Setting<Boolean> rotate = new Setting<>("Rotate", true);
     public final Setting<Boolean> swing = new Setting<>("Swing", true);
@@ -33,7 +34,7 @@ public class Scaffold extends Module {
             if (InventoryUtil.isHolding(ItemBlock.class, true)) {
                 hand = InventoryUtil.getHeld(EnumHand.MAIN_HAND).getItem() instanceof ItemBlock ? EnumHand.MAIN_HAND : InventoryUtil.getHeld(EnumHand.OFF_HAND).getItem() instanceof ItemBlock ? EnumHand.OFF_HAND : null;
             } else {
-                if (this.swap.getValue() == InventoryUtil.Swap.None) {
+                if (this.swap.getValue() == InventoryManager.Swap.None) {
                     return;
                 }
 
@@ -45,7 +46,7 @@ public class Scaffold extends Module {
                 hand = slot == 45 ? EnumHand.OFF_HAND : EnumHand.MAIN_HAND;
                 if (hand == EnumHand.MAIN_HAND) {
                     oldSlot = mc.player.inventory.currentItem;
-                    InventoryUtil.swap(slot, this.swap.getValue());
+                    Inferno.inventoryManager.swap(slot, this.swap.getValue());
                 }
             }
 
@@ -72,7 +73,7 @@ public class Scaffold extends Module {
             }
 
             if (oldSlot != -1) {
-                InventoryUtil.swap(oldSlot, this.swap.getValue());
+                Inferno.inventoryManager.swap(oldSlot, this.swap.getValue());
             }
         }
     }

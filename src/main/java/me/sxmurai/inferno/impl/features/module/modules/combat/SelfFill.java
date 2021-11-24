@@ -3,6 +3,7 @@ package me.sxmurai.inferno.impl.features.module.modules.combat;
 import me.sxmurai.inferno.Inferno;
 import me.sxmurai.inferno.impl.features.module.Module;
 import me.sxmurai.inferno.impl.manager.InteractionManager;
+import me.sxmurai.inferno.impl.manager.InventoryManager;
 import me.sxmurai.inferno.impl.settings.Setting;
 import me.sxmurai.inferno.util.entity.InventoryUtil;
 import net.minecraft.block.Block;
@@ -19,7 +20,7 @@ import net.minecraft.util.math.BlockPos;
 public class SelfFill extends Module {
     public final Setting<Type> type = new Setting<>("Type", Type.Obsidian);
     public final Setting<Boolean> offhand = new Setting<>("Offhand", true);
-    public final Setting<InventoryUtil.Swap> swap = new Setting<>("Swap", InventoryUtil.Swap.Legit);
+    public final Setting<InventoryManager.Swap> swap = new Setting<>("Swap", InventoryManager.Swap.Legit);
     public final Setting<Double> rubberband = new Setting<>("Rubberband", 3.0, -5.0, 5.0);
     public final Setting<Boolean> rotate = new Setting<>("Rotate", true);
     public final Setting<Boolean> swing = new Setting<>("Swing", true);
@@ -50,7 +51,7 @@ public class SelfFill extends Module {
             return;
         }
 
-        if (this.swap.getValue() != InventoryUtil.Swap.None) {
+        if (this.swap.getValue() != InventoryManager.Swap.None) {
             int slot = InventoryUtil.getHotbarBlockSlot(this.type.getValue().block, this.offhand.getValue());
             if (slot == -1) {
                 this.toggle();
@@ -62,7 +63,7 @@ public class SelfFill extends Module {
 
             if (this.hand == EnumHand.MAIN_HAND) {
                 this.oldSlot = mc.player.inventory.currentItem;
-                InventoryUtil.swap(slot, this.swap.getValue());
+                Inferno.inventoryManager.swap(slot, this.swap.getValue());
             }
         } else {
             // @todo
@@ -76,7 +77,7 @@ public class SelfFill extends Module {
         this.hand = null;
 
         if (this.oldSlot != -1 && fullNullCheck()) {
-            InventoryUtil.swap(this.oldSlot, this.swap.getValue());
+            Inferno.inventoryManager.swap(this.oldSlot, this.swap.getValue());
         }
 
         this.oldSlot = -1;

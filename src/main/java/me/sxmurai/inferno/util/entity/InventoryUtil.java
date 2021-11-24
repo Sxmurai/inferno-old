@@ -1,12 +1,12 @@
 package me.sxmurai.inferno.util.entity;
 
+import me.sxmurai.inferno.Inferno;
 import me.sxmurai.inferno.util.Util;
 import net.minecraft.block.Block;
 import net.minecraft.inventory.ClickType;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
-import net.minecraft.network.play.client.CPacketHeldItemChange;
 import net.minecraft.util.EnumHand;
 
 public class InventoryUtil implements Util {
@@ -70,20 +70,6 @@ public class InventoryUtil implements Util {
         return mc.player.getHeldItem(hand);
     }
 
-    public static void swap(int slot, Swap swap) {
-        if (swap == Swap.None) {
-            return;
-        }
-
-        mc.player.connection.sendPacket(new CPacketHeldItemChange(slot));
-
-        if (swap == Swap.Legit) {
-            mc.player.inventory.currentItem = slot;
-        }
-
-        mc.playerController.updateController();
-    }
-
     public static class Task {
         private final int slot;
         private final boolean update;
@@ -96,14 +82,10 @@ public class InventoryUtil implements Util {
         }
 
         public void run() {
-            mc.playerController.windowClick(0, this.slot, 0, this.shiftClick ? ClickType.QUICK_MOVE : ClickType.PICKUP, mc.player);
+            Inferno.inventoryManager.click(this.slot, this.shiftClick ? ClickType.QUICK_MOVE : ClickType.PICKUP);
             if (this.update) {
                 mc.playerController.updateController();
             }
         }
-    }
-
-    public enum Swap {
-        None, Legit, Silent
     }
 }

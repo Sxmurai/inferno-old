@@ -4,6 +4,7 @@ import me.sxmurai.inferno.Inferno;
 import me.sxmurai.inferno.impl.event.entity.EntityRemoveEvent;
 import me.sxmurai.inferno.impl.event.network.PacketEvent;
 import me.sxmurai.inferno.impl.features.module.Module;
+import me.sxmurai.inferno.impl.manager.InventoryManager;
 import me.sxmurai.inferno.impl.settings.Setting;
 import me.sxmurai.inferno.util.entity.DamageUtil;
 import me.sxmurai.inferno.util.entity.EntityUtil;
@@ -57,8 +58,8 @@ public class AutoCrystal extends Module {
     public final Setting<Boolean> destroyPacket = new Setting<>("DestroyPacket", true);
 
     public final Setting<Boolean> await = new Setting<>("Await", true);
-    public final Setting<InventoryUtil.Swap> swap = new Setting<>("Swap", InventoryUtil.Swap.Legit);
-    public final Setting<Integer> swapDelay = new Setting<>("SwapDelay", 2, 0, 12, () -> this.swap.getValue() != InventoryUtil.Swap.None);
+    public final Setting<InventoryManager.Swap> swap = new Setting<>("Swap", InventoryManager.Swap.Legit);
+    public final Setting<Integer> swapDelay = new Setting<>("SwapDelay", 2, 0, 12, () -> this.swap.getValue() != InventoryManager.Swap.None);
     public final Setting<Raytrace> raytrace = new Setting<>("Raytrace", Raytrace.Base);
     public final Setting<Boolean> sync = new Setting<>("Sync", true);
     public final Setting<Boolean> safe = new Setting<>("Safe", true);
@@ -89,7 +90,7 @@ public class AutoCrystal extends Module {
     @Override
     protected void onDeactivated() {
         if (fullNullCheck() && this.oldSlot != -1) {
-            InventoryUtil.swap(this.oldSlot, this.swap.getValue());
+            Inferno.inventoryManager.swap(this.oldSlot, this.swap.getValue());
         }
 
         this.oldSlot = -1;
@@ -352,7 +353,7 @@ public class AutoCrystal extends Module {
         }
 
         if (!InventoryUtil.isHolding(Items.END_CRYSTAL, true)) {
-            if (this.swap.getValue() != InventoryUtil.Swap.None && this.placePos != null) {
+            if (this.swap.getValue() != InventoryManager.Swap.None && this.placePos != null) {
                 int slot = InventoryUtil.getHotbarItemSlot(Items.END_CRYSTAL, true);
                 if (slot == -1) {
                     return false;
@@ -361,7 +362,7 @@ public class AutoCrystal extends Module {
                 this.hand = slot == InventoryUtil.OFFHAND_SLOT ? EnumHand.OFF_HAND : EnumHand.MAIN_HAND;
                 if (this.hand == EnumHand.MAIN_HAND) {
                     this.oldSlot = mc.player.inventory.currentItem;
-                    InventoryUtil.swap(slot, this.swap.getValue());
+                    Inferno.inventoryManager.swap(slot, this.swap.getValue());
                 }
 
                 if (this.hand == null) {

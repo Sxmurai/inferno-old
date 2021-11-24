@@ -1,8 +1,10 @@
 package me.sxmurai.inferno.impl.features.module.modules.player;
 
+import me.sxmurai.inferno.Inferno;
 import me.sxmurai.inferno.impl.event.world.DamageBlockEvent;
 import me.sxmurai.inferno.impl.event.world.DestroyBlockEvent;
 import me.sxmurai.inferno.impl.features.module.Module;
+import me.sxmurai.inferno.impl.manager.InventoryManager;
 import me.sxmurai.inferno.impl.settings.Setting;
 import me.sxmurai.inferno.util.entity.InventoryUtil;
 import net.minecraft.item.ItemPickaxe;
@@ -19,7 +21,7 @@ public class Speedmine extends Module {
     public final Setting<Boolean> reset = new Setting<>("Reset", true);
     public final Setting<Double> distance = new Setting<>("Distance", 6.0, 1.0, 15.0);
     public final Setting<Boolean> doubleBreak = new Setting<>("Double", false);
-    public final Setting<InventoryUtil.Swap> swap = new Setting<>("Swap", InventoryUtil.Swap.None);
+    public final Setting<InventoryManager.Swap> swap = new Setting<>("Swap", InventoryManager.Swap.None);
     public final Setting<Render> render = new Setting<>("Render", Render.Filled);
 
     private BlockPos pos;
@@ -48,11 +50,11 @@ public class Speedmine extends Module {
             this.pos = event.getPos();
             mc.playerController.isHittingBlock = this.reset.getValue();
 
-            if (this.swap.getValue() != InventoryUtil.Swap.None) {
+            if (this.swap.getValue() != InventoryManager.Swap.None) {
                 int slot = InventoryUtil.getHotbarItemSlot(ItemPickaxe.class, false);
                 if (slot != -1) {
                     this.oldSlot = mc.player.inventory.currentItem;
-                    InventoryUtil.swap(slot, this.swap.getValue());
+                    Inferno.inventoryManager.swap(slot, this.swap.getValue());
                 }
             }
 
@@ -95,7 +97,7 @@ public class Speedmine extends Module {
 
     private void swapBack() {
         if (this.oldSlot != -1) {
-            InventoryUtil.swap(this.oldSlot, this.swap.getValue());
+            Inferno.inventoryManager.swap(this.oldSlot, this.swap.getValue());
             this.oldSlot = -1;
         }
     }
