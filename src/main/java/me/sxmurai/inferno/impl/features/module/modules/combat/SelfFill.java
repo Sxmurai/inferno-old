@@ -1,9 +1,10 @@
 package me.sxmurai.inferno.impl.features.module.modules.combat;
 
-import me.sxmurai.inferno.impl.settings.Setting;
-import me.sxmurai.inferno.util.world.BlockUtil;
-import me.sxmurai.inferno.util.entity.InventoryUtil;
+import me.sxmurai.inferno.Inferno;
 import me.sxmurai.inferno.impl.features.module.Module;
+import me.sxmurai.inferno.impl.manager.InteractionManager;
+import me.sxmurai.inferno.impl.settings.Setting;
+import me.sxmurai.inferno.util.entity.InventoryUtil;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
@@ -89,7 +90,7 @@ public class SelfFill extends Module {
             mc.player.connection.sendPacket(new CPacketPlayer.Position(mc.player.posX, mc.player.posY + 1.00133597911214, mc.player.posZ, true));
             mc.player.connection.sendPacket(new CPacketPlayer.Position(mc.player.posX, mc.player.posY + 1.16610926093821, mc.player.posZ, true));
 
-            BlockUtil.place(this.origin, this.hand, true, this.sneak.getValue(), this.swing.getValue(), this.rotate.getValue());
+            Inferno.interactionManager.place(this.origin, InteractionManager.Placement.Packet, this.hand, this.rotate.getValue(), this.swing.getValue(), this.sneak.getValue());
 
             mc.player.connection.sendPacket(new CPacketPlayer.Position(mc.player.posX, mc.player.posY + this.rubberband.getValue(), mc.player.posZ, true));
 

@@ -1,10 +1,10 @@
 package me.sxmurai.inferno.impl.features.module.modules.render;
 
 import me.sxmurai.inferno.impl.event.entity.TotemPopEvent;
-import me.sxmurai.inferno.impl.settings.Setting;
-import me.sxmurai.inferno.util.render.ColorUtil;
 import me.sxmurai.inferno.impl.features.module.Module;
+import me.sxmurai.inferno.impl.settings.Setting;
 import me.sxmurai.inferno.impl.ui.Animation;
+import me.sxmurai.inferno.util.render.ColorUtil;
 import net.minecraft.client.entity.EntityOtherPlayerMP;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;

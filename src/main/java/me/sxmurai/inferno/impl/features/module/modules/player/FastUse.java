@@ -1,9 +1,9 @@
 package me.sxmurai.inferno.impl.features.module.modules.player;
 
+import me.sxmurai.inferno.impl.features.module.Module;
 import me.sxmurai.inferno.impl.settings.Setting;
 import me.sxmurai.inferno.util.entity.InventoryUtil;
 import me.sxmurai.inferno.util.timing.TickTimer;
-import me.sxmurai.inferno.impl.features.module.Module;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemBlock;
 

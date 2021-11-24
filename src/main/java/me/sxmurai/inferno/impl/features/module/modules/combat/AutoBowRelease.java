@@ -1,11 +1,11 @@
 package me.sxmurai.inferno.impl.features.module.modules.combat;
 
+import me.sxmurai.inferno.Inferno;
+import me.sxmurai.inferno.impl.features.module.Module;
 import me.sxmurai.inferno.impl.settings.Setting;
 import me.sxmurai.inferno.util.entity.InventoryUtil;
 import me.sxmurai.inferno.util.timing.TickTimer;
-import me.sxmurai.inferno.impl.features.module.Module;
 import net.minecraft.init.Items;
-import net.minecraft.network.play.client.CPacketPlayerDigging;
 
 @Module.Define(name = "AutoBowRelease", category = Module.Category.Combat)
 @Module.Info(description = "Automatically releases your bow for you")
@@ -22,8 +22,7 @@ public class AutoBowRelease extends Module {
             this.timer.reset();
 
             if (InventoryUtil.isHolding(Items.BOW, this.offhand.getValue()) && mc.player.getItemInUseMaxCount() >= this.amount.getValue()) {
-                mc.player.connection.sendPacket(new CPacketPlayerDigging(CPacketPlayerDigging.Action.RELEASE_USE_ITEM, mc.player.getPosition(), mc.player.getHorizontalFacing()));
-                mc.player.stopActiveHand();
+                Inferno.interactionManager.releaseItem();
             }
         }
     }

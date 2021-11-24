@@ -1,18 +1,17 @@
 package me.sxmurai.inferno.impl.features.module.modules.combat;
 
 import me.sxmurai.inferno.Inferno;
+import me.sxmurai.inferno.impl.features.module.Module;
 import me.sxmurai.inferno.impl.settings.Setting;
 import me.sxmurai.inferno.util.entity.DamageUtil;
 import me.sxmurai.inferno.util.entity.EntityUtil;
 import me.sxmurai.inferno.util.entity.InventoryUtil;
 import me.sxmurai.inferno.util.timing.TickTimer;
-import me.sxmurai.inferno.impl.features.module.Module;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemSword;
 import net.minecraft.network.play.client.CPacketEntityAction;
 import net.minecraft.network.play.client.CPacketPlayer;
-import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 
 import java.util.Comparator;
@@ -90,11 +89,7 @@ public class Aura extends Module {
                 mc.player.connection.sendPacket(new CPacketEntityAction(mc.player, this.sprint.getValue().action));
             }
 
-            mc.playerController.attackEntity(mc.player, this.target);
-
-            if (swing.getValue()) {
-                mc.player.swingArm(EnumHand.MAIN_HAND);
-            }
+            Inferno.interactionManager.attack(this.target, false, this.rotate.getValue(), this.swing.getValue());
 
             if (this.sprint.getValue() == Sprint.Start) {
                 mc.player.connection.sendPacket(new CPacketEntityAction(mc.player, CPacketEntityAction.Action.STOP_SPRINTING));

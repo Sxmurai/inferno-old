@@ -1,8 +1,8 @@
 package me.sxmurai.inferno.impl.features.module.modules.render;
 
+import me.sxmurai.inferno.impl.features.module.Module;
 import me.sxmurai.inferno.impl.settings.Setting;
 import me.sxmurai.inferno.util.render.ColorUtil;
-import me.sxmurai.inferno.impl.features.module.Module;
 
 @Module.Define(name = "Chams", category = Module.Category.Render)
 @Module.Info(description = "Renders entities differently")

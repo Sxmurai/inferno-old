@@ -1,6 +1,9 @@
 package me.sxmurai.inferno.impl.features.module.modules.combat;
 
 import me.sxmurai.inferno.Inferno;
+import me.sxmurai.inferno.impl.event.entity.EntityRemoveEvent;
+import me.sxmurai.inferno.impl.event.network.PacketEvent;
+import me.sxmurai.inferno.impl.features.module.Module;
 import me.sxmurai.inferno.impl.settings.Setting;
 import me.sxmurai.inferno.util.entity.DamageUtil;
 import me.sxmurai.inferno.util.entity.EntityUtil;
@@ -10,9 +13,6 @@ import me.sxmurai.inferno.util.render.ColorUtil;
 import me.sxmurai.inferno.util.render.RenderUtil;
 import me.sxmurai.inferno.util.timing.TickTimer;
 import me.sxmurai.inferno.util.world.BlockUtil;
-import me.sxmurai.inferno.impl.event.entity.EntityRemoveEvent;
-import me.sxmurai.inferno.impl.event.network.PacketEvent;
-import me.sxmurai.inferno.impl.features.module.Module;
 import me.sxmurai.inferno.util.world.CrystalUtil;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityEnderCrystal;

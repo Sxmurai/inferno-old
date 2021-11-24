@@ -1,9 +1,9 @@
 package me.sxmurai.inferno.impl.features.module.modules.movement;
 
-import me.sxmurai.inferno.util.world.BlockUtil;
-import me.sxmurai.inferno.util.timing.TickTimer;
 import me.sxmurai.inferno.impl.features.module.Module;
 import me.sxmurai.inferno.impl.settings.Setting;
+import me.sxmurai.inferno.util.timing.TickTimer;
+import me.sxmurai.inferno.util.world.BlockUtil;
 import net.minecraft.network.play.client.CPacketEntityAction;
 
 @Module.Define(name = "FastFall", category = Module.Category.Movement)

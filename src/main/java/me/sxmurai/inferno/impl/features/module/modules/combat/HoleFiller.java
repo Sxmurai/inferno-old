@@ -3,6 +3,7 @@ package me.sxmurai.inferno.impl.features.module.modules.combat;
 import me.sxmurai.inferno.Inferno;
 import me.sxmurai.inferno.impl.features.module.Module;
 import me.sxmurai.inferno.impl.manager.HoleManager;
+import me.sxmurai.inferno.impl.manager.InteractionManager;
 import me.sxmurai.inferno.impl.settings.Setting;
 import me.sxmurai.inferno.util.entity.InventoryUtil;
 import me.sxmurai.inferno.util.timing.TickTimer;
@@ -28,7 +29,7 @@ public class HoleFiller extends Module {
     public final Setting<Double> range = new Setting<>("Range", 4.0, 1.0, 6.0);
     public final Setting<Integer> blocks = new Setting<>("Blocks", 1, 1, 5);
     public final Setting<Integer> delay = new Setting<>("Delay", 1, 0, 20);
-    public final Setting<Boolean> packet = new Setting<>("Packet", false);
+    public final Setting<InteractionManager.Placement> place = new Setting<>("Place", InteractionManager.Placement.Legit);
     public final Setting<Boolean> swing = new Setting<>("Swing", true);
     public final Setting<Boolean> rotate = new Setting<>("Rotate", true);
 
@@ -111,7 +112,7 @@ public class HoleFiller extends Module {
                         continue;
                     }
 
-                    BlockUtil.place(pos, this.hand, this.packet.getValue(), false, this.swing.getValue(), this.rotate.getValue());
+                    Inferno.interactionManager.place(pos, this.place.getValue(), this.hand, this.rotate.getValue(), this.swing.getValue(), false);
                 }
             }
         }

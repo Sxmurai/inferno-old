@@ -1,7 +1,9 @@
 package me.sxmurai.inferno.impl.features.module.modules.combat;
 
+import me.sxmurai.inferno.Inferno;
 import me.sxmurai.inferno.impl.event.entity.JumpEvent;
 import me.sxmurai.inferno.impl.features.module.Module;
+import me.sxmurai.inferno.impl.manager.InteractionManager;
 import me.sxmurai.inferno.impl.settings.Setting;
 import me.sxmurai.inferno.util.entity.InventoryUtil;
 import me.sxmurai.inferno.util.entity.MovementUtil;
@@ -24,6 +26,7 @@ public class Surround extends Module {
     public final Setting<MovementUtil.Center> center = new Setting<>("Center", MovementUtil.Center.Teleport);
     public final Setting<InventoryUtil.Swap> swap = new Setting<>("Swap", InventoryUtil.Swap.Legit);
     public final Setting<Disable> disable = new Setting<>("Disable", Disable.Finished);
+    public final Setting<InteractionManager.Placement> place = new Setting<>("Place", InteractionManager.Placement.Legit);
     public final Setting<Boolean> rotate = new Setting<>("Rotate", true);
     public final Setting<Boolean> swing = new Setting<>("Swing", true);
     public final Setting<Boolean> sneak = new Setting<>("Sneak", false);
@@ -119,7 +122,7 @@ public class Surround extends Module {
                         break;
                     }
 
-                    BlockUtil.place(pos, this.hand, false, this.sneak.getValue(), this.swing.getValue(), this.rotate.getValue());
+                    Inferno.interactionManager.place(pos, this.place.getValue(), this.hand, this.rotate.getValue(), this.swing.getValue(), this.sneak.getValue());
                 }
             }
         }

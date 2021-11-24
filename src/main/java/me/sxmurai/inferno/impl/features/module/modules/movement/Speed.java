@@ -1,11 +1,11 @@
 package me.sxmurai.inferno.impl.features.module.modules.movement;
 
-import me.sxmurai.inferno.impl.settings.Setting;
-import me.sxmurai.inferno.util.entity.MovementUtil;
 import me.sxmurai.inferno.impl.event.entity.MoveEvent;
 import me.sxmurai.inferno.impl.event.entity.UpdateWalkingPlayerEvent;
 import me.sxmurai.inferno.impl.event.network.PacketEvent;
 import me.sxmurai.inferno.impl.features.module.Module;
+import me.sxmurai.inferno.impl.settings.Setting;
+import me.sxmurai.inferno.util.entity.MovementUtil;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.init.MobEffects;
 import net.minecraft.network.play.server.SPacketPlayerPosLook;

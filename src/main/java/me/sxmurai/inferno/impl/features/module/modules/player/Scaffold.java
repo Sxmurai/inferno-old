@@ -1,6 +1,8 @@
 package me.sxmurai.inferno.impl.features.module.modules.player;
 
+import me.sxmurai.inferno.Inferno;
 import me.sxmurai.inferno.impl.features.module.Module;
+import me.sxmurai.inferno.impl.manager.InteractionManager;
 import me.sxmurai.inferno.impl.settings.Setting;
 import me.sxmurai.inferno.util.entity.InventoryUtil;
 import me.sxmurai.inferno.util.timing.Timer;
@@ -15,7 +17,7 @@ import net.minecraft.util.math.BlockPos;
 public class Scaffold extends Module {
     public final Setting<Boolean> tower = new Setting<>("Tower", true);
     public final Setting<InventoryUtil.Swap> swap = new Setting<>("Swap", InventoryUtil.Swap.Legit);
-    public final Setting<Place> place = new Setting<>("Place", Place.Vanilla);
+    public final Setting<InteractionManager.Placement> place = new Setting<>("Place", InteractionManager.Placement.Legit);
     public final Setting<Boolean> rotate = new Setting<>("Rotate", true);
     public final Setting<Boolean> swing = new Setting<>("Swing", true);
     public final Setting<Boolean> sneak = new Setting<>("Sneak", false);
@@ -56,7 +58,7 @@ public class Scaffold extends Module {
                 return;
             }
 
-            BlockUtil.place(below, hand, this.place.getValue() == Place.Packet, this.sneak.getValue(), this.swing.getValue(), this.rotate.getValue());
+            Inferno.interactionManager.place(below, this.place.getValue(), hand, this.rotate.getValue(), this.swing.getValue(), this.sneak.getValue());
 
             if (!mc.world.isAirBlock(below) && mc.gameSettings.keyBindJump.isKeyDown() && direction == EnumFacing.DOWN && this.tower.getValue()) {
                 mc.player.motionX *= 0.3;
