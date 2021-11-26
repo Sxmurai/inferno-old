@@ -42,7 +42,9 @@ public class ModuleManager {
                 new Surround(),
 
                 // miscellaneous
+                new AutoRespawn(),
                 new FakePlayer(),
+                new MiddleClick(),
                 new NoHandshake(),
                 new Suffix(),
 
@@ -58,11 +60,9 @@ public class ModuleManager {
 
                 // player
                 new AntiVoid(),
-                new AutoRespawn(),
                 new FastUse(),
                 new HotbarRefill(),
                 new Interact(),
-                new MiddleClick(),
                 new MultiTask(),
                 new Portal(),
                 new Reach(),
