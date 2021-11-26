@@ -13,7 +13,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import java.util.ArrayList;
 
 @Module.Define(name = "Wallhack", category = Module.Category.Render)
-@Module.Info(description = "omg guys im a hacker look i can download an xray texture pack!!111!!")
+@Module.Info(description = "Allows you to see blocks through walls")
 public class Wallhack extends Module {
     public static Wallhack INSTANCE;
     public static ArrayList<Block> blocks = new ArrayList<>();
