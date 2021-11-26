@@ -25,48 +25,46 @@ public class Velocity extends Module {
 
     @SubscribeEvent
     public void onPacketReceive(PacketEvent.Receive event) {
-        if (fullNullCheck()) {
-            if (event.getPacket() instanceof SPacketEntityVelocity) {
-                if (!this.knockback.getValue()) {
-                    return;
-                }
+        if (event.getPacket() instanceof SPacketEntityVelocity) {
+            if (!this.knockback.getValue()) {
+                return;
+            }
 
-                SPacketEntityVelocity packet = event.getPacket();
-                if (packet.getEntityID() == mc.player.entityId) {
-                    if (this.horizontal.getValue() == 0.0f && this.vertical.getValue() == 0.0f) {
-                        event.setCanceled(true);
-                        return;
-                    }
-
-                    packet.motionX *= this.horizontal.getValue().intValue();
-                    packet.motionY *= this.vertical.getValue().intValue();
-                    packet.motionZ *= this.horizontal.getValue().intValue();
-                }
-            } else if (event.getPacket() instanceof SPacketExplosion) {
-                if (!this.explosions.getValue()) {
-                    return;
-                }
-
+            SPacketEntityVelocity packet = event.getPacket();
+            if (packet.getEntityID() == mc.player.entityId) {
                 if (this.horizontal.getValue() == 0.0f && this.vertical.getValue() == 0.0f) {
                     event.setCanceled(true);
                     return;
                 }
 
-                SPacketExplosion packet = event.getPacket();
-                packet.motionX *= this.horizontal.getValue();
-                packet.motionY *= this.vertical.getValue();
-                packet.motionZ *= this.horizontal.getValue();
-            } else if (event.getPacket() instanceof SPacketEntityStatus) {
-                if (!this.bobbers.getValue()) {
-                    return;
-                }
+                packet.motionX *= this.horizontal.getValue().intValue();
+                packet.motionY *= this.vertical.getValue().intValue();
+                packet.motionZ *= this.horizontal.getValue().intValue();
+            }
+        } else if (event.getPacket() instanceof SPacketExplosion) {
+            if (!this.explosions.getValue()) {
+                return;
+            }
 
-                SPacketEntityStatus packet = event.getPacket();
-                if (packet.getEntity(mc.world) instanceof EntityFishHook && packet.getOpCode() == 31) {
-                    EntityFishHook hook = (EntityFishHook) packet.getEntity(mc.world);
-                    if (hook.caughtEntity == mc.player) {
-                        event.setCanceled(true);
-                    }
+            if (this.horizontal.getValue() == 0.0f && this.vertical.getValue() == 0.0f) {
+                event.setCanceled(true);
+                return;
+            }
+
+            SPacketExplosion packet = event.getPacket();
+            packet.motionX *= this.horizontal.getValue();
+            packet.motionY *= this.vertical.getValue();
+            packet.motionZ *= this.horizontal.getValue();
+        } else if (event.getPacket() instanceof SPacketEntityStatus) {
+            if (!this.bobbers.getValue()) {
+                return;
+            }
+
+            SPacketEntityStatus packet = event.getPacket();
+            if (packet.getEntity(mc.world) instanceof EntityFishHook && packet.getOpCode() == 31) {
+                EntityFishHook hook = (EntityFishHook) packet.getEntity(mc.world);
+                if (hook.caughtEntity == mc.player) {
+                    event.setCanceled(true);
                 }
             }
         }
@@ -76,25 +74,19 @@ public class Velocity extends Module {
     public void onPush(PushEvent event) {
         if (event.getEntity() == mc.player) {
             switch (event.getMaterial()) {
-                case BLOCKS:
-                    event.setCanceled(this.blocks.getValue());
-                    break;
-
-                case LIQUID:
-                    event.setCanceled(this.liquid.getValue());
-                    break;
-
+                case BLOCKS: event.setCanceled(this.blocks.getValue()); break;
+                case LIQUID: event.setCanceled(this.liquid.getValue()); break;
                 case ENTITY: {
                     if (this.push.getValue()) {
-                        PushEvent.Entity evt = (PushEvent.Entity) event;
+                        PushEvent.Entity pushEvent = (PushEvent.Entity) event;
                         if (this.vertical.getValue() == 0.0f && this.horizontal.getValue() == 0.0f) {
-                            evt.setCanceled(true);
+                            pushEvent.setCanceled(true);
                             return;
                         }
 
-                        evt.setX(evt.getX() * this.horizontal.getValue().doubleValue());
-                        evt.setY(evt.getY() * this.vertical.getValue().doubleValue());
-                        evt.setZ(evt.getZ() * this.horizontal.getValue().doubleValue());
+                        pushEvent.setX(pushEvent.getX() * this.horizontal.getValue().doubleValue());
+                        pushEvent.setY(pushEvent.getY() * this.vertical.getValue().doubleValue());
+                        pushEvent.setZ(pushEvent.getZ() * this.horizontal.getValue().doubleValue());
                         break;
                     }
                 }
