@@ -5,6 +5,7 @@ import me.sxmurai.inferno.impl.event.entity.MoveEvent;
 import me.sxmurai.inferno.impl.event.entity.PushEvent;
 import me.sxmurai.inferno.impl.event.entity.UpdateWalkingPlayerEvent;
 import me.sxmurai.inferno.impl.event.network.PacketEvent;
+import me.sxmurai.inferno.impl.event.world.AddBoxToListEvent;
 import me.sxmurai.inferno.impl.features.module.Module;
 import me.sxmurai.inferno.impl.settings.Setting;
 import me.sxmurai.inferno.util.entity.MovementUtil;
@@ -21,7 +22,7 @@ import java.util.concurrent.ThreadLocalRandom;
 public class PacketFly extends Module {
     public final Setting<Bounds> bounds = new Setting<>("Bounds", Bounds.Positive);
     public final Setting<Double> factor = new Setting<>("Factor", 1.5, 0.1, 5.0);
-    public final Setting<Double> reduction = new Setting<>("Reduction", 0.2, 0.0, 2.0);
+    public final Setting<Phase> phase = new Setting<>("Phase", Phase.Semi);
     public final Setting<Boolean> antiKick = new Setting<>("AntiKick", true);
     public final Setting<Boolean> limitJitter = new Setting<>("LimitJitter", true);
     public final Setting<Boolean> sync = new Setting<>("Sync", true);
@@ -50,31 +51,26 @@ public class PacketFly extends Module {
             if (MovementUtil.isMoving() || mc.gameSettings.keyBindSneak.isKeyDown() || mc.gameSettings.keyBindJump.isKeyDown()) {
                 double speed = this.factor.getValue() / 10.0;
                 if (this.isClipped()) {
-                    speed /= this.reduction.getValue(); // slow down while clipped in a block
+                    speed /= 2.5; // slow down while clipped in a block
                 }
 
                 double[] motion = MovementUtil.getDirectionalSpeed(speed);
-                if (this.reduction.getValue() != 0.0 && MovementUtil.isMoving()) { // we dont want to do this if we're only sneaking/jumping
-                    double random = this.random(-0.325, this.reduction.getValue());
 
-                    motion[0] += (random * -Math.sin(Math.toRadians(mc.player.rotationYaw)));
-                    motion[1] += (random * Math.cos(Math.toRadians(mc.player.rotationYaw)));
-                }
-
-                mc.player.motionX = motion[0];
-                mc.player.motionY = this.getMotionY();
-                mc.player.motionZ = motion[1];
-                mc.player.noClip = true;
-
+                mc.player.setVelocity(motion[0], this.getMotionY(), motion[1]);
                 this.send(mc.player.motionX, mc.player.motionY, mc.player.motionZ);
             }
         }
     }
 
     @SubscribeEvent
+    public void onAddBoxToList(AddBoxToListEvent event) {
+        event.setCanceled(event.getEntity() == mc.player && this.phase.getValue() != Phase.None);
+    }
+
+    @SubscribeEvent
     public void onPush(PushEvent event) {
         if (event.getMaterial() == PushEvent.Type.BLOCKS && event.getEntity() == mc.player) {
-            event.setCanceled(true);
+            event.setCanceled(this.phase.getValue() != Phase.None);
         }
     }
 
@@ -113,7 +109,7 @@ public class PacketFly extends Module {
             motionY = this.factor.getValue() / 10.0;
         }
 
-        if (this.antiKick.getValue() && !this.isClipped()) { // we dont want to go down while clipped, but if we're in the air we'll fall every once in awhile
+        if (this.antiKick.getValue() && !this.isClipped() && !mc.gameSettings.keyBindJump.isKeyDown() && !mc.gameSettings.keyBindSneak.isKeyDown()) { // we dont want to go down while clipped, but if we're in the air we'll fall every once in awhile
             if (mc.player.ticksExisted % 8 == 2) {
                 motionY = -0.0356;
             } else if (mc.player.ticksExisted % 8 == 4) {
@@ -127,6 +123,10 @@ public class PacketFly extends Module {
     }
 
     private double random(double start, double end) {
+        if (end > start) {
+            return end;
+        }
+
         return ThreadLocalRandom.current().nextDouble(start, end);
     }
 
@@ -167,5 +167,9 @@ public class PacketFly extends Module {
             this.y = y;
             this.z = z;
         }
+    }
+
+    public enum Phase {
+        None, Semi, Full
     }
 }
