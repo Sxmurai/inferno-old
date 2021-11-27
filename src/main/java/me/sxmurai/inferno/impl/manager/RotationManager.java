@@ -17,7 +17,7 @@ public class RotationManager implements Wrapper {
 
     @SubscribeEvent
     public void onPacketSend(PacketEvent.Send event) {
-        if (fullNullCheck() && event.getPacket() instanceof CPacketPlayer) {
+        if (event.getPacket() instanceof CPacketPlayer) {
             CPacketPlayer packet = event.getPacket();
             if (packet.rotating && this.rotation.isValid()) {
                 packet.yaw = this.rotation.getYaw();
@@ -40,14 +40,12 @@ public class RotationManager implements Wrapper {
     }
 
     private void reset() {
-        this.rotation.setYaw(-1.0f);
-        this.rotation.setPitch(-1.0f);
+        this.rotation.set(-1.0f, -1.0f);
     }
 
     public void setRotations(float yaw, float pitch) {
         this.timer.reset();
-        this.rotation.setYaw(yaw);
-        this.rotation.setPitch(pitch);
+        this.rotation.set(yaw, pitch);
     }
 
     public void look(Entity entity) {
