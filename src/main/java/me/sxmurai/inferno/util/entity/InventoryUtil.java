@@ -12,6 +12,17 @@ import net.minecraft.util.EnumHand;
 public class InventoryUtil implements Util {
     public static final int OFFHAND_SLOT = 45;
 
+    public static int getInventoryItemSlot(Item item, boolean hotbar) {
+        for (int i = hotbar ? 0 : 9; i < 36; ++i) {
+            ItemStack stack = mc.player.inventory.getStackInSlot(i);
+            if (!stack.isEmpty() && stack.getItem() == item) {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
     public static int getHotbarBlockSlot(Block block, boolean offhand) {
         Item off = getHeld(EnumHand.OFF_HAND).getItem();
         if (offhand && off instanceof ItemBlock && ((ItemBlock) off).getBlock() == block) {

@@ -33,6 +33,7 @@ public class ModuleManager {
                 new AutoArmor(),
                 new AutoBowRelease(),
                 new AutoCrystal(),
+                new AutoTotem(),
                 new Critcals(),
                 new FastProjectile(),
                 new HoleFiller(),
