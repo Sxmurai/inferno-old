@@ -272,14 +272,16 @@ public class AutoCrystal extends Module {
                     continue;
                 }
 
-                float selfDamage = DamageUtil.calculateDamage(new Vec3d(place.x + 0.5, place.y + 1.0, place.z + 0.5), mc.player);
+                Vec3d location = new Vec3d(place).add(0.5, 1.0, 0.5);
+
+                float selfDamage = DamageUtil.calculateDamage(location, mc.player);
                 if (selfDamage + this.damageBias.getValue() >= EntityUtil.getHealth(mc.player) || selfDamage > this.maxLocal.getValue()) {
                     continue;
                 }
 
                 float targetDamage = 0.0f;
                 if (t != null) {
-                    targetDamage = DamageUtil.calculateDamage(new Vec3d(place.x + 0.5, place.y + 1.0, place.z + 0.5), t);
+                    targetDamage = DamageUtil.calculateDamage(location, t);
                     if (selfDamage > targetDamage || targetDamage < this.placeMin.getValue()) {
                         continue;
                     }
@@ -300,7 +302,7 @@ public class AutoCrystal extends Module {
                             continue;
                         }
 
-                        float playerDamage = DamageUtil.calculateDamage(new Vec3d(place.x + 0.5, place.y + 1.0, place.z + 0.5), player);
+                        float playerDamage = DamageUtil.calculateDamage(location, player);
                         if (playerDamage > targetDamage) {
                             t = player;
                             targetDamage = playerDamage;
@@ -326,7 +328,7 @@ public class AutoCrystal extends Module {
                         continue;
                     }
 
-                    float d = DamageUtil.calculateDamage(new Vec3d(neighbor.x + 0.5, neighbor.y + 1.0, neighbor.z + 0.5), t);
+                    float d = DamageUtil.calculateDamage(new Vec3d(neighbor).add(0.5, 1.0, 0.5), t);
                     if (d <= this.faceplaceDamage.getValue()) {
                         continue;
                     }
