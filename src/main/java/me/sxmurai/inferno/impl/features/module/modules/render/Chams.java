@@ -1,6 +1,7 @@
 package me.sxmurai.inferno.impl.features.module.modules.render;
 
 import me.sxmurai.inferno.impl.features.module.Module;
+import me.sxmurai.inferno.impl.settings.EnumConverter;
 import me.sxmurai.inferno.impl.settings.Setting;
 import me.sxmurai.inferno.util.render.ColorUtil;
 
@@ -15,6 +16,11 @@ public class Chams extends Module {
 
     public Chams() {
         INSTANCE = this;
+    }
+
+    @Override
+    public String getDisplayInfo() {
+        return EnumConverter.getActualName(this.mode.getValue());
     }
 
     public enum Mode {

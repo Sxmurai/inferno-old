@@ -30,6 +30,24 @@ public class AutoTotem extends Module {
     private final TickTimer timer = new TickTimer();
 
     @Override
+    public String getDisplayInfo() {
+        Item item = mc.player.getHeldItemOffhand().getItem();
+
+        // hardcoded shit, cope harder
+        if (item == Items.TOTEM_OF_UNDYING) {
+            return "Totem";
+        } else if (item == Items.GOLDEN_APPLE) {
+            return "GApple";
+        } else if (item == Items.END_CRYSTAL) {
+            return "Crystal";
+        } else if (item == Items.EXPERIENCE_BOTTLE) {
+            return "EXP";
+        }
+
+        return null;
+    }
+
+    @Override
     public void onTick() {
         if (!this.guis.getValue() && !(mc.currentScreen == null || mc.currentScreen instanceof GuiChat || mc.currentScreen instanceof InfernoGUI)) {
             return;

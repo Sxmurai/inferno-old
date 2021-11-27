@@ -4,6 +4,7 @@ import me.sxmurai.inferno.impl.event.entity.MoveEvent;
 import me.sxmurai.inferno.impl.event.entity.UpdateWalkingPlayerEvent;
 import me.sxmurai.inferno.impl.event.network.PacketEvent;
 import me.sxmurai.inferno.impl.features.module.Module;
+import me.sxmurai.inferno.impl.settings.EnumConverter;
 import me.sxmurai.inferno.impl.settings.Setting;
 import me.sxmurai.inferno.util.entity.MovementUtil;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -27,6 +28,11 @@ public class Speed extends Module {
 
     // yport/onground/bhop
     private boolean up = false;
+
+    @Override
+    public String getDisplayInfo() {
+        return EnumConverter.getActualName(this.mode.getValue());
+    }
 
     @Override
     public void onUpdate() {

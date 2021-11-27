@@ -3,6 +3,7 @@ package me.sxmurai.inferno.impl.features.module.modules.movement;
 import me.sxmurai.inferno.impl.event.network.PacketEvent;
 import me.sxmurai.inferno.impl.event.world.AddBoxToListEvent;
 import me.sxmurai.inferno.impl.features.module.Module;
+import me.sxmurai.inferno.impl.settings.EnumConverter;
 import me.sxmurai.inferno.impl.settings.Setting;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
@@ -25,6 +26,11 @@ public class Jesus extends Module {
 
     private double yOffset = 0.0;
     private int floatUpTimer = 0;
+
+    @Override
+    public String getDisplayInfo() {
+        return EnumConverter.getActualName(this.mode.getValue());
+    }
 
     @Override
     public void onUpdate() {

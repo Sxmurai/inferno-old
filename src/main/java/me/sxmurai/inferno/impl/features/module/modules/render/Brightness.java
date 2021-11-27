@@ -1,6 +1,7 @@
 package me.sxmurai.inferno.impl.features.module.modules.render;
 
 import me.sxmurai.inferno.impl.features.module.Module;
+import me.sxmurai.inferno.impl.settings.EnumConverter;
 import me.sxmurai.inferno.impl.settings.Setting;
 import me.sxmurai.inferno.impl.ui.Animation;
 import net.minecraft.init.MobEffects;
@@ -13,6 +14,11 @@ public class Brightness extends Module {
 
     private final Animation animation = new Animation(100.0f, 0.3f, 22L, true);
     public float oldGamma = -1.0f;
+
+    @Override
+    public String getDisplayInfo() {
+        return EnumConverter.getActualName(this.mode.getValue());
+    }
 
     @Override
     protected void onDeactivated() {

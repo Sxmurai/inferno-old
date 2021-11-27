@@ -13,4 +13,9 @@ public class ViewClip extends Module {
     public ViewClip() {
         INSTANCE = this;
     }
+
+    @Override
+    public String getDisplayInfo() {
+        return String.valueOf(distance.getValue());
+    }
 }

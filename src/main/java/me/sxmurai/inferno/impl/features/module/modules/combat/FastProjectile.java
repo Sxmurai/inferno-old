@@ -18,6 +18,11 @@ public class FastProjectile extends Module {
     public final Setting<Integer> spoofs = new Setting<>("Spoofs", 10, 1, 50);
     public final Setting<Double> boost = new Setting<>("Boost", 25.0, 1.0, 200.0);
 
+    @Override
+    public String getDisplayInfo() {
+        return String.valueOf(this.boost.getValue());
+    }
+
     @SubscribeEvent
     public void onPacketSend(PacketEvent.Send event) {
         if (event.getPacket() instanceof CPacketPlayerDigging) {

@@ -2,6 +2,7 @@ package me.sxmurai.inferno.impl.features.module.modules.combat;
 
 import me.sxmurai.inferno.impl.event.network.PacketEvent;
 import me.sxmurai.inferno.impl.features.module.Module;
+import me.sxmurai.inferno.impl.settings.EnumConverter;
 import me.sxmurai.inferno.impl.settings.Setting;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.network.play.client.CPacketPlayer;
@@ -12,6 +13,11 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 @Module.Info(description = "Scores some critical hits for you")
 public class Critcals extends Module {
     public final Setting<Mode> mode = new Setting<>("Mode", Mode.Packet);
+
+    @Override
+    public String getDisplayInfo() {
+        return EnumConverter.getActualName(this.mode.getName());
+    }
 
     @SubscribeEvent
     public void onPacketSend(PacketEvent.Send event) {

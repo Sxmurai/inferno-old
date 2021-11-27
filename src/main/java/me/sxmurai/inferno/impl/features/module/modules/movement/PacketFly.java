@@ -30,6 +30,11 @@ public class PacketFly extends Module {
     private int teleportId = 0;
 
     @Override
+    public String getDisplayInfo() {
+        return String.valueOf(this.factor.getValue());
+    }
+
+    @Override
     protected void onDeactivated() {
         this.teleportId = 0;
 

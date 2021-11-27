@@ -17,6 +17,11 @@ public class AutoBowRelease extends Module {
     private final TickTimer timer = new TickTimer();
 
     @Override
+    public String getDisplayInfo() {
+        return String.valueOf(this.amount.getValue());
+    }
+
+    @Override
     public void onTick() {
         if (this.timer.passed(this.delay.getValue())) {
             this.timer.reset();

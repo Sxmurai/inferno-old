@@ -11,6 +11,11 @@ public class Timer extends Module {
     public final Setting<Float> speed = new Setting<>("Speed", 1.0f, 0.1f, 20.0f, () -> !this.sync.getValue());
 
     @Override
+    public String getDisplayInfo() {
+        return String.valueOf(this.speed.getValue());
+    }
+
+    @Override
     protected void onDeactivated() {
         if (fullNullCheck()) {
             Inferno.tickManager.reset();

@@ -1,6 +1,7 @@
 package me.sxmurai.inferno.impl.features.module.modules.player;
 
 import me.sxmurai.inferno.impl.features.module.Module;
+import me.sxmurai.inferno.impl.settings.EnumConverter;
 import me.sxmurai.inferno.impl.settings.Setting;
 import net.minecraft.network.play.client.CPacketPlayer;
 
@@ -8,6 +9,11 @@ import net.minecraft.network.play.client.CPacketPlayer;
 @Module.Info(description = "Stops you from falling into the void")
 public class AntiVoid extends Module {
     public final Setting<Mode> mode = new Setting<>("Mode", Mode.Suspend);
+
+    @Override
+    public String getDisplayInfo() {
+        return EnumConverter.getActualName(this.mode.getValue());
+    }
 
     @Override
     public void onUpdate() {

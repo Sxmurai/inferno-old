@@ -131,6 +131,10 @@ public class Module implements Wrapper {
         return settings;
     }
 
+    public String getDisplayInfo() {
+        return null;
+    }
+
     @Retention(RetentionPolicy.RUNTIME)
     public @interface Define {
         String name();

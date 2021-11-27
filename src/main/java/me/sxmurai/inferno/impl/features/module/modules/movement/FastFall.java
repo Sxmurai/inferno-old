@@ -2,6 +2,7 @@ package me.sxmurai.inferno.impl.features.module.modules.movement;
 
 import me.sxmurai.inferno.Inferno;
 import me.sxmurai.inferno.impl.features.module.Module;
+import me.sxmurai.inferno.impl.settings.EnumConverter;
 import me.sxmurai.inferno.impl.settings.Setting;
 import me.sxmurai.inferno.util.world.BlockUtil;
 
@@ -14,6 +15,11 @@ public class FastFall extends Module {
     public final Setting<Boolean> liquids = new Setting<>("Liquids", false);
 
     private boolean resetTimer = false;
+
+    @Override
+    public String getDisplayInfo() {
+        return EnumConverter.getActualName(this.mode.getName());
+    }
 
     @Override
     protected void onDeactivated() {

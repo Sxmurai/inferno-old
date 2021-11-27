@@ -23,6 +23,11 @@ public class Velocity extends Module {
     public final Setting<Boolean> push = new Setting<>("NoPush", true);
     public final Setting<Boolean> bobbers = new Setting<>("Bobbers", false);
 
+    @Override
+    public String getDisplayInfo() {
+        return "H: " + this.horizontal.getValue() + "%, V: " + this.vertical.getValue() + "%";
+    }
+
     @SubscribeEvent
     public void onPacketReceive(PacketEvent.Receive event) {
         if (event.getPacket() instanceof SPacketEntityVelocity) {

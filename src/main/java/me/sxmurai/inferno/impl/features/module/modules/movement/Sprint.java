@@ -1,6 +1,7 @@
 package me.sxmurai.inferno.impl.features.module.modules.movement;
 
 import me.sxmurai.inferno.impl.features.module.Module;
+import me.sxmurai.inferno.impl.settings.EnumConverter;
 import me.sxmurai.inferno.impl.settings.Setting;
 import net.minecraft.client.settings.KeyBinding;
 
@@ -8,6 +9,11 @@ import net.minecraft.client.settings.KeyBinding;
 @Module.Info(description = "Makes you automatically sprint")
 public class Sprint extends Module {
     public final Setting<Mode> mode = new Setting<>("Mode", Mode.Legit);
+
+    @Override
+    public String getDisplayInfo() {
+        return EnumConverter.getActualName(this.mode.getValue());
+    }
 
     @Override
     public void onUpdate() {

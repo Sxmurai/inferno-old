@@ -5,6 +5,7 @@ import me.sxmurai.inferno.impl.event.world.DamageBlockEvent;
 import me.sxmurai.inferno.impl.event.world.DestroyBlockEvent;
 import me.sxmurai.inferno.impl.features.module.Module;
 import me.sxmurai.inferno.impl.manager.InventoryManager;
+import me.sxmurai.inferno.impl.settings.EnumConverter;
 import me.sxmurai.inferno.impl.settings.Setting;
 import me.sxmurai.inferno.util.entity.InventoryUtil;
 import me.sxmurai.inferno.util.render.ColorUtil;
@@ -31,6 +32,11 @@ public class Speedmine extends Module {
     private final Timer timer = new Timer();
     private BlockPos pos;
     private int oldSlot = -1;
+
+    @Override
+    public String getDisplayInfo() {
+        return EnumConverter.getActualName(this.mode.getValue());
+    }
 
     @Override
     protected void onDeactivated() {

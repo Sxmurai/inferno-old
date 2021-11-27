@@ -87,6 +87,11 @@ public class AutoCrystal extends Module {
     private final RotationHandler rotationHandler = new RotationHandler();
 
     @Override
+    public String getDisplayInfo() {
+        return this.target == null ? null : this.target.getName();
+    }
+
+    @Override
     protected void onDeactivated() {
         if (fullNullCheck() && this.oldSlot != -1) {
             Inferno.inventoryManager.swap(this.oldSlot, this.swap.getValue());

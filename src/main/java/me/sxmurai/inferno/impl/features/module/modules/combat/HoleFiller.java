@@ -41,6 +41,11 @@ public class HoleFiller extends Module {
     private EnumHand hand;
 
     @Override
+    public String getDisplayInfo() {
+        return String.valueOf(this.positions.size());
+    }
+
+    @Override
     protected void onDeactivated() {
         if (fullNullCheck()) {
             this.swapBack();

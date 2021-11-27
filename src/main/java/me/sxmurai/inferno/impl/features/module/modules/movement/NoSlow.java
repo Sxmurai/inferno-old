@@ -2,6 +2,7 @@ package me.sxmurai.inferno.impl.features.module.modules.movement;
 
 import me.sxmurai.inferno.impl.event.network.PacketEvent;
 import me.sxmurai.inferno.impl.features.module.Module;
+import me.sxmurai.inferno.impl.settings.EnumConverter;
 import me.sxmurai.inferno.impl.settings.Setting;
 import net.minecraft.client.gui.GuiChat;
 import net.minecraft.client.settings.KeyBinding;
@@ -40,6 +41,11 @@ public class NoSlow extends Module {
 
     public NoSlow() {
         INSTANCE = this;
+    }
+
+    @Override
+    public String getDisplayInfo() {
+        return EnumConverter.getActualName(this.bypass.getValue());
     }
 
     @Override

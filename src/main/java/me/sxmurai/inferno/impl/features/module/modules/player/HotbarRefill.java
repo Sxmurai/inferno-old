@@ -26,6 +26,11 @@ public class HotbarRefill extends Module {
     private final TickTimer timer = new TickTimer();
 
     @Override
+    public String getDisplayInfo() {
+        return String.valueOf(this.threshold.getValue());
+    }
+
+    @Override
     protected void onDeactivated() {
         this.hotbar.clear();
     }

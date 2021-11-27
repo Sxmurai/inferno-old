@@ -42,6 +42,11 @@ public class Aura extends Module {
     private int oldSlot = -1;
 
     @Override
+    public String getDisplayInfo() {
+        return this.target == null ? null : this.target.getName();
+    }
+
+    @Override
     public void onUpdate() {
         if (this.isInvalid(this.target)) {
             this.target = null;
