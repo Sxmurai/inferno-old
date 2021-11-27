@@ -13,16 +13,16 @@ public class Timer extends Module {
     @Override
     protected void onDeactivated() {
         if (fullNullCheck()) {
-            mc.timer.tickLength = 50.0f;
+            Inferno.tickManager.reset();
         }
     }
 
     @Override
     public void onUpdate() {
         if (this.sync.getValue()) {
-            mc.timer.tickLength = 1000.0f / (float) Inferno.serverManager.getTps();
+            Inferno.tickManager.setTicks(1000.0f, (float) Inferno.serverManager.getTps());
         } else {
-            mc.timer.tickLength = 50.0f / this.speed.getValue();
+            Inferno.tickManager.setTicks(this.speed.getValue());
         }
     }
 }
