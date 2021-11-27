@@ -77,8 +77,4 @@ public class Scaffold extends Module {
             }
         }
     }
-
-    public enum Place {
-        Vanilla, Packet
-    }
 }
