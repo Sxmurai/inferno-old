@@ -62,8 +62,8 @@ public class AutoCrystal extends Module {
     public final Setting<Integer> swapDelay = new Setting<>("SwapDelay", 2, 0, 12, () -> this.swap.getValue() != InventoryManager.Swap.None);
     public final Setting<Raytrace> raytrace = new Setting<>("Raytrace", Raytrace.Base);
     public final Setting<Boolean> sync = new Setting<>("Sync", true);
-    public final Setting<Boolean> safe = new Setting<>("Safe", true);
     public final Setting<Float> maxLocal = new Setting<>("MaxLocal", 12.0f, 1.0f, 36.0f);
+    public final Setting<Float> damageBias = new Setting<>("DamageBias", 0.5f, 0.0f, 20.0f);
     public final Setting<Boolean> swing = new Setting<>("Swing", true);
     public final Setting<Boolean> rotate = new Setting<>("Rotate", true);
     public final Setting<YawStep> yawStep = new Setting<>("YawStep", YawStep.Semi);
@@ -274,7 +274,7 @@ public class AutoCrystal extends Module {
                 }
 
                 float selfDamage = DamageUtil.calculateDamage(new Vec3d(place.x + 0.5, place.y + 1.0, place.z + 0.5), mc.player);
-                if ((this.safe.getValue() && selfDamage + 0.5f >= EntityUtil.getHealth(mc.player)) || selfDamage + 0.5f > this.maxLocal.getValue()) {
+                if (selfDamage + this.damageBias.getValue() >= EntityUtil.getHealth(mc.player) || selfDamage > this.maxLocal.getValue()) {
                     continue;
                 }
 
