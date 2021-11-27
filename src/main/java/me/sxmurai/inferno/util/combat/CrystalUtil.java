@@ -1,5 +1,6 @@
 package me.sxmurai.inferno.util.combat;
 
+import me.sxmurai.inferno.Inferno;
 import me.sxmurai.inferno.impl.features.Wrapper;
 import net.minecraft.entity.item.EntityEnderCrystal;
 import net.minecraft.network.play.client.CPacketAnimation;
@@ -32,19 +33,7 @@ public class CrystalUtil implements Wrapper {
     }
 
     public static void destroy(EntityEnderCrystal crystal, EnumHand hand, boolean swing, boolean packet) {
-        mc.player.resetCooldown();
-
-        if (packet) {
-            mc.player.connection.sendPacket(new CPacketUseEntity(crystal));
-        } else {
-            mc.playerController.attackEntity(mc.player, crystal);
-        }
-
-        if (swing) {
-            mc.player.swingArm(hand);
-        } else {
-            mc.player.connection.sendPacket(new CPacketAnimation(hand));
-        }
+        Inferno.interactionManager.attack(crystal, packet, false, swing);
     }
 
     public enum Direction {
