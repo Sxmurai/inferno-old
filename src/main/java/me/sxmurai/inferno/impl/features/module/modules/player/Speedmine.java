@@ -7,10 +7,14 @@ import me.sxmurai.inferno.impl.features.module.Module;
 import me.sxmurai.inferno.impl.manager.InventoryManager;
 import me.sxmurai.inferno.impl.settings.Setting;
 import me.sxmurai.inferno.util.entity.InventoryUtil;
+import me.sxmurai.inferno.util.render.ColorUtil;
+import me.sxmurai.inferno.util.render.RenderUtil;
+import me.sxmurai.inferno.util.timing.Timer;
 import net.minecraft.item.ItemPickaxe;
 import net.minecraft.network.play.client.CPacketAnimation;
 import net.minecraft.network.play.client.CPacketPlayerDigging;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -24,6 +28,7 @@ public class Speedmine extends Module {
     public final Setting<InventoryManager.Swap> swap = new Setting<>("Swap", InventoryManager.Swap.None);
     public final Setting<Render> render = new Setting<>("Render", Render.Filled);
 
+    private final Timer timer = new Timer();
     private BlockPos pos;
     private int oldSlot = -1;
 
@@ -35,9 +40,20 @@ public class Speedmine extends Module {
     }
 
     @Override
+    public void onRenderWorld() {
+        if (this.pos != null && this.render.getValue() != Render.None) {
+            boolean passed = this.timer.passedMs(2000L);
+            int r = passed ? 0 : 255;
+            int g = passed ? 255 : 0;
+
+            RenderUtil.drawEsp(new AxisAlignedBB(this.pos).offset(RenderUtil.getScreen()), this.render.getValue() == Render.Filled || this.render.getValue() == Render.Both, this.render.getValue() == Render.Outline || this.render.getValue() == Render.Both, 1.5f, ColorUtil.getColor(r, g, 0, 80));
+        }
+    }
+
+    @Override
     public void onUpdate() {
         if (this.pos != null) {
-            if (mc.player.getDistance(this.pos.getX(), this.pos.getY(), this.pos.getZ()) > this.distance.getValue()) {
+            if (mc.world.isAirBlock(pos) || mc.player.getDistance(this.pos.getX(), this.pos.getY(), this.pos.getZ()) > this.distance.getValue()) {
                 this.pos = null;
                 this.swapBack();
             }
@@ -48,6 +64,11 @@ public class Speedmine extends Module {
     public void onDamageBlock(DamageBlockEvent event) {
         if (event.getPos() != null) {
             this.pos = event.getPos();
+            if (mc.world.getBlockState(this.pos).getBlock().blockHardness == -1.0f) {
+                this.pos = null;
+                return;
+            }
+
             mc.playerController.isHittingBlock = this.reset.getValue();
 
             if (this.swap.getValue() != InventoryManager.Swap.None) {
@@ -58,7 +79,7 @@ public class Speedmine extends Module {
                 }
             }
 
-            mc.player.connection.sendPacket(new CPacketAnimation(EnumHand.MAIN_HAND));
+            this.timer.reset();
             switch (this.mode.getValue()) {
                 case Packet: {
                     mc.player.connection.sendPacket(new CPacketPlayerDigging(CPacketPlayerDigging.Action.START_DESTROY_BLOCK, event.getPos(), event.getFacing()));
@@ -79,10 +100,13 @@ public class Speedmine extends Module {
                 }
             }
 
+            mc.player.connection.sendPacket(new CPacketAnimation(EnumHand.MAIN_HAND));
+
             if (this.doubleBreak.getValue()) {
                 mc.player.connection.sendPacket(new CPacketPlayerDigging(CPacketPlayerDigging.Action.START_DESTROY_BLOCK, event.getPos(), event.getFacing()));
                 mc.player.connection.sendPacket(new CPacketPlayerDigging(CPacketPlayerDigging.Action.STOP_DESTROY_BLOCK, event.getPos(), event.getFacing()));
                 mc.world.setBlockToAir(this.pos);
+                mc.player.connection.sendPacket(new CPacketAnimation(EnumHand.MAIN_HAND));
             }
         }
     }

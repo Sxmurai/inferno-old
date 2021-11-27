@@ -199,9 +199,9 @@ public class RenderUtil implements Util {
     public static void drawFilledBox(AxisAlignedBB box, int hex) {
         GlStateManager.pushMatrix();
         GlStateManager.enableBlend();
-        GlStateManager.disableDepth();
-        GlStateManager.tryBlendFuncSeparate(770, 771, 0, 1);
+        GlStateManager.tryBlendFuncSeparate(771, 770, 0, 1);
         GlStateManager.disableTexture2D();
+        GlStateManager.disableDepth();
         GlStateManager.depthMask(false);
 
         ColorUtil.Color color = ColorUtil.getColor(hex);
@@ -217,9 +217,9 @@ public class RenderUtil implements Util {
     public static void drawOutlinedBox(AxisAlignedBB box, float width, int hex) {
         GlStateManager.pushMatrix();
         GlStateManager.enableBlend();
-        GlStateManager.disableDepth();
-        GlStateManager.tryBlendFuncSeparate(770, 771, 0, 1);
+        GlStateManager.tryBlendFuncSeparate(771, 770, 0, 1);
         GlStateManager.disableTexture2D();
+        GlStateManager.disableDepth();
         GlStateManager.depthMask(false);
         GL11.glEnable(GL11.GL_LINE_SMOOTH);
         GL11.glHint(GL11.GL_LINE_SMOOTH_HINT, GL11.GL_NICEST);
