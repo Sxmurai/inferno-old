@@ -32,6 +32,10 @@ public class PacketFly extends Module {
     @Override
     protected void onDeactivated() {
         this.teleportId = 0;
+
+        if (fullNullCheck()) {
+            mc.player.noClip = false;
+        }
     }
 
     @SubscribeEvent
@@ -49,14 +53,18 @@ public class PacketFly extends Module {
             mc.player.noClip = true;
 
             if (MovementUtil.isMoving() || mc.gameSettings.keyBindSneak.isKeyDown() || mc.gameSettings.keyBindJump.isKeyDown()) {
-                double speed = this.factor.getValue() / 10.0;
-                if (this.isClipped()) {
-                    speed /= 2.5; // slow down while clipped in a block
+                if (MovementUtil.isMoving()) {
+                    double speed = this.factor.getValue() / 10.0;
+                    if (this.isClipped()) {
+                        speed /= 2.5; // slow down while clipped in a block
+                    }
+
+                    double[] motion = MovementUtil.getDirectionalSpeed(speed);
+                    mc.player.motionX = motion[0];
+                    mc.player.motionZ = motion[1];
                 }
 
-                double[] motion = MovementUtil.getDirectionalSpeed(speed);
-
-                mc.player.setVelocity(motion[0], this.getMotionY(), motion[1]);
+                mc.player.setVelocity(mc.player.motionX, this.getMotionY(), mc.player.motionZ);
                 this.send(mc.player.motionX, mc.player.motionY, mc.player.motionZ);
             }
         }
@@ -69,9 +77,7 @@ public class PacketFly extends Module {
 
     @SubscribeEvent
     public void onPush(PushEvent event) {
-        if (event.getMaterial() == PushEvent.Type.BLOCKS && event.getEntity() == mc.player) {
-            event.setCanceled(this.phase.getValue() != Phase.None);
-        }
+        event.setCanceled(event.getEntity() == mc.player && event.getMaterial() == PushEvent.Type.BLOCKS);
     }
 
     private void send(double x, double y, double z) {
@@ -82,7 +88,6 @@ public class PacketFly extends Module {
 
         if (this.limitJitter.getValue()) {
             mc.player.connection.sendPacket(new CPacketConfirmTeleport(this.teleportId));
-            ++this.teleportId;
         }
     }
 
@@ -131,7 +136,7 @@ public class PacketFly extends Module {
     }
 
     private boolean isClipped() {
-        return !mc.world.getCollisionBoxes(mc.player, mc.player.getEntityBoundingBox().expand(0.0625, 0.0625, 0.0625)).isEmpty();
+        return !mc.world.getCollisionBoxes(mc.player, mc.player.getEntityBoundingBox().contract(0.0625, 0.0625, 0.0625)).isEmpty();
     }
 
     @SubscribeEvent
@@ -143,8 +148,13 @@ public class PacketFly extends Module {
             }
 
             if (this.limitJitter.getValue()) {
+                if (this.teleportId == 0) {
+                    this.teleportId = packet.getTeleportId() + 1;
+                } else {
+                    ++this.teleportId;
+                }
+
                 mc.player.connection.sendPacket(new CPacketConfirmTeleport(packet.getTeleportId()));
-                ++this.teleportId;
             }
 
             if (this.sync.getValue()) {
