@@ -45,7 +45,8 @@ public abstract class MixinEntityPlayerSP extends AbstractClientPlayer {
     public void move(AbstractClientPlayer player, MoverType moverType, double x, double y, double z) {
         MoveEvent event = new MoveEvent(moverType, x, y, z);
         MinecraftForge.EVENT_BUS.post(event);
-        if (!event.isCanceled()) {
+
+        if (!event.isCanceled() || event.stillMove()) {
             super.move(moverType, event.getX(), event.getY(), event.getZ());
         }
     }

@@ -9,6 +9,8 @@ public class MoveEvent extends Event {
     private final MoverType moverType;
     private double x, y, z;
 
+    private boolean stillMove = true;
+
     public MoveEvent(MoverType moverType, double x, double y, double z) {
         this.moverType = moverType;
         this.x = x;
@@ -42,5 +44,14 @@ public class MoveEvent extends Event {
 
     public void setZ(double z) {
         this.z = z;
+    }
+
+    public void setCanceled(boolean cancel, boolean stillMove) {
+        super.setCanceled(cancel);
+        this.stillMove = stillMove;
+    }
+
+    public boolean stillMove() {
+        return stillMove;
     }
 }
