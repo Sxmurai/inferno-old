@@ -55,7 +55,6 @@ public class AutoCrystal extends Module {
     public final Setting<Float> destroyMin = new Setting<>("DestroyMin", 4.0f, 1.0f, 36.0f);
     public final Setting<Boolean> inhibit = new Setting<>("Inhibit", true);
     public final Setting<Integer> ticksExisted = new Setting<>("TicksExisted", 2, 0, 20);
-    public final Setting<Boolean> destroyPacket = new Setting<>("DestroyPacket", true);
 
     public final Setting<Boolean> await = new Setting<>("Await", true);
     public final Setting<InventoryManager.Swap> swap = new Setting<>("Swap", InventoryManager.Swap.Legit);
@@ -255,7 +254,7 @@ public class AutoCrystal extends Module {
             if (this.crystal != null) {
                 this.placePos = null;
                 this.updateRotations();
-                CrystalUtil.destroy(this.crystal, this.hand, this.swing.getValue(), this.destroyPacket.getValue());
+                CrystalUtil.destroy(this.crystal, this.hand, this.swing.getValue());
                 this.destroyTimer.reset();
             }
         }

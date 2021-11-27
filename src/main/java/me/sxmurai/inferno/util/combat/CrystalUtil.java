@@ -32,8 +32,8 @@ public class CrystalUtil implements Wrapper {
         }
     }
 
-    public static void destroy(EntityEnderCrystal crystal, EnumHand hand, boolean swing, boolean packet) {
-        Inferno.interactionManager.attack(crystal, packet, false, swing);
+    public static void destroy(EntityEnderCrystal crystal, EnumHand hand, boolean swing) {
+        Inferno.interactionManager.attack(crystal, true, false, swing);
     }
 
     public enum Direction {
