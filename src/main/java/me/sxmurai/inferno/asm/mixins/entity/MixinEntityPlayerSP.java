@@ -1,7 +1,6 @@
 package me.sxmurai.inferno.asm.mixins.entity;
 
 import com.mojang.authlib.GameProfile;
-import me.sxmurai.inferno.Inferno;
 import me.sxmurai.inferno.impl.event.entity.MoveEvent;
 import me.sxmurai.inferno.impl.event.entity.PushEvent;
 import me.sxmurai.inferno.impl.event.entity.UpdateWalkingPlayerEvent;
@@ -53,11 +52,11 @@ public abstract class MixinEntityPlayerSP extends AbstractClientPlayer {
 
     @Inject(method = "onUpdateWalkingPlayer", at = @At("HEAD"), cancellable = true)
     public void onUpdateWalkingPlayerPre(CallbackInfo info) {
-        UpdateWalkingPlayerEvent event = new UpdateWalkingPlayerEvent(UpdateWalkingPlayerEvent.Era.PRE);
+        UpdateWalkingPlayerEvent event = new UpdateWalkingPlayerEvent(UpdateWalkingPlayerEvent.Era.PRE, this.rotationYaw, this.rotationPitch);
         MinecraftForge.EVENT_BUS.post(event);
         if (event.isCanceled()) {
+            this.handlePositioning(event.getYaw(), event.getPitch());
             info.cancel();
-            this.handlePositioning();
         }
     }
 
@@ -77,7 +76,7 @@ public abstract class MixinEntityPlayerSP extends AbstractClientPlayer {
 
     // this is taken exactly from the minecraft code, just the variables are renamed to more human-readable names.
     // this is because we cancel onUpdateWalkingPlayer in our RotationManager, so we want to make sure to sync our states with the server.
-    private void handlePositioning() {
+    private void handlePositioning(float yaw, float pitch) {
         ++this.positionUpdateTicks;
 
         if (this.isSprinting() != this.serverSprintState) {
@@ -91,13 +90,10 @@ public abstract class MixinEntityPlayerSP extends AbstractClientPlayer {
         }
 
         if (this.isCurrentViewEntity()) {
-            boolean moved = this.hasMoved();
-            boolean rotated = this.hasRotated();
-
-            float yaw = Inferno.rotationManager.getYaw(true);
-            float pitch = Inferno.rotationManager.getPitch(true);
-
             double minY = this.getEntityBoundingBox().minY;
+
+            boolean moved = Math.pow(this.posX - this.lastReportedPosX, 2) + Math.pow(minY - this.lastReportedPosY, 2) + Math.pow(this.posZ - this.lastReportedPosZ, 2) > 9.0E-4D || this.positionUpdateTicks >= 20;
+            boolean rotated = yaw - this.lastReportedYaw != 0.0f || pitch - this.lastReportedPitch != 0.0f;
 
             if (this.isRiding()) {
                 mc.player.connection.sendPacket(new CPacketPlayer.PositionRotation(this.motionX, -999.0, this.motionZ, yaw, pitch, this.onGround));
@@ -129,13 +125,5 @@ public abstract class MixinEntityPlayerSP extends AbstractClientPlayer {
             this.prevOnGround = this.onGround;
             this.autoJumpEnabled = mc.gameSettings.autoJump;
         }
-    }
-
-    private boolean hasMoved() {
-        return Math.pow(this.posX - this.lastReportedPosX, 2) + Math.pow(this.getEntityBoundingBox().minY - this.lastReportedPosY, 2) + Math.pow(this.posZ - this.lastReportedPosZ, 2) > 9.0E-4D || this.positionUpdateTicks >= 20;
-    }
-
-    private boolean hasRotated() {
-        return Inferno.rotationManager.getYaw(true) - this.lastReportedYaw != 0.0D || Inferno.rotationManager.getPitch(true) - this.lastReportedPitch != 0.0D;
     }
 }

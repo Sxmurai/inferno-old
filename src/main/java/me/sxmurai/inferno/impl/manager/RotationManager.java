@@ -2,10 +2,9 @@ package me.sxmurai.inferno.impl.manager;
 
 import me.sxmurai.inferno.impl.event.entity.UpdateWalkingPlayerEvent;
 import me.sxmurai.inferno.impl.event.network.PacketEvent;
-import me.sxmurai.inferno.util.entity.MovementUtil;
+import me.sxmurai.inferno.impl.features.Wrapper;
 import me.sxmurai.inferno.util.entity.RotationUtil;
 import me.sxmurai.inferno.util.timing.Timer;
-import me.sxmurai.inferno.impl.features.Wrapper;
 import net.minecraft.entity.Entity;
 import net.minecraft.network.play.client.CPacketPlayer;
 import net.minecraft.util.math.BlockPos;
@@ -19,7 +18,7 @@ public class RotationManager implements Wrapper {
     @SubscribeEvent
     public void onPacketSend(PacketEvent.Send event) {
         if (fullNullCheck() && event.getPacket() instanceof CPacketPlayer) {
-            CPacketPlayer packet = (CPacketPlayer) event.getPacket();
+            CPacketPlayer packet = event.getPacket();
             if (packet.rotating && this.rotation.isValid()) {
                 packet.yaw = this.rotation.getYaw();
                 packet.pitch = this.rotation.getPitch();
@@ -33,6 +32,8 @@ public class RotationManager implements Wrapper {
             if (this.timer.passedMs(375L)) {
                 this.reset();
             } else {
+                event.setYaw(this.getYaw(true));
+                event.setPitch(this.getPitch(true));
                 event.setCanceled(true);
             }
         }
@@ -47,8 +48,6 @@ public class RotationManager implements Wrapper {
         this.timer.reset();
         this.rotation.setYaw(yaw);
         this.rotation.setPitch(pitch);
-
-        //mc.player.connection.sendPacket(new CPacketPlayer.Rotation(yaw, pitch, mc.player.onGround));
     }
 
     public void look(Entity entity) {
