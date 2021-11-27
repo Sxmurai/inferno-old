@@ -36,7 +36,6 @@ public class ModuleManager {
                 new Critcals(),
                 new FastProjectile(),
                 new HoleFiller(),
-                new Offhand(),
                 new Quiver(),
                 new SelfFill(),
                 new Surround(),
