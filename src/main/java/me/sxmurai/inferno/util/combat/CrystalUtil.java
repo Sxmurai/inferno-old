@@ -1,4 +1,4 @@
-package me.sxmurai.inferno.util.world;
+package me.sxmurai.inferno.util.combat;
 
 import me.sxmurai.inferno.impl.features.Wrapper;
 import net.minecraft.entity.item.EntityEnderCrystal;

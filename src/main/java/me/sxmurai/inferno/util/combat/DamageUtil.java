@@ -1,4 +1,4 @@
-package me.sxmurai.inferno.util.entity;
+package me.sxmurai.inferno.util.combat;
 
 import me.sxmurai.inferno.impl.features.Wrapper;
 import me.sxmurai.inferno.util.world.BlockUtil;
