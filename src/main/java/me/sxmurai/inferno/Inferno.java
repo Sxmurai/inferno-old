@@ -36,6 +36,7 @@ public class Inferno {
     public static HudManager hudManager;
     public static InteractionManager interactionManager;
     public static InventoryManager inventoryManager;
+    public static TickManager tickManager;
 
     @SubscribeEvent
     public void onPreInit(FMLPreInitializationEvent event) {
@@ -67,6 +68,7 @@ public class Inferno {
         hudManager = new HudManager();
         interactionManager = new InteractionManager();
         inventoryManager = new InventoryManager();
+        tickManager = new TickManager();
 
         MinecraftForge.EVENT_BUS.register(new EventManager());
         MinecraftForge.EVENT_BUS.register(moduleManager);
