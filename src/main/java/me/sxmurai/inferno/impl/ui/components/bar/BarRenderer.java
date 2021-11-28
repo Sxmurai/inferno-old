@@ -1,5 +1,6 @@
 package me.sxmurai.inferno.impl.ui.components.bar;
 
+import me.sxmurai.inferno.impl.ui.hud.HudEditorScreen;
 import me.sxmurai.inferno.util.render.ColorUtil;
 import me.sxmurai.inferno.util.render.RenderUtil;
 import me.sxmurai.inferno.impl.ui.InfernoGUI;
@@ -25,7 +26,14 @@ public class BarRenderer extends Component {
             }
         });
 
-        this.buttons.add(new CustomTextButton("HUD"));
+        this.buttons.add(new CustomTextButton("HUD") {
+            @Override
+            public void mouseClicked(int mouseX, int mouseY, int button) {
+                super.mouseClicked(mouseX, mouseY, button);
+                mc.displayGuiScreen(HudEditorScreen.getInstance());
+            }
+        });
+
         this.buttons.add(new CustomTextButton("Macros"));
         this.buttons.add(new CustomTextButton("Console"));
     }
@@ -60,6 +68,10 @@ public class BarRenderer extends Component {
     @Override
     public void mouseClicked(int mouseX, int mouseY, int button) {
         super.mouseClicked(mouseX, mouseY, button);
-        this.buttons.forEach((b) -> b.mouseClicked(mouseX, mouseY, button));
+        this.buttons.forEach((b) -> {
+            if (b.isMouseInBounds(mouseX, mouseY)) {
+                b.mouseClicked(mouseX, mouseY, button);
+            }
+        });
     }
 }
