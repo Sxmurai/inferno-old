@@ -1,6 +1,7 @@
 package me.sxmurai.inferno.impl.ui.click.components.other;
 
 import me.sxmurai.inferno.Inferno;
+import me.sxmurai.inferno.impl.features.module.modules.client.Colors;
 import me.sxmurai.inferno.impl.settings.Setting;
 import me.sxmurai.inferno.util.render.RenderUtil;
 import me.sxmurai.inferno.util.render.ScaleUtil;
@@ -35,8 +36,8 @@ public class Slider extends Component {
         double endX = this.x + (this.setting.getValue().floatValue() <= this.setting.getMin().floatValue() ? 0.0 : this.width * this.partialMultiplier());
         double posY = this.y + Inferno.fontManager.getHeight() + 2.0;
 
-        RenderUtil.drawLine(this.x - 0.5, posY, endX - 1.0, posY,1.55f, new Color(253, 31, 31).getRGB());
-        RenderUtil.drawCircle(endX, posY, 1.55, new Color(253, 31, 31).getRGB());
+        RenderUtil.drawLine(this.x - 0.5, posY, endX - 1.0, posY,1.55f, Colors.color());
+        RenderUtil.drawCircle(endX, posY, 1.55, Colors.color());
     }
 
     @Override
