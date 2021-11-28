@@ -32,8 +32,6 @@ public class ConfigManager {
 
     public void saveConfigs() {
         this.configs.forEach((name, config) -> {
-            Inferno.LOGGER.info("Loading {} configuration...", name);
-
             try {
                 StopWatch stopwatch = new StopWatch();
                 stopwatch.start();
@@ -42,7 +40,8 @@ public class ConfigManager {
 
                 Inferno.LOGGER.info("Loaded {} config in {}ms", name, stopwatch.getTime(TimeUnit.MILLISECONDS));
             } catch (Exception e) {
-                Inferno.LOGGER.error("Error loading {} config. \n\n{}", name, e.toString());
+                Inferno.LOGGER.error("Error loading {} config. Stack trace is as follows:", name);
+                e.printStackTrace();
             }
         });
     }
