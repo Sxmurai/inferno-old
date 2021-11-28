@@ -30,19 +30,20 @@ public class Arraylist extends HudComponent {
 
         this.width = modules.stream().mapToDouble((module) -> Inferno.fontManager.getWidth(this.getFullDisplay(module))).max().orElse(0.0);
 
-        modules.sort(Comparator.comparingDouble((mod) -> {
-            double width = Inferno.fontManager.getWidth(this.getFullDisplay(mod));
+        modules.sort(Comparator.comparingInt((mod) -> {
+            int width = Inferno.fontManager.getWidth(this.getFullDisplay(mod));
             return this.quadrant == Quadrant.TopRight || this.quadrant == Quadrant.TopLeft ? -width : width;
         }));
 
-        double textY = this.y + 2.0;
+        double yOffset = 0.0;
         for (Module module : modules) {
             String text = this.getFullDisplay(module);
-            Inferno.fontManager.drawCorrectString(text, this.x - (this.quadrant == Quadrant.TopRight || this.quadrant == Quadrant.BottomRight ? Inferno.fontManager.getWidth(text) : -1.0), textY, Colors.color());
+            Inferno.fontManager.drawCorrectString(text, this.x + (this.quadrant == Quadrant.TopRight || this.quadrant == Quadrant.BottomRight ? (this.width - Inferno.fontManager.getWidth(text)) : 1.0), this.y + yOffset, Colors.color());
 
-            double height = Inferno.fontManager.getHeight() + 2.0;
-            textY -= this.quadrant == Quadrant.BottomRight || this.quadrant == Quadrant.BottomLeft ? height : -height;
+            yOffset += Inferno.fontManager.getHeight() + 2.0;
         }
+
+        this.height = yOffset;
     }
 
     private String getFullDisplay(Module module) {
