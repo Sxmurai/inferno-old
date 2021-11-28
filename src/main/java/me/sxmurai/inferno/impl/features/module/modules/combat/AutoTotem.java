@@ -86,7 +86,7 @@ public class AutoTotem extends Module {
     }
 
     private void setInOffhand(Item item) {
-        if (mc.player.getHeldItemMainhand().getItem() == item || mc.player.getHeldItemOffhand().getItem() == item) {
+        if (mc.player.getHeldItemOffhand().getItem() == item) {
             return;
         }
 
