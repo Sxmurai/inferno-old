@@ -2,10 +2,7 @@ package me.sxmurai.inferno.impl.manager;
 
 import com.google.common.collect.Lists;
 import me.sxmurai.inferno.impl.features.module.Module;
-import me.sxmurai.inferno.impl.features.module.modules.client.CustomFont;
-import me.sxmurai.inferno.impl.features.module.modules.client.GUI;
-import me.sxmurai.inferno.impl.features.module.modules.client.HUD;
-import me.sxmurai.inferno.impl.features.module.modules.client.Notifier;
+import me.sxmurai.inferno.impl.features.module.modules.client.*;
 import me.sxmurai.inferno.impl.features.module.modules.combat.*;
 import me.sxmurai.inferno.impl.features.module.modules.miscellaneous.*;
 import me.sxmurai.inferno.impl.features.module.modules.movement.*;
@@ -23,6 +20,7 @@ public class ModuleManager {
     public ModuleManager() {
         this.modules = Lists.newArrayList(
                 // client
+                new Colors(),
                 new CustomFont(),
                 new GUI(),
                 new HUD(),

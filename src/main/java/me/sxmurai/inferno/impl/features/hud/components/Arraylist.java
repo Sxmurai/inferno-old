@@ -1,8 +1,11 @@
 package me.sxmurai.inferno.impl.features.hud.components;
 
+import com.mojang.realmsclient.gui.ChatFormatting;
 import me.sxmurai.inferno.Inferno;
 import me.sxmurai.inferno.impl.features.hud.HudComponent;
 import me.sxmurai.inferno.impl.features.module.Module;
+import me.sxmurai.inferno.impl.features.module.modules.client.Colors;
+import me.sxmurai.inferno.impl.settings.Setting;
 import net.minecraft.client.gui.ScaledResolution;
 
 import java.util.Comparator;
@@ -10,6 +13,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Arraylist extends HudComponent {
+    public final Setting<Boolean> display = new Setting<>("Display", true);
+
     public Arraylist() {
         super("ArrayList");
         this.height = 100.0;
@@ -33,7 +38,7 @@ public class Arraylist extends HudComponent {
         double textY = this.y + 2.0;
         for (Module module : modules) {
             String text = this.getFullDisplay(module);
-            Inferno.fontManager.drawCorrectString(text, this.x - (this.quadrant == Quadrant.TopRight || this.quadrant == Quadrant.BottomRight ? Inferno.fontManager.getWidth(text) : -1.0), textY, -1);
+            Inferno.fontManager.drawCorrectString(text, this.x - (this.quadrant == Quadrant.TopRight || this.quadrant == Quadrant.BottomRight ? Inferno.fontManager.getWidth(text) : -1.0), textY, Colors.color());
 
             double height = Inferno.fontManager.getHeight() + 2.0;
             textY -= this.quadrant == Quadrant.BottomRight || this.quadrant == Quadrant.BottomLeft ? height : -height;
@@ -42,8 +47,8 @@ public class Arraylist extends HudComponent {
 
     private String getFullDisplay(Module module) {
         String display = module.getName();
-        if (module.getDisplayInfo() != null) {
-            display += (" [" + module.getDisplayInfo() + "]");
+        if (this.display.getValue() && module.getDisplayInfo() != null) {
+            display += (ChatFormatting.GRAY +  " [" + ChatFormatting.WHITE + module.getDisplayInfo() + ChatFormatting.GRAY + "]");
         }
 
         return display;
