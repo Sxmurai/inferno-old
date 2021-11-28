@@ -74,6 +74,7 @@ public class Inferno {
         MinecraftForge.EVENT_BUS.register(moduleManager);
         MinecraftForge.EVENT_BUS.register(commandManager);
         MinecraftForge.EVENT_BUS.register(notificationManager);
+        MinecraftForge.EVENT_BUS.register(configManager);
         MinecraftForge.EVENT_BUS.register(rotationManager);
         MinecraftForge.EVENT_BUS.register(totemPopManager);
         MinecraftForge.EVENT_BUS.register(serverManager);
