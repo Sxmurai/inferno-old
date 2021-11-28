@@ -16,7 +16,7 @@ public class Critcals extends Module {
 
     @Override
     public String getDisplayInfo() {
-        return EnumConverter.getActualName(this.mode.getName());
+        return EnumConverter.getActualName(this.mode.getValue());
     }
 
     @SubscribeEvent
