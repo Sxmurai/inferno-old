@@ -4,7 +4,7 @@
   "mixinPriority": 2147483647,
   "minVersion": "0.7-SNAPSHOT",
   "compatibilityLevel": "JAVA_8",
-  "package": "me.sxmurai.inferno.asm.mixins",
+  "package": "cope.inferno.asm.mixins",
   "refmap": "mixins.inferno.refmap.json",
   "verbose": true,
   "mixins": [
