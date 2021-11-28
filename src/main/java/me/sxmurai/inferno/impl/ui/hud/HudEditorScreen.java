@@ -2,7 +2,7 @@ package me.sxmurai.inferno.impl.ui.hud;
 
 import me.sxmurai.inferno.Inferno;
 import me.sxmurai.inferno.impl.features.hud.HudComponent;
-import me.sxmurai.inferno.impl.ui.InfernoGUI;
+import me.sxmurai.inferno.impl.ui.hud.components.HudPanel;
 import me.sxmurai.inferno.util.render.ColorUtil;
 import me.sxmurai.inferno.util.render.RenderUtil;
 import net.minecraft.client.gui.GuiScreen;
@@ -12,8 +12,19 @@ import java.io.IOException;
 public class HudEditorScreen extends GuiScreen {
     private static HudEditorScreen INSTANCE;
 
+    private final HudPanel panel;
+
     private HudComponent dragging = null;
     private double x2, y2;
+
+    private HudEditorScreen() {
+        this.panel = new HudPanel("Components", 4.0, 4.0) {
+            @Override
+            protected void init() {
+                // @todo
+            }
+        };
+    }
 
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
