@@ -13,6 +13,12 @@ public class ServerManager implements Wrapper {
     private double tps = 20.0;
     private long time = -1L;
 
+    private double speed = 0.0;
+
+    public void onUpdate() {
+        this.speed = Math.pow(mc.player.posX - mc.player.prevPosX, 2) + Math.pow(mc.player.posZ - mc.player.prevPosZ, 2);
+    }
+
     @SubscribeEvent
     public void onPacketReceive(PacketEvent.Receive event) {
         if (event.getPacket() instanceof SPacketTimeUpdate) {
@@ -34,6 +40,10 @@ public class ServerManager implements Wrapper {
             this.tps = Math.min(average / this.previous.length, 20.0);
             this.time = currentTime;
         }
+    }
+
+    public double getSpeed() {
+        return speed;
     }
 
     public double getTps() {

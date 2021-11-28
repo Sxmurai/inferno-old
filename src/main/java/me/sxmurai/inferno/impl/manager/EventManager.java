@@ -50,6 +50,7 @@ public class EventManager implements Wrapper {
 
             Inferno.holeManager.onUpdate();
             Inferno.tickManager.onUpdate();
+            Inferno.serverManager.onUpdate();
         }
     }
 

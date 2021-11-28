@@ -18,7 +18,6 @@ public class Arraylist extends HudComponent {
     public Arraylist() {
         super("ArrayList", "Shows a list of modules enabled on the client.");
         this.height = 100.0;
-        this.setVisible(true);
     }
 
     private Quadrant quadrant = Quadrant.TopRight;
