@@ -44,6 +44,7 @@ public class ModuleManager {
                 new FakePlayer(),
                 new MiddleClick(),
                 new NoHandshake(),
+                new NoSoundLag(),
                 new Suffix(),
 
                 // movement
