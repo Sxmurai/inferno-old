@@ -9,7 +9,6 @@ public class Watermark extends HudComponent {
 
     public Watermark() {
         super("Watermark");
-        this.setVisible(true); // by default, we'll make this visible. this is for testing purposes until the HUDEditor is done.
     }
 
     @Override
