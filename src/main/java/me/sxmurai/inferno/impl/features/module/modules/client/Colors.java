@@ -9,8 +9,8 @@ import me.sxmurai.inferno.util.render.RainbowUtil;
 public class Colors extends Module {
     public static final Setting<Boolean> rainbow = new Setting<>("Rainbow", true);
     public static final Setting<Float> hue = new Setting<>("Hue", 360.0f, 0.0f, 360.0f);
-    public static final Setting<Float> saturation = new Setting<>("Saturation", 1.0f, 0.1f, 1.0f);
-    public static final Setting<Float> brightness = new Setting<>("Brightness", 1.0f, 0.1f, 1.0f);
+    public static final Setting<Float> saturation = new Setting<>("Saturation", 1.0f, 0.0f, 1.0f);
+    public static final Setting<Float> brightness = new Setting<>("Brightness", 1.0f, 0.0f, 1.0f);
 
     public Colors() {
         this.toggle();
