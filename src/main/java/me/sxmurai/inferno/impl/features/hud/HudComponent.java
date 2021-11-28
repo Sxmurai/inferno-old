@@ -9,9 +9,11 @@ import java.util.Arrays;
 public abstract class HudComponent extends Component {
     private final ArrayList<Setting> settings = new ArrayList<>();
     private boolean visible = false;
+    private final String description;
 
-    public HudComponent(String name) {
+    public HudComponent(String name, String description) {
         super(name);
+        this.description = description;
     }
 
     public abstract void render();
@@ -36,5 +38,9 @@ public abstract class HudComponent extends Component {
     @Override
     public boolean isVisible() {
         return this.visible;
+    }
+
+    public String getDescription() {
+        return description;
     }
 }

@@ -9,7 +9,7 @@ public class Watermark extends HudComponent {
     public final Setting<Boolean> version = new Setting<>("Version", true);
 
     public Watermark() {
-        super("Watermark");
+        super("Watermark", "Shows the client's name and version");
     }
 
     @Override
