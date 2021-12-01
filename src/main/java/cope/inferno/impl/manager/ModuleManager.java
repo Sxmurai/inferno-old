@@ -73,6 +73,7 @@ public class ModuleManager {
                 // render
                 new Brightness(),
                 new Chams(),
+                new ESP(),
                 new Nametags(),
                 new NoRender(),
                 new PopChams(),

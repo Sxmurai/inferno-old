@@ -1,5 +1,6 @@
 package cope.inferno.asm.mixins.render;
 
+import cope.inferno.impl.event.render.RenderModelEvent;
 import cope.inferno.util.render.ColorUtil;
 import cope.inferno.impl.features.module.modules.render.Chams;
 import cope.inferno.impl.features.module.modules.render.PopChams;
@@ -10,6 +11,7 @@ import net.minecraft.client.renderer.entity.RenderLivingBase;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraftforge.common.MinecraftForge;
 import org.lwjgl.opengl.GL11;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -91,7 +93,10 @@ public abstract class MixinRenderLivingBase<T extends EntityLivingBase> extends 
             }
         }
 
-        if (!shouldCancel) {
+        RenderModelEvent event = new RenderModelEvent(entity, modelBase, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scaleFactor);
+        MinecraftForge.EVENT_BUS.post(event);
+
+        if (!shouldCancel && !event.isCanceled()) {
             modelBase.render(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scaleFactor);
         }
     }
