@@ -2,6 +2,7 @@ package cope.inferno.asm.mixins.render;
 
 import com.google.common.base.Predicate;
 import cope.inferno.impl.features.module.modules.player.Interact;
+import cope.inferno.impl.features.module.modules.render.Aspect;
 import cope.inferno.impl.features.module.modules.render.NoRender;
 import cope.inferno.impl.features.module.modules.render.ViewClip;
 import net.minecraft.client.Minecraft;
@@ -11,6 +12,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.AxisAlignedBB;
+import org.lwjgl.util.glu.Project;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -92,5 +94,25 @@ public class MixinEntityRenderer {
         }
 
         return client.getEntitiesInAABBexcluding(entity, box, predicate);
+    }
+
+    @Redirect(method = "setupCameraTransform", at = @At(value = "INVOKE", target = "Lorg/lwjgl/util/glu/Project;gluPerspective(FFFF)V"))
+    public void gluPerspectiveSetupCameraTransform(float fovy, float aspect, float zNear, float zFar) {
+        Project.gluPerspective(fovy, Aspect.INSTANCE.isOn() ? Aspect.ratio.getValue() : aspect, zNear, zFar);
+    }
+
+    @Redirect(method = "renderWorldPass", at = @At(value = "INVOKE", target = "Lorg/lwjgl/util/glu/Project;gluPerspective(FFFF)V"))
+    public void gluPerspectiveRenderWorldPass(float fovy, float aspect, float zNear, float zFar) {
+        Project.gluPerspective(fovy, Aspect.INSTANCE.isOn() ? Aspect.ratio.getValue() : aspect, zNear, zFar);
+    }
+
+    @Redirect(method = "renderCloudsCheck", at = @At(value = "INVOKE", target = "Lorg/lwjgl/util/glu/Project;gluPerspective(FFFF)V"))
+    public void gluPerspectiveRenderCloudsCheck(float fovy, float aspect, float zNear, float zFar) {
+        Project.gluPerspective(fovy, Aspect.INSTANCE.isOn() ? Aspect.ratio.getValue() : aspect, zNear, zFar);
+    }
+
+    @Redirect(method = "renderHand", at = @At(value = "INVOKE", target = "Lorg/lwjgl/util/glu/Project;gluPerspective(FFFF)V"))
+    public void gluPerspectiveRenderHand(float fovy, float aspect, float zNear, float zFar) {
+        Project.gluPerspective(fovy, Aspect.INSTANCE.isOn() ? Aspect.ratio.getValue() : aspect, zNear, zFar);
     }
 }

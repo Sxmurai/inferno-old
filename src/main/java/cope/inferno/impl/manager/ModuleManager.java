@@ -71,6 +71,7 @@ public class ModuleManager {
                 new Timer(),
 
                 // render
+                new Aspect(),
                 new Brightness(),
                 new Chams(),
                 new ESP(),
