@@ -20,6 +20,8 @@ import net.minecraft.entity.item.EntityEnderCrystal;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.network.play.client.CPacketAnimation;
+import net.minecraft.network.play.client.CPacketUseEntity;
 import net.minecraft.network.play.server.SPacketDestroyEntities;
 import net.minecraft.network.play.server.SPacketExplosion;
 import net.minecraft.network.play.server.SPacketSoundEffect;
@@ -34,6 +36,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.ThreadLocalRandom;
 
 @Module.Define(name = "AutoCrystal", category = Module.Category.Combat)
 @Module.Info(description = "Automatically breaks and destroys end crystals")
@@ -55,8 +58,10 @@ public class AutoCrystal extends Module {
     public final Setting<Float> destroyMin = new Setting<>("DestroyMin", 4.0f, 1.0f, 36.0f);
     public final Setting<Boolean> inhibit = new Setting<>("Inhibit", true);
     public final Setting<Integer> ticksExisted = new Setting<>("TicksExisted", 2, 0, 20);
+    public final Setting<Boolean> damageTick = new Setting<>("DamageTick", false);
 
     public final Setting<Boolean> await = new Setting<>("Await", true);
+    public final Setting<Integer> limit = new Setting<>("Limit", 2, 0, 50);
     public final Setting<InventoryManager.Swap> swap = new Setting<>("Swap", InventoryManager.Swap.Legit);
     public final Setting<Integer> swapDelay = new Setting<>("SwapDelay", 2, 0, 12, () -> this.swap.getValue() != InventoryManager.Swap.None);
     public final Setting<Raytrace> raytrace = new Setting<>("Raytrace", Raytrace.Base);
@@ -75,6 +80,7 @@ public class AutoCrystal extends Module {
     private final TickTimer placeTimer = new TickTimer();
     private final TickTimer destroyTimer = new TickTimer();
     private final TickTimer swapTimer = new TickTimer();
+    private final TickTimer limitTimer = new TickTimer();
 
     private int oldSlot = -1;
     private EnumHand hand = EnumHand.MAIN_HAND;
@@ -83,6 +89,8 @@ public class AutoCrystal extends Module {
     private BlockPos placePos = null;
     private EntityEnderCrystal crystal = null;
     private float damage = 0.0f;
+
+    private int packets = 0;
 
     private final RotationHandler rotationHandler = new RotationHandler();
 
@@ -105,6 +113,19 @@ public class AutoCrystal extends Module {
         this.crystal = null;
         this.damage = 0.0f;
         this.rotationHandler.reset();
+    }
+
+    @SubscribeEvent
+    public void onPacketSend(PacketEvent.Send event) {
+        if (event.getPacket() instanceof CPacketAnimation && this.limit.getValue() != 0) {
+            ++this.packets;
+            if (this.limitTimer.passed(1)) {
+                this.packets = 0;
+                this.limitTimer.reset();
+            } else {
+                event.setCanceled(packets > this.limit.getValue());
+            }
+        }
     }
 
     @SubscribeEvent
@@ -254,6 +275,10 @@ public class AutoCrystal extends Module {
                     // @todo calculations
                     this.crystal = crystal;
                 }
+            }
+
+            if (this.damageTick.getValue() && this.target != null && this.target.hurtTime != 0) {
+                return;
             }
 
             if (this.crystal != null) {
