@@ -1,8 +1,6 @@
 package cope.inferno.impl.features.module.modules.combat;
 
 import cope.inferno.impl.features.module.Module;
-import cope.inferno.Inferno;
-import cope.inferno.impl.manager.InventoryManager;
 import cope.inferno.impl.settings.Setting;
 import cope.inferno.impl.ui.InfernoGUI;
 import cope.inferno.util.entity.EntityUtil;
@@ -12,7 +10,6 @@ import net.minecraft.client.gui.GuiChat;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemSword;
-import net.minecraft.network.play.client.CPacketPlayerDigging;
 
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -92,18 +89,10 @@ public class AutoTotem extends Module {
 
         int slot = InventoryUtil.getInventoryItemSlot(item, true);
         if (slot == -1) {
-            return; // -1 = item wasnt found
-        }
-
-        // there's no need to send window click packets if its already in our hotbar
-        // maybe a delay added here would be beneficial?
-        if (slot <= 9) {
-            int oldSlot = mc.player.inventory.currentItem;
-            Inferno.inventoryManager.swap(slot, InventoryManager.Swap.Legit);
-            mc.player.connection.sendPacket(new CPacketPlayerDigging(CPacketPlayerDigging.Action.SWAP_HELD_ITEMS, mc.player.getPosition(), mc.player.getHorizontalFacing()));
-            Inferno.inventoryManager.swap(oldSlot, InventoryManager.Swap.Legit);
             return;
         }
+
+        slot = slot < 9 ? slot + 36 : slot;
 
         this.tasks.add(new InventoryUtil.Task(slot, true, false));
         this.tasks.add(new InventoryUtil.Task(InventoryUtil.OFFHAND_SLOT, true, false));
