@@ -1,6 +1,7 @@
 package cope.inferno.impl.newui.main.bar;
 
 import cope.inferno.impl.newui.components.AbstractComponent;
+import cope.inferno.impl.newui.main.InfernoUI;
 import cope.inferno.impl.newui.main.bar.interactables.TextButton;
 import cope.inferno.impl.newui.main.clickgui.ClickGuiComponent;
 import cope.inferno.util.render.ColorUtil;
@@ -9,8 +10,6 @@ import net.minecraft.client.gui.ScaledResolution;
 
 public class BarRenderer extends AbstractComponent {
     private static final double PADDING = 8.0;
-
-    private AbstractComponent currentComponent = ClickGuiComponent.getInstance();
 
     public BarRenderer(String id, double x, double y) {
         super(id, x, y, -1.0, -1.0);
@@ -22,7 +21,7 @@ public class BarRenderer extends AbstractComponent {
         this.children.add(new TextButton("Modules") {
             @Override
             public void onClick(int button) {
-                currentComponent = ClickGuiComponent.getInstance();
+                InfernoUI.getInstance().setCurrent(ClickGuiComponent.getInstance());
             }
         });
 
@@ -71,10 +70,6 @@ public class BarRenderer extends AbstractComponent {
 
             component.onRender(mouseX, mouseY);
         }
-
-        if (this.currentComponent != null) {
-            this.currentComponent.onRender(mouseX, mouseY);
-        }
     }
 
     @Override
@@ -84,23 +79,5 @@ public class BarRenderer extends AbstractComponent {
                 child.onMouseClicked(mouseX, mouseY, button);
             }
         });
-
-        if (this.currentComponent != null) {
-            this.currentComponent.onMouseClicked(mouseX, mouseY, button);
-        }
-    }
-
-    @Override
-    public void onMouseReleased(int mouseX, int mouseY, int state) {
-        if (this.currentComponent != null) {
-            this.currentComponent.onMouseReleased(mouseX, mouseY, state);
-        }
-    }
-
-    @Override
-    public void onKeyTyped(char charTyped, int code) {
-        if (this.currentComponent != null) {
-            this.currentComponent.onKeyTyped(charTyped, code);
-        }
     }
 }

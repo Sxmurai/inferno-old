@@ -1,6 +1,7 @@
 package cope.inferno.impl.features.module.modules.client;
 
 import cope.inferno.impl.features.module.Module;
+import cope.inferno.impl.newui.main.InfernoUI;
 import cope.inferno.impl.settings.Setting;
 import cope.inferno.impl.ui.InfernoGUI;
 import org.lwjgl.input.Keyboard;
@@ -24,7 +25,7 @@ public class GUI extends Module {
             return;
         }
 
-        mc.displayGuiScreen(InfernoGUI.getInstance());
+        mc.displayGuiScreen(InfernoUI.getInstance());
     }
 
     @Override

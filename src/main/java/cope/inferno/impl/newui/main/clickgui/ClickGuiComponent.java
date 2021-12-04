@@ -13,16 +13,14 @@ public class ClickGuiComponent extends AbstractComponent {
 
     public ClickGuiComponent() {
         super("clickgui", -1.0, -1.0, -1.0, -1.0);
+        this.init();
     }
 
     @Override
     public void init() {
         double x = 4.0;
         for (Module.Category category : Module.Category.values()) {
-            List<Module> modules = Inferno.moduleManager.getModules()
-                    .stream().filter((module) -> module.getCategory().equals(category))
-                    .collect(Collectors.toList());
-
+            List<Module> modules = Inferno.moduleManager.getModules().stream().filter((module) -> module.getCategory().equals(category)).collect(Collectors.toList());
             if (modules.isEmpty()) {
                 continue;
             }
@@ -33,12 +31,21 @@ public class ClickGuiComponent extends AbstractComponent {
                     modules.forEach((module) -> this.children.add(new ModuleButton(module)));
                 }
             });
+
+            x += 90.0;
         }
     }
 
     @Override
     public void onRender(int mouseX, int mouseY) {
+        System.out.println(this.children.size());
+        this.children.forEach((child) -> child.onRender(mouseX, mouseY));
+    }
 
+    @Override
+    public void onMouseClicked(int mouseX, int mouseY, int button) {
+        super.onMouseClicked(mouseX, mouseY, button);
+        this.children.forEach((child) -> child.onMouseReleased(mouseX, mouseY, button));
     }
 
     public static ClickGuiComponent getInstance() {
