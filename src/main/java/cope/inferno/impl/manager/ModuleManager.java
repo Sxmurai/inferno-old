@@ -64,6 +64,7 @@ public class ModuleManager {
                 new HotbarRefill(),
                 new Interact(),
                 new MultiTask(),
+                new PingSpoof(),
                 new Portal(),
                 new Reach(),
                 new Scaffold(),
