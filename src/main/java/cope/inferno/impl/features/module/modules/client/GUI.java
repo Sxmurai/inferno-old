@@ -25,7 +25,7 @@ public class GUI extends Module {
             return;
         }
 
-        mc.displayGuiScreen(InfernoUI.getInstance());
+        mc.displayGuiScreen(InfernoGUI.getInstance());
     }
 
     @Override
