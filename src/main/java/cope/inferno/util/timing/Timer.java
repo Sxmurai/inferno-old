@@ -23,6 +23,10 @@ public class Timer {
         return (System.nanoTime() - this.time) / 1000000L;
     }
 
+    public float getPassedTimeMsFloat() {
+        return ((float) (System.nanoTime() - this.time) / 1000000L);
+    }
+
     public Timer reset() {
         this.time = System.nanoTime();
         return this;
