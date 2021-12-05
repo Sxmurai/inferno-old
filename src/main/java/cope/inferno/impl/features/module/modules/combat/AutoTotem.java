@@ -79,7 +79,7 @@ public class AutoTotem extends Module {
     // https://gaming.stackexchange.com/questions/10218/how-is-fall-damage-calculated-in-minecraft
     // i could add things like feather falling checks or absorption, but im lazy. so cope.
     private boolean willDieIfFall() {
-        return (mc.player.fallDistance - 3.0f) / 2.0f >= EntityUtil.getHealth(mc.player);
+        return ((mc.player.fallDistance - 3.0f) / 2.0f) + 2.0f >= EntityUtil.getHealth(mc.player);
     }
 
     private void setInOffhand(Item item) {
