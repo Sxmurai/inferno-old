@@ -27,7 +27,6 @@ public class Critcals extends Module {
                 return;
             }
 
-            mc.player.onGround = false;
             switch (this.mode.getValue()) {
                 case Packet: {
                     mc.player.connection.sendPacket(new CPacketPlayer.Position(mc.player.posX, mc.player.posY + 0.3, mc.player.posZ, false));

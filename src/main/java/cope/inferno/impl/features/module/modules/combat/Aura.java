@@ -30,7 +30,7 @@ public class Aura extends Module {
     public final Setting<Boolean> rotate = new Setting<>("Rotate", true);
     public final Setting<Boolean> swing = new Setting<>("Swing", true);
     public final Setting<Boolean> teleport = new Setting<>("Teleport", false);
-    public final Setting<Sprint> sprint = new Setting<>("Sprint", Sprint.Start);
+    public final Setting<Sprint> sprint = new Setting<>("Sprint", Sprint.None);
 
     public final Setting<Boolean> players = new Setting<>("Players", true);
     public final Setting<Boolean> invisible = new Setting<>("Invisible", true);
