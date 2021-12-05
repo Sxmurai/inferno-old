@@ -10,9 +10,25 @@ public class MovementUtil implements Wrapper {
     }
 
     public static double[] getDirectionalSpeed(double speed) {
-        float forward = mc.player.movementInput.moveForward,
-                strafe = mc.player.movementInput.moveStrafe,
-                yaw = mc.player.rotationYaw;
+        float[] movements = getMovement();
+
+        float forward = movements[0];
+        float strafe = movements[1];
+
+        double sin = -Math.sin(Math.toRadians(movements[2]));
+        double cos = Math.cos(Math.toRadians(movements[2]));
+
+        return new double[] {
+                forward * speed * sin + strafe * speed * cos,
+                forward * speed * cos - strafe * speed * sin
+        };
+    }
+
+    public static float[] getMovement() {
+        float forward = mc.player.movementInput.moveForward;
+        float strafe = mc.player.movementInput.moveStrafe;
+
+        float yaw = mc.player.rotationYaw;
 
         if (forward != 0.0f) {
             if (strafe > 0.0f) {
@@ -29,10 +45,7 @@ public class MovementUtil implements Wrapper {
             }
         }
 
-        double x = forward * speed * -Math.sin(Math.toRadians(yaw)) + strafe * speed * Math.cos(Math.toRadians(yaw));
-        double z = forward * speed * Math.cos(Math.toRadians(yaw)) - strafe * speed * -Math.sin(Math.toRadians(yaw));
-
-        return new double[] { x, z };
+        return new float[] { forward, strafe, yaw, };
     }
 
     public static void center(Center center, double tolerance) {

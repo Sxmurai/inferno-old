@@ -41,6 +41,7 @@ public class ModuleManager {
 
                 // miscellaneous
                 new AutoRespawn(),
+                new Disabler(),
                 new FakePlayer(),
                 new MiddleClick(),
                 new NoHandshake(),
