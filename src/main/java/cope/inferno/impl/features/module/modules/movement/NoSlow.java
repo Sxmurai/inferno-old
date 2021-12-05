@@ -7,10 +7,7 @@ import cope.inferno.impl.settings.EnumConverter;
 import cope.inferno.impl.settings.Setting;
 import net.minecraft.client.gui.GuiChat;
 import net.minecraft.client.settings.KeyBinding;
-import net.minecraft.network.play.client.CPacketEntityAction;
-import net.minecraft.network.play.client.CPacketHeldItemChange;
-import net.minecraft.network.play.client.CPacketPlayer;
-import net.minecraft.network.play.client.CPacketPlayerDigging;
+import net.minecraft.network.play.client.*;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.client.event.InputUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
@@ -35,6 +32,7 @@ public class NoSlow extends Module {
     public final Setting<Bypass> bypass = new Setting<>("Bypass", Bypass.NCP);
     public final Setting<Boolean> items = new Setting<>("Items", true);
     public final Setting<Boolean> guiMove = new Setting<>("GuiMove", true);
+    public final Setting<Boolean> moveBypass = new Setting<>("MoveBypass", true);
     public static final Setting<Boolean> soulSand = new Setting<>("Soulsand", false);
     public static final Setting<Boolean> slime = new Setting<>("Slime", false);
 
@@ -78,8 +76,14 @@ public class NoSlow extends Module {
 
     @SubscribeEvent
     public void onPacketSend(PacketEvent.Send event) {
-        if (fullNullCheck() && event.getPacket() instanceof CPacketPlayer && this.bypass.getValue() == Bypass.NCP && this.shouldDoItemNoSlow()) {
-            Wrapper.mc.player.connection.sendPacket(new CPacketPlayerDigging(CPacketPlayerDigging.Action.ABORT_DESTROY_BLOCK, Wrapper.mc.player.getPosition(), EnumFacing.DOWN));
+        if (event.getPacket() instanceof CPacketPlayer) {
+            if (this.bypass.getValue() == Bypass.NCP && this.shouldDoItemNoSlow()) {
+                mc.player.connection.sendPacket(new CPacketPlayerDigging(CPacketPlayerDigging.Action.ABORT_DESTROY_BLOCK, mc.player.getPosition(), EnumFacing.DOWN));
+            }
+        } else if (event.getPacket() instanceof CPacketClickWindow) {
+            if (this.moveBypass.getValue()) {
+                mc.player.connection.sendPacket(new CPacketEntityAction(mc.player, CPacketEntityAction.Action.STOP_SPRINTING));
+            }
         }
     }
 
