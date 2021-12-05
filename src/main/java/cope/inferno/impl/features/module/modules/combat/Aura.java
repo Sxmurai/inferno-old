@@ -108,7 +108,7 @@ public class Aura extends Module {
     }
 
     public boolean canAttack() {
-        return !this.isInvalid(this.target) && (this.timing.getValue() == Timing.Vanilla ? mc.player.getCooledAttackStrength(mc.getRenderPartialTicks()) == 1.0f : this.timer.passed(15));
+        return !this.isInvalid(this.target) && (this.timing.getValue() == Timing.Vanilla ? mc.player.getCooledAttackStrength(mc.getRenderPartialTicks()) == 1.0f : this.timer.passed(14));
     }
 
     public boolean isInvalid(EntityLivingBase target) {
