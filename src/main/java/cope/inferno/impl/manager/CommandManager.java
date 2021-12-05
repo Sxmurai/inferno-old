@@ -2,10 +2,7 @@ package cope.inferno.impl.manager;
 
 import cope.inferno.impl.event.network.PacketEvent;
 import cope.inferno.impl.features.command.Command;
-import cope.inferno.impl.features.command.commands.Font;
-import cope.inferno.impl.features.command.commands.Help;
-import cope.inferno.impl.features.command.commands.LoggedInUser;
-import cope.inferno.impl.features.command.commands.Profile;
+import cope.inferno.impl.features.command.commands.*;
 import net.minecraft.network.play.client.CPacketChatMessage;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -19,6 +16,7 @@ public class CommandManager {
     private String prefix = ",";
 
     public CommandManager() {
+        this.commands.add(new Drawn());
         this.commands.add(new Font());
         this.commands.add(new Help());
         this.commands.add(new LoggedInUser());
