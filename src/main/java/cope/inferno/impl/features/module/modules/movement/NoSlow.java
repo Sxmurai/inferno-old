@@ -32,7 +32,7 @@ public class NoSlow extends Module {
     public final Setting<Bypass> bypass = new Setting<>("Bypass", Bypass.NCP);
     public final Setting<Boolean> items = new Setting<>("Items", true);
     public final Setting<Boolean> guiMove = new Setting<>("GuiMove", true);
-    public final Setting<Boolean> moveBypass = new Setting<>("MoveBypass", true);
+    public final Setting<Boolean> moveBypass = new Setting<>("MoveBypass", false);
     public static final Setting<Boolean> soulSand = new Setting<>("Soulsand", false);
     public static final Setting<Boolean> slime = new Setting<>("Slime", false);
 
