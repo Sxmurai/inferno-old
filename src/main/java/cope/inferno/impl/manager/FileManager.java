@@ -1,5 +1,6 @@
 package cope.inferno.impl.manager;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -7,6 +8,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.Collections;
+import java.util.Objects;
 
 public class FileManager {
     private static final FileManager INSTANCE = new FileManager();
@@ -38,9 +40,30 @@ public class FileManager {
 
     public void delete(Path path) {
         try {
+            // fuck you
+            if (Files.isDirectory(path)) {
+                this.deleteAllFilesInDirectory(path);
+            }
+
             Files.deleteIfExists(path);
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    public void deleteAllFilesInDirectory(Path path) {
+        if (Files.isDirectory(path)) {
+            for (File file : Objects.requireNonNull(path.toFile().listFiles())) {
+                if (file.isDirectory()) {
+                    this.deleteAllFilesInDirectory(file.toPath());
+                } else {
+                    try {
+                        Files.deleteIfExists(file.toPath());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
         }
     }
 

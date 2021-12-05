@@ -25,6 +25,6 @@ public class MixinMinecraft {
 
     @Inject(method = "shutdown", at = @At("HEAD"), cancellable = true)
     public void shutdown(CallbackInfo info) {
-        Inferno.configManager.saveConfigs();
+        Inferno.configManager.save();
     }
 }

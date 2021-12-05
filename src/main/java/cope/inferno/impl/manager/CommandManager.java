@@ -5,6 +5,7 @@ import cope.inferno.impl.features.command.Command;
 import cope.inferno.impl.features.command.commands.Font;
 import cope.inferno.impl.features.command.commands.Help;
 import cope.inferno.impl.features.command.commands.LoggedInUser;
+import cope.inferno.impl.features.command.commands.Profile;
 import net.minecraft.network.play.client.CPacketChatMessage;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -21,6 +22,7 @@ public class CommandManager {
         this.commands.add(new Font());
         this.commands.add(new Help());
         this.commands.add(new LoggedInUser());
+        this.commands.add(new Profile());
     }
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)

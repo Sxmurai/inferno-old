@@ -46,5 +46,10 @@ public class ColorUtil {
         public float getAlpha() {
             return alpha;
         }
+
+        @Override
+        public String toString() {
+            return this.red + "," + this.green + "," + this.blue + "," + this.alpha;
+        }
     }
 }

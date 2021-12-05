@@ -1,12 +1,10 @@
 package cope.inferno.impl.features.module.modules.render;
 
-import com.google.common.collect.Lists;
 import cope.inferno.impl.event.inferno.OptionChangeEvent;
 import cope.inferno.impl.features.Wrapper;
 import cope.inferno.impl.features.module.Module;
 import cope.inferno.impl.settings.Setting;
 import net.minecraft.block.Block;
-import net.minecraft.init.Blocks;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.common.ForgeModContainer;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -27,32 +25,6 @@ public class Wallhack extends Module {
 
     public Wallhack() {
         INSTANCE = this;
-
-        // @todo, this will be loaded dynamically using configs. for now this will do
-        blocks = Lists.newArrayList(
-                Blocks.COAL_ORE,
-                Blocks.IRON_ORE,
-                Blocks.GOLD_ORE,
-                Blocks.LAPIS_ORE,
-                Blocks.REDSTONE_ORE,
-                Blocks.DIAMOND_ORE,
-
-                Blocks.COAL_BLOCK,
-                Blocks.IRON_BLOCK,
-                Blocks.GOLD_BLOCK,
-                Blocks.LAPIS_BLOCK,
-                Blocks.REDSTONE_BLOCK,
-                Blocks.DIAMOND_BLOCK,
-
-                Blocks.IRON_BARS,
-                Blocks.REDSTONE_LAMP,
-                Blocks.LIT_REDSTONE_LAMP,
-                Blocks.FURNACE,
-                Blocks.LIT_FURNACE,
-                Blocks.CHEST,
-                Blocks.TRAPPED_CHEST,
-                Blocks.ENDER_CHEST
-        );
     }
 
     @Override

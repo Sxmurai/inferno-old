@@ -38,7 +38,7 @@ public class Inferno {
     public static InventoryManager inventoryManager;
     public static TickManager tickManager;
 
-    @SubscribeEvent
+    @Mod.EventHandler
     public void onPreInit(FMLPreInitializationEvent event) {
         if (!FileManager.getInstance().exists(FileManager.getInstance().getClientFolder())) {
             LOGGER.info("Creating Inferno folder as it did not exist...");
@@ -46,6 +46,8 @@ public class Inferno {
         }
 
         LOGGER.info("get out of my logs cunt - aesthetical");
+
+        configManager = new ConfigManager();
     }
 
     @Mod.EventHandler
@@ -59,7 +61,6 @@ public class Inferno {
         moduleManager = new ModuleManager();
         commandManager = new CommandManager();
         notificationManager = new NotificationManager();
-        configManager = ConfigManager.getInstance();
         rotationManager = new RotationManager();
         totemPopManager = new TotemPopManager();
         serverManager = new ServerManager();
@@ -84,8 +85,6 @@ public class Inferno {
 
     @Mod.EventHandler
     public void onPostInit(FMLPostInitializationEvent event) {
-        LOGGER.info("Loading configurations...");
-        configManager = new ConfigManager();
-        LOGGER.info("Loaded all configurations!");
+        configManager.load();
     }
 }
