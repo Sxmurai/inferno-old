@@ -44,7 +44,7 @@ public class NoSlow extends Module {
 
     @Override
     public String getDisplayInfo() {
-        return EnumConverter.getActualName(this.bypass.getValue());
+        return this.bypass.getValue().name();
     }
 
     @Override
