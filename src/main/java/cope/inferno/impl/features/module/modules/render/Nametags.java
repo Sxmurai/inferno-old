@@ -13,6 +13,7 @@ import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Enchantments;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -185,8 +186,8 @@ public class Nametags extends Module {
         GlStateManager.depthMask(true);
         GlStateManager.enableLighting();
         GlStateManager.disableBlend();
-        GlStateManager.disablePolygonOffset();
         GlStateManager.doPolygonOffset(1.0f, 1500000.0f);
+        GlStateManager.disablePolygonOffset();
         GlStateManager.popMatrix();
     }
 
@@ -228,7 +229,12 @@ public class Nametags extends Module {
             text.add(ChatFormatting.RED + "max");
         } else {
             for (Map.Entry<Enchantment, Integer> entry : enchants.entrySet()) {
-                text.add(shortenEnchantName(entry.getKey(), entry.getValue()));
+                String color = "";
+                if (entry.getKey() == Enchantments.VANISHING_CURSE || entry.getKey() == Enchantments.BINDING_CURSE) {
+                    color = ChatFormatting.RED.toString();
+                }
+
+                text.add(color + shortenEnchantName(entry.getKey(), entry.getValue()));
             }
         }
 
