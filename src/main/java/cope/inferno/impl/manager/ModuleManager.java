@@ -65,6 +65,7 @@ public class ModuleManager implements Wrapper {
 
                 // player
                 new AntiVoid(),
+                new Blink(),
                 new FastUse(),
                 new HotbarRefill(),
                 new Interact(),
