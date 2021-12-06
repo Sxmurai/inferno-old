@@ -21,6 +21,8 @@ import java.util.List;
 @Module.Define(name = "Aura", category = Module.Category.Combat)
 @Module.Info(description = "Attacks entities around you")
 public class Aura extends Module {
+    public static Aura INSTANCE;
+
     public final Setting<Priority> priority = new Setting<>("Priority", Priority.Closest);
     public final Setting<Timing> timing = new Setting<>("Timing", Timing.Vanilla);
     public final Setting<Weapon> weapon = new Setting<>("Weapon", Weapon.Require);
@@ -38,8 +40,12 @@ public class Aura extends Module {
     public final Setting<Boolean> passive = new Setting<>("Passive", true);
 
     private final TickTimer timer = new TickTimer();
-    private EntityLivingBase target = null;
+    public EntityLivingBase target = null;
     private int oldSlot = -1;
+
+    public Aura() {
+        INSTANCE = this;
+    }
 
     @Override
     public String getDisplayInfo() {

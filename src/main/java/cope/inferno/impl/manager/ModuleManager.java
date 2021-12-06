@@ -31,6 +31,7 @@ public class ModuleManager {
                 new AutoArmor(),
                 new AutoBowRelease(),
                 new AutoCrystal(),
+                new AutoGG(),
                 new AutoTotem(),
                 new Critcals(),
                 new FastProjectile(),

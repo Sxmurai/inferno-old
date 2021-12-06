@@ -36,6 +36,8 @@ import java.util.Optional;
 @Module.Define(name = "AutoCrystal", category = Module.Category.Combat)
 @Module.Info(description = "Automatically breaks and destroys end crystals")
 public class AutoCrystal extends Module {
+    public static AutoCrystal INSTANCE;
+
     // place settings
     public final Setting<Boolean> place = new Setting<>("Place", true);
     public final Setting<Double> placeRange = new Setting<>("PlaceRange", 5.0, 1.0, 6.0);
@@ -75,9 +77,13 @@ public class AutoCrystal extends Module {
 
     private RotationUtil.Rotation nextRotation = new RotationUtil.Rotation();
 
-    private EntityPlayer target = null;
+    public EntityPlayer target = null;
     private BlockPos placePos = null;
     private EntityEnderCrystal crystal = null;
+
+    public AutoCrystal() {
+        INSTANCE = this;
+    }
 
     @Override
     protected void onDeactivated() {
