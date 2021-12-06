@@ -47,6 +47,7 @@ public class ModuleManager implements Wrapper {
                 new Disabler(),
                 new FakePlayer(),
                 new MiddleClick(),
+                new NoGlitchBlocks(),
                 new NoHandshake(),
                 new NoSoundLag(),
                 new Suffix(),
