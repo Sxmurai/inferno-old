@@ -43,6 +43,8 @@ public class ModuleButton extends Button {
                 }
 
                 this.components.add(new Slider(setting));
+            } else if (setting.getValue() instanceof String) {
+                this.components.add(new StringButton(setting));
             }
         }
     }

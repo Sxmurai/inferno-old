@@ -6,7 +6,7 @@ public class Animation {
     private final Timer progressTimer = new Timer();
     private float progress = 0.0f;
 
-    private final float max;
+    private float max;
     private final float increment;
     private final long delay;
     private final boolean allowReversed;
@@ -32,6 +32,14 @@ public class Animation {
                 }
             }
         }
+    }
+
+    public void setMax(float max) {
+        this.max = max;
+    }
+
+    public float getMax() {
+        return max;
     }
 
     public void setProgress(float progress) {
