@@ -62,8 +62,6 @@ public class ESP extends Module {
             event.setCanceled(true);
             this.setupFBOs();
 
-            // this doesnt work entirely, ill probably come back to this but it kinda works kinda doesnt.
-
             GL11.glPushAttrib(GL11.GL_ALL_ATTRIB_BITS);
             GL11.glPushMatrix();
 
@@ -71,30 +69,35 @@ public class ESP extends Module {
             GL11.glClear(GL11.GL_STENCIL_BUFFER_BIT);
 
             GL11.glEnable(GL11.GL_STENCIL_TEST);
-            GL11.glStencilFunc(GL11.GL_ALWAYS, 1, 0xff);
-            GL11.glStencilOp(GL11.GL_KEEP, GL11.GL_KEEP, GL11.GL_REPLACE);
-
-            GL11.glPolygonMode(GL11.GL_FRONT_AND_BACK, GL11.GL_FILL);
-            //GL11.glColor3f(0.0f, 0.0f, 0.0f); // this can be removed, this is for visualizing
-            GL11.glStencilMask(0xff);
-            event.getModelBase().render(event.getEntity(), event.getLimbSwing(), event.getLimbSwingAmount(), event.getAgeInTicks(), event.getNetHeadYaw(), event.getHeadPitch(), event.getScaleFactor());
-
-            GL11.glDisable(GL11.GL_LIGHTING);
             GL11.glDisable(GL11.GL_TEXTURE_2D);
-
-            GL11.glStencilFunc(GL11.GL_NOTEQUAL, 1, 0xff);
-            GL11.glStencilOp(GL11.GL_REPLACE, GL11.GL_REPLACE, GL11.GL_REPLACE);
+            GL11.glDisable(GL11.GL_LIGHTING);
+            GL11.glEnable(GL11.GL_LINE_SMOOTH);
             GL11.glLineWidth(this.width.getValue());
+
+            GL11.glStencilFunc(GL11.GL_NEVER, 1, 0xff);
+            GL11.glStencilOp(GL11.GL_REPLACE, GL11.GL_REPLACE, GL11.GL_REPLACE);
             GL11.glPolygonMode(GL11.GL_FRONT_AND_BACK, GL11.GL_LINE);
-            GL11.glColor3f(1.0f, 1.0f, 1.0f);
-            GL11.glStencilMask(0x00);
             event.getModelBase().render(event.getEntity(), event.getLimbSwing(), event.getLimbSwingAmount(), event.getAgeInTicks(), event.getNetHeadYaw(), event.getHeadPitch(), event.getScaleFactor());
 
+            GL11.glStencilFunc(GL11.GL_NEVER, 0, 0xff);
+            GL11.glStencilOp(GL11.GL_REPLACE, GL11.GL_REPLACE, GL11.GL_REPLACE);
+            GL11.glPolygonMode(GL11.GL_FRONT_AND_BACK, GL11.GL_FILL);
+            event.getModelBase().render(event.getEntity(), event.getLimbSwing(), event.getLimbSwingAmount(), event.getAgeInTicks(), event.getNetHeadYaw(), event.getHeadPitch(), event.getScaleFactor());
+
+            GL11.glStencilFunc(GL11.GL_EQUAL, 1, 0xff);
+            GL11.glStencilOp(GL11.GL_KEEP, GL11.GL_KEEP, GL11.GL_KEEP);
+            GL11.glPolygonMode(GL11.GL_FRONT_AND_BACK, GL11.GL_LINE);
+            event.getModelBase().render(event.getEntity(), event.getLimbSwing(), event.getLimbSwingAmount(), event.getAgeInTicks(), event.getNetHeadYaw(), event.getHeadPitch(), event.getScaleFactor());
+
+            GL11.glLineWidth(1.0f);
+            GL11.glDisable(GL11.GL_LINE_SMOOTH);
             GL11.glEnable(GL11.GL_TEXTURE_2D);
             GL11.glEnable(GL11.GL_LIGHTING);
-
             GL11.glPopAttrib();
             GL11.glPopMatrix();
+
+            // render model
+            event.getModelBase().render(event.getEntity(), event.getLimbSwing(), event.getLimbSwingAmount(), event.getAgeInTicks(), event.getNetHeadYaw(), event.getHeadPitch(), event.getScaleFactor());
         } else if (this.mode.getValue() == Mode.Wireframe) {
             event.setCanceled(true);
 
@@ -131,6 +134,8 @@ public class ESP extends Module {
 
             GL11.glPopAttrib();
             GL11.glPopMatrix();
+
+            event.getModelBase().render(event.getEntity(), event.getLimbSwing(), event.getLimbSwingAmount(), event.getAgeInTicks(), event.getNetHeadYaw(), event.getHeadPitch(), event.getScaleFactor());
         }
     }
 
