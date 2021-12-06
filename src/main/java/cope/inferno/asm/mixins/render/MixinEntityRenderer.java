@@ -5,11 +5,13 @@ import cope.inferno.impl.features.module.modules.player.Interact;
 import cope.inferno.impl.features.module.modules.render.Aspect;
 import cope.inferno.impl.features.module.modules.render.NoRender;
 import cope.inferno.impl.features.module.modules.render.ViewClip;
+import cope.inferno.util.entity.InventoryUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.client.renderer.EntityRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.init.Items;
+import net.minecraft.item.ItemPickaxe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.AxisAlignedBB;
 import org.lwjgl.util.glu.Project;
@@ -89,7 +91,7 @@ public class MixinEntityRenderer {
 
     @Redirect(method = "getMouseOver", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/multiplayer/WorldClient;getEntitiesInAABBexcluding(Lnet/minecraft/entity/Entity;Lnet/minecraft/util/math/AxisAlignedBB;Lcom/google/common/base/Predicate;)Ljava/util/List;"))
     public List<Entity> hookGetEntitiesInAABBExcluding(WorldClient client, Entity entity, AxisAlignedBB box, Predicate predicate) {
-        if (Interact.INSTANCE.isOn() && Interact.noEntityTrace.getValue()) {
+        if (Interact.INSTANCE.isOn() && Interact.noEntityTrace.getValue() && InventoryUtil.isHolding(ItemPickaxe.class, false)) {
             return new ArrayList<>();
         }
 
