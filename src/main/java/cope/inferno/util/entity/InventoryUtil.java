@@ -12,6 +12,13 @@ import net.minecraft.util.EnumHand;
 public class InventoryUtil implements Util {
     public static final int OFFHAND_SLOT = 45;
 
+    public static int getItemCount(Item item) {
+        return mc.player.inventory.mainInventory.stream()
+                .filter((stack) -> stack.getItem().equals(item))
+                .mapToInt((stack) -> stack.stackSize) // in case we have stacked totems
+                .sum();
+    }
+
     public static int getInventoryItemSlot(Item item, boolean hotbar) {
         for (int i = hotbar ? 0 : 9; i < 36; ++i) {
             ItemStack stack = mc.player.inventory.getStackInSlot(i);

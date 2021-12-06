@@ -33,6 +33,7 @@ public class ModuleManager implements Wrapper {
                 new AutoBowRelease(),
                 new AutoCrystal(),
                 new AutoGG(),
+                new AutoLog(),
                 new AutoTotem(),
                 new Critcals(),
                 new FastProjectile(),
