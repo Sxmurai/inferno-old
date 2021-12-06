@@ -1,6 +1,7 @@
 package cope.inferno.impl.manager;
 
 import com.google.common.collect.Lists;
+import cope.inferno.impl.features.Wrapper;
 import cope.inferno.impl.features.module.Module;
 import cope.inferno.impl.features.module.modules.client.*;
 import cope.inferno.impl.features.module.modules.combat.*;
@@ -14,7 +15,7 @@ import org.lwjgl.input.Keyboard;
 
 import java.util.List;
 
-public class ModuleManager {
+public class ModuleManager implements Wrapper {
     private final List<Module> modules;
 
     public ModuleManager() {
@@ -90,12 +91,12 @@ public class ModuleManager {
     @SubscribeEvent
     public void onKeyInput(InputEvent.KeyInputEvent event) {
         int code = Keyboard.getEventKey();
-        if (code != Keyboard.KEY_NONE && !Keyboard.getEventKeyState()) { // if the key is not unknown and the button is not down
-            this.modules.forEach((module) -> {
+        if (mc.currentScreen == null && code != Keyboard.KEY_NONE && !Keyboard.getEventKeyState()) {
+            for (Module module : this.modules) {
                 if (module.getBind() == code) {
                     module.toggle();
                 }
-            });
+            }
         }
     }
 
