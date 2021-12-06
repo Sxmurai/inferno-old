@@ -21,4 +21,14 @@ public class HudManager {
     public ArrayList<HudComponent> getComponents() {
         return components;
     }
+
+    public <T extends HudComponent> T getComponent(String name) {
+        for (HudComponent component : this.components) {
+            if (component.getName().equalsIgnoreCase(name)) {
+                return (T) component;
+            }
+        }
+
+        return null;
+    }
 }

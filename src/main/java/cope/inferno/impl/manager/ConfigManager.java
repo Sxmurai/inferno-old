@@ -3,6 +3,7 @@ package cope.inferno.impl.manager;
 import cope.inferno.Inferno;
 import cope.inferno.impl.config.Config;
 import cope.inferno.impl.config.configs.FriendsConfig;
+import cope.inferno.impl.config.configs.HudConfig;
 import cope.inferno.impl.config.configs.ModulesConfig;
 import cope.inferno.impl.config.configs.WallhackConfig;
 import org.apache.commons.lang3.time.StopWatch;
@@ -26,7 +27,11 @@ public class ConfigManager {
     private String currentProfile = "default";
 
     public ConfigManager() {
+        // global configs
         this.configs.add(new FriendsConfig());
+        this.configs.add(new HudConfig());
+
+        // per profile configs
         this.configs.add(new ModulesConfig());
         this.configs.add(new WallhackConfig());
 
