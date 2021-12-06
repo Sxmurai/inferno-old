@@ -3,7 +3,6 @@ package cope.inferno.asm.mixins.render;
 import cope.inferno.impl.features.Wrapper;
 import cope.inferno.Inferno;
 import cope.inferno.impl.features.module.modules.render.Nametags;
-import cope.inferno.impl.features.module.modules.render.PopChams;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.renderer.entity.RenderPlayer;
 import org.spongepowered.asm.mixin.Mixin;
@@ -61,11 +60,6 @@ public class MixinRenderPlayer {
 
     @Inject(method = "renderEntityName", at = @At("HEAD"), cancellable = true)
     protected void renderEntityName(AbstractClientPlayer entityIn, double x, double y, double z, String name, double distanceSq, CallbackInfo info) {
-        if (PopChams.INSTANCE.isOn() && PopChams.INSTANCE.pops.containsKey(entityIn.entityId)) {
-            info.cancel();
-            return;
-        }
-
         if (Nametags.INSTANCE.isOn()) {
             info.cancel();
         }
