@@ -80,7 +80,7 @@ public class ModuleManager {
                 new ESP(),
                 new Nametags(),
                 new NoRender(),
-                new PopChams(),
+                //new PopChams(),
                 new ViewClip(),
                 new Wallhack()
         );
