@@ -202,7 +202,7 @@ public class RenderUtil implements Util {
     public static void drawFilledBox(AxisAlignedBB box, int hex) {
         GlStateManager.pushMatrix();
         GlStateManager.enableBlend();
-        GlStateManager.tryBlendFuncSeparate(771, 770, 0, 1);
+        GlStateManager.tryBlendFuncSeparate(770, 771, 0, 1);
         GlStateManager.disableTexture2D();
         GlStateManager.disableDepth();
         GlStateManager.depthMask(false);
