@@ -233,7 +233,7 @@ public class AutoCrystal extends Module {
 
     @Override
     public void onTick() {
-        if (!InventoryUtil.isHolding(Items.END_CRYSTAL, true) || this.hand == null && this.placePos != null) {
+        if (!InventoryUtil.isHolding(Items.END_CRYSTAL, true) || this.hand == null && this.placePos != null && this.target != null) {
             int slot = InventoryUtil.getHotbarItemSlot(Items.END_CRYSTAL, true);
             if (slot == -1) {
                 return;
