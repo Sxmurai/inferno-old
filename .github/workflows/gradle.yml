@@ -33,10 +33,12 @@ jobs:
         arguments: ./gradlew setupDecompWorkspace
         
     - name: Cleanup
+      uses: gradle/gradle-build-action@4137be6a8bf7d7133955359dbd952c0ca73b1021
       with:
         arguments: ./gradlew clean
         
     - name: Build
+      uses: gradle/gradle-build-action@4137be6a8bf7d7133955359dbd952c0ca73b1021
       with:
         arguments: ./gradlew build
         
