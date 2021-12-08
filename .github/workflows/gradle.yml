@@ -30,17 +30,17 @@ jobs:
     - name: Setup Decomp Workspace
       uses: gradle/gradle-build-action@4137be6a8bf7d7133955359dbd952c0ca73b1021
       with:
-        arguments: ./gradlew setupDecompWorkspace
+        arguments: gradlew setupDecompWorkspace
         
     - name: Cleanup
       uses: gradle/gradle-build-action@4137be6a8bf7d7133955359dbd952c0ca73b1021
       with:
-        arguments: ./gradlew clean
+        arguments: gradlew clean
         
     - name: Build
       uses: gradle/gradle-build-action@4137be6a8bf7d7133955359dbd952c0ca73b1021
       with:
-        arguments: ./gradlew build
+        arguments: gradlew build
         
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v2.3.0
