@@ -23,6 +23,7 @@ import net.minecraft.init.SoundEvents;
 import net.minecraft.network.play.client.CPacketUseEntity;
 import net.minecraft.network.play.server.SPacketDestroyEntities;
 import net.minecraft.network.play.server.SPacketSoundEffect;
+import net.minecraft.network.play.server.SPacketSpawnObject;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -49,6 +50,8 @@ public class AutoCrystal extends Module {
     public final Setting<Placement> placement = new Setting<>("Placement", Placement.Native);
     public final Setting<Float> faceplace = new Setting<>("Faceplace", 14.0f, 1.0f, 20.0f);
     public final Setting<Float> faceplaceDamage = new Setting<>("FaceplaceDamage", 2.0f, 1.0f, 4.0f);
+    public final Setting<Boolean> prediction = new Setting<>("Prediction", true);
+    public final Setting<Float> predictDelay = new Setting<>("PredictDelay", 25.0f, 0.0f, 500.0f);
 
     // explode settings
     public final Setting<Boolean> explode = new Setting<>("Explode", true);
@@ -74,6 +77,7 @@ public class AutoCrystal extends Module {
     // local variables
     private final Timer placeTimer = new Timer();
     private final Timer explodeTimer = new Timer();
+    private final Timer predictTimer = new Timer();
 
     private EnumHand hand = EnumHand.MAIN_HAND;
     private int oldSlot = -1;
@@ -186,6 +190,37 @@ public class AutoCrystal extends Module {
                         }
                     }
                 }
+            }
+        } else if (event.getPacket() instanceof SPacketSpawnObject) {
+            if (!this.prediction.getValue()) {
+                return;
+            }
+
+            // scuffed shit
+            SPacketSpawnObject packet = event.getPacket();
+            if (this.explode.getValue() && this.target != null && packet.getType() == 51) {
+                Entity entity = mc.world.getEntityByID(packet.getEntityID());
+                if (entity == null || !(entity instanceof EntityEnderCrystal)) {
+                    return;
+                }
+
+                BlockPos pos = new BlockPos(packet.getX(), packet.getY(), packet.getZ());
+                double dist = mc.player.getDistance(pos.getX(), pos.getY(), pos.getZ());
+                if (!BlockUtil.canSeePos(pos, 0.5) && dist > this.explodeTrace.getValue() || dist > this.explodeTrace.getValue()) {
+                    return;
+                }
+
+                float selfDamage = DamageUtil.calculateDamage(new Vec3d(pos).add(0.5, 1.0, 0.5), mc.player);
+                if (selfDamage + this.localBias.getValue() >= EntityUtil.getHealth(mc.player) || selfDamage >= this.maxLocal.getValue()) {
+                    return;
+                }
+
+                float targetDamage = DamageUtil.calculateDamage(new Vec3d(pos).add(0.5, 1.0, 0.5), this.target);
+                if (selfDamage > targetDamage || targetDamage < this.explodeDamage.getValue()) {
+                    return;
+                }
+
+                this.crystal = (EntityEnderCrystal) entity;
             }
         }
     }
