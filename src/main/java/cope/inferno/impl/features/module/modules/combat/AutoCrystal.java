@@ -287,7 +287,7 @@ public class AutoCrystal extends Module {
         float damage = 0.0f;
 
         for (BlockPos pos : placements) {
-            if (!BlockUtil.canSeePos(pos, this.raytrace.getValue().boost) && mc.player.getDistance(pos.getX(), pos.getY(), pos.getZ()) > this.placeTrace.getValue()) {
+            if (!BlockUtil.canSeePos(pos, 0.5) && mc.player.getDistance(pos.getX(), pos.getY(), pos.getZ()) > this.placeTrace.getValue()) {
                 continue;
             }
 

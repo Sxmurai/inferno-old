@@ -65,7 +65,6 @@ public class BlockUtil implements Wrapper {
     }
 
     public static boolean canSeePos(BlockPos pos, double offset) {
-        offset = offset == -1.0 ? 0.0 : offset;
         return mc.world.rayTraceBlocks(new Vec3d(mc.player.posX, mc.player.posY + mc.player.getEyeHeight(), mc.player.posZ), new Vec3d(pos.x + 0.5, pos.y + offset, pos.z + 0.5), false, true, false) == null;
     }
 }
