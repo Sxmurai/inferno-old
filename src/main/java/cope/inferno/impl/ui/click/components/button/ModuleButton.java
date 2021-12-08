@@ -1,10 +1,12 @@
 package cope.inferno.impl.ui.click.components.button;
 
 import cope.inferno.impl.features.module.Module;
+import cope.inferno.impl.ui.click.components.other.ColorPicker;
 import cope.inferno.impl.ui.components.Component;
 import cope.inferno.impl.ui.components.widgets.button.Button;
 import cope.inferno.Inferno;
 import cope.inferno.impl.settings.Setting;
+import cope.inferno.util.render.ColorUtil;
 import cope.inferno.util.render.ScaleUtil;
 import cope.inferno.impl.settings.Bind;
 import cope.inferno.impl.ui.click.components.other.Slider;
@@ -45,6 +47,8 @@ public class ModuleButton extends Button {
                 this.components.add(new Slider(setting));
             } else if (setting.getValue() instanceof String) {
                 this.components.add(new StringButton(setting));
+            } else if (setting.getValue() instanceof ColorUtil.Color) {
+                this.components.add(new ColorPicker(setting));
             }
         }
     }
@@ -59,18 +63,19 @@ public class ModuleButton extends Button {
         }
 
         if (this.expanded) {
-            double posY = 1.0;
+            double posY = 14.0;
             for (Component component : this.components) {
                 if (!component.isVisible()) {
                     continue;
                 }
 
                 component.setX(this.x + 2.0);
-                component.setY(this.y + (posY += component.getHeight() + 1.0));
+                component.setY(this.y + posY);
                 component.setWidth(this.width - 2.0);
-                component.setHeight(13.0);
 
                 component.render(mouseX, mouseY);
+
+                posY += component.getHeight() + 1.0;
             }
         }
     }

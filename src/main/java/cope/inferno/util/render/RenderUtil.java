@@ -132,6 +132,31 @@ public class RenderUtil implements Util {
         GlStateManager.disableBlend();
     }
 
+    public static void drawGradientRectangle(double x, double y, double width, double height, int s, int e) {
+        ColorUtil.Color start = ColorUtil.getColor(s);
+        ColorUtil.Color end = ColorUtil.getColor(e);
+
+        GlStateManager.disableTexture2D();
+        GlStateManager.enableBlend();
+        GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
+        GlStateManager.shadeModel(GL11.GL_SMOOTH);
+
+        Tessellator tessellator = Tessellator.getInstance();
+        BufferBuilder buffer = tessellator.getBuffer();
+
+        buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_COLOR);
+        buffer.pos(x + width, y, 0.0).color(start.getRed(), start.getGreen(), start.getBlue(), start.getAlpha()).endVertex();
+        buffer.pos(x, y, 0.0).color(start.getRed(), start.getGreen(), start.getBlue(), start.getAlpha()).endVertex();
+        buffer.pos(x, y + height, 0.0).color(end.getRed(), end.getGreen(), end.getBlue(), start.getAlpha()).endVertex();
+        buffer.pos(x + width, y + height, 0.0).color(end.getRed(), end.getGreen(), end.getBlue(), start.getAlpha()).endVertex();
+        tessellator.draw();
+
+        GlStateManager.shadeModel(GL11.GL_FLAT);
+        GlStateManager.disableBlend();
+        GlStateManager.enableAlpha();
+        GlStateManager.enableTexture2D();
+    }
+
     public static void drawCircle(double x, double y, double radius, int hex) {
         ColorUtil.Color color = ColorUtil.getColor(hex);
 
