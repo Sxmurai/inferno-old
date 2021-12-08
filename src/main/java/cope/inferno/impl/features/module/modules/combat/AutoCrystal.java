@@ -23,6 +23,7 @@ import net.minecraft.init.SoundEvents;
 import net.minecraft.network.play.client.CPacketUseEntity;
 import net.minecraft.network.play.server.SPacketDestroyEntities;
 import net.minecraft.network.play.server.SPacketSoundEffect;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -46,6 +47,8 @@ public class AutoCrystal extends Module {
     public final Setting<CrystalUtil.Direction> direction = new Setting<>("Direction", CrystalUtil.Direction.Normal);
     public final Setting<Float> placeDamage = new Setting<>("PlaceDamage", 4.0f, 1.0f, 20.0f);
     public final Setting<Placement> placement = new Setting<>("Placement", Placement.Native);
+    public final Setting<Float> faceplace = new Setting<>("Faceplace", 14.0f, 1.0f, 20.0f);
+    public final Setting<Float> faceplaceDamage = new Setting<>("FaceplaceDamage", 2.0f, 1.0f, 4.0f);
 
     // explode settings
     public final Setting<Boolean> explode = new Setting<>("Explode", true);
@@ -324,8 +327,26 @@ public class AutoCrystal extends Module {
             }
         }
 
-        if (placement == null) {
-            // @todo faceplace
+        if (placement == null && this.target != null && EntityUtil.getHealth(mc.player) <= this.faceplace.getValue()) {
+            BlockPos base = new BlockPos(this.target.posX, this.target.posY, this.target.posZ);
+            for (EnumFacing facing : EnumFacing.values()) {
+                BlockPos surrounding = base.offset(facing);
+                if (!DamageUtil.canPlaceCrystal(surrounding, this.placement.getValue() == Placement.Protocol)) {
+                    continue;
+                }
+
+                // do we even need to calculate local damage? i dont think so
+
+                float targetDamage = DamageUtil.calculateDamage(new Vec3d(surrounding).add(0.5, 1.0, 0.5), this.target);
+                if (targetDamage < this.faceplaceDamage.getValue()) {
+                    continue;
+                }
+
+                if (targetDamage - 0.5f > damage) {
+                    placement = surrounding;
+                    damage = targetDamage;
+                }
+            }
         }
 
         this.placePos = placement;
