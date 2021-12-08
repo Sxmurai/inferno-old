@@ -204,6 +204,12 @@ public class AutoCrystal extends Module {
                     return;
                 }
 
+                if (!this.predictTimer.passedMs(this.predictDelay.getValue().longValue())) {
+                    return;
+                }
+
+                this.predictTimer.reset();
+
                 BlockPos pos = new BlockPos(packet.getX(), packet.getY(), packet.getZ());
                 double dist = mc.player.getDistance(pos.getX(), pos.getY(), pos.getZ());
                 if (!BlockUtil.canSeePos(pos, 0.5) && dist > this.explodeTrace.getValue() || dist > this.explodeTrace.getValue()) {
