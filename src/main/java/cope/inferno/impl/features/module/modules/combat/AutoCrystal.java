@@ -67,6 +67,7 @@ public class AutoCrystal extends Module {
     public final Setting<InventoryManager.Swap> swap = new Setting<>("Swap", InventoryManager.Swap.Legit);
     public final Setting<Timing> timing = new Setting<>("Timing", Timing.Sequential);
     public final Setting<Raytrace> raytrace = new Setting<>("Raytrace", Raytrace.Normal);
+    public final Setting<Boolean> ignoreTerrain = new Setting<>("IgnoreTerrain", false);
     public final Setting<Boolean> swing = new Setting<>("Swing", true);
     public final Setting<Rotate> rotate = new Setting<>("Rotate", Rotate.Normal);
     public final Setting<Float> threshold = new Setting<>("Threshold", 55.0f, 10.0f, 360.0f, () -> this.rotate.getValue() == Rotate.Limit);
@@ -216,12 +217,12 @@ public class AutoCrystal extends Module {
                     return;
                 }
 
-                float selfDamage = DamageUtil.calculateDamage(new Vec3d(pos).add(0.5, 1.0, 0.5), mc.player);
+                float selfDamage = DamageUtil.calculateDamage(new Vec3d(pos).add(0.5, 1.0, 0.5), mc.player, this.ignoreTerrain.getValue());
                 if (selfDamage + this.localBias.getValue() >= EntityUtil.getHealth(mc.player) || selfDamage >= this.maxLocal.getValue()) {
                     return;
                 }
 
-                float targetDamage = DamageUtil.calculateDamage(new Vec3d(pos).add(0.5, 1.0, 0.5), this.target);
+                float targetDamage = DamageUtil.calculateDamage(new Vec3d(pos).add(0.5, 1.0, 0.5), this.target, this.ignoreTerrain.getValue());
                 if (selfDamage > targetDamage || targetDamage < this.explodeDamage.getValue()) {
                     return;
                 }
@@ -335,14 +336,14 @@ public class AutoCrystal extends Module {
 
             Vec3d location = new Vec3d(pos).add(0.5, 1.0, 0.5);
 
-            float localDamage = DamageUtil.calculateDamage(location, mc.player);
+            float localDamage = DamageUtil.calculateDamage(location, mc.player, this.ignoreTerrain.getValue());
             if (localDamage + this.localBias.getValue() >= EntityUtil.getHealth(mc.player) || localDamage >= this.maxLocal.getValue()) {
                 continue;
             }
 
             float targetDamage = 0.0f;
             if (this.target != null) {
-                targetDamage = DamageUtil.calculateDamage(location, this.target);
+                targetDamage = DamageUtil.calculateDamage(location, this.target, this.ignoreTerrain.getValue());
                 if (targetDamage < localDamage || targetDamage < this.placeDamage.getValue()) {
                     continue;
                 }
@@ -353,7 +354,7 @@ public class AutoCrystal extends Module {
                     continue;
                 }
 
-                float playerDamage = DamageUtil.calculateDamage(location, player);
+                float playerDamage = DamageUtil.calculateDamage(location, player, this.ignoreTerrain.getValue());
                 if (targetDamage > playerDamage) {
                     targetDamage = playerDamage;
                     this.target = player;
@@ -376,7 +377,7 @@ public class AutoCrystal extends Module {
 
                 // do we even need to calculate local damage? i dont think so
 
-                float targetDamage = DamageUtil.calculateDamage(new Vec3d(surrounding).add(0.5, 1.0, 0.5), this.target);
+                float targetDamage = DamageUtil.calculateDamage(new Vec3d(surrounding).add(0.5, 1.0, 0.5), this.target, this.ignoreTerrain.getValue());
                 if (targetDamage < this.faceplaceDamage.getValue()) {
                     continue;
                 }
@@ -426,12 +427,12 @@ public class AutoCrystal extends Module {
 
             Vec3d location = new Vec3d(entity.posX, entity.posY + 0.5, entity.posZ);
 
-            float localDamage = DamageUtil.calculateDamage(location, mc.player);
+            float localDamage = DamageUtil.calculateDamage(location, mc.player, this.ignoreTerrain.getValue());
             if (localDamage + this.localBias.getValue() >= EntityUtil.getHealth(mc.player) || localDamage > this.maxLocal.getValue()) {
                 continue;
             }
 
-            float targetDamage = DamageUtil.calculateDamage(location, this.target);
+            float targetDamage = DamageUtil.calculateDamage(location, this.target, this.ignoreTerrain.getValue());
             if (localDamage > targetDamage || targetDamage < this.explodeDamage.getValue()) {
                 continue;
             }

@@ -68,19 +68,19 @@ public class DamageUtil implements Wrapper {
         return true;
     }
 
-    public static float calculateDamage(Vec3d vec, EntityPlayer target) {
+    public static float calculateDamage(Vec3d vec, EntityPlayer target, boolean ignoreTerrain) {
         if (target == mc.player && mc.player.isCreative()) {
             return 0.0f;
         }
 
         float doublePower = 12.0f;
         double distancedSize = target.getDistanceSq(vec.x, vec.y, vec.z) / doublePower;
-        double blast = target.world.getBlockDensity(vec, target.getEntityBoundingBox());
+        double density = BlockUtil.getBlockDensity(ignoreTerrain, vec, target.getEntityBoundingBox());
 
-        double impact = (1.0 - distancedSize) * blast;
+        double impact = (1.0 - distancedSize) * density;
         float damage = (float) ((impact * impact + impact) / 2.0f * 7.0f * doublePower + 1.0);
 
-        return getBlastReduction(target, getDamageMultiplier(damage), new Explosion(target.world, target, vec.x, vec.y, vec.z, 6.0f, false, true));
+        return getBlastReduction(target, getDamageMultiplier(damage), new Explosion(target.world, target, vec.x, vec.y, vec.z, doublePower / 2.0f, false, true));
     }
 
     public static float getBlastReduction(EntityPlayer target, float damage, Explosion explosion) {
@@ -96,7 +96,7 @@ public class DamageUtil implements Wrapper {
         damage *= 1.0f - eof / 25.0f;
 
         if (target.isPotionActive(MobEffects.RESISTANCE)) {
-            damage -= damage / 4.0f;
+            damage = damage * (25.0f - (mc.player.getActivePotionEffect(MobEffects.RESISTANCE).getAmplifier() + 1) * 5.0f) / 25.0f;
         }
 
         return Math.max(0.0f, damage);
