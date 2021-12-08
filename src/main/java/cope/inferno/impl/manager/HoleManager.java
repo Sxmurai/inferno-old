@@ -21,7 +21,7 @@ public class HoleManager implements Wrapper {
             this.timer.reset();
 
             for (BlockPos blockPos : BlockUtil.getSphere(mc.player.getPosition(), 5, 5, false, true, 0)) {
-                if (!mc.world.isAirBlock(blockPos)) {
+                if (!mc.world.isAirBlock(blockPos) || !mc.world.isAirBlock(blockPos.add(0.0, 1.0, 0.0)) || !mc.world.isAirBlock(blockPos.add(0.0, 2.0, 0.0))) {
                     continue;
                 }
 
