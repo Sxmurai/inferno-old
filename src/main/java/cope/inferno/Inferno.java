@@ -54,8 +54,6 @@ public class Inferno {
     public void onInit(FMLInitializationEvent event) {
         LOGGER.info("Initializing {} {}", Inferno.NAME, Inferno.VERSION);
 
-        Display.setTitle(Inferno.NAME + " " + Inferno.VERSION);
-
         fontManager = new FontManager();
         fontManager.resetCustomFont();
         moduleManager = new ModuleManager();
