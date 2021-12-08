@@ -27,6 +27,9 @@ jobs:
         java-version: '8'
         distribution: 'adopt'
 
+    - name: Cache Gradle Shit
+      uses: actions/cache@v2.1.7
+
     - name: Setup Decomp Workspace
       uses: gradle/gradle-build-action@4137be6a8bf7d7133955359dbd952c0ca73b1021
       with:
