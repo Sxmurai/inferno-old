@@ -205,8 +205,8 @@ public class AutoCrystal extends Module {
             return;
         }
 
+        this.calculatePlacePosition();
         if (this.place.getValue() && this.placeTimer.getPassedTimeMsFloat() / 50.0f >= 20.0f - this.placeSpeed.getValue()) {
-            this.calculatePlacePosition();
             if (this.placePos == null || this.target == null) {
                 return;
             }
@@ -237,8 +237,8 @@ public class AutoCrystal extends Module {
             CrystalUtil.place(this.placePos, this.hand, this.direction.getValue(), this.swing.getValue(), this.raytrace.getValue().boost);
         }
 
+        this.calculateBestCrystal();
         if (this.explode.getValue() && this.explodeTimer.getPassedTimeMsFloat() / 50.0f >= 20.0f - this.explodeSpeed.getValue()) {
-            this.calculateBestCrystal();
             if (this.crystal == null) {
                 return;
             }
