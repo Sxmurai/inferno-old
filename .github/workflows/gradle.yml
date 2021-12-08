@@ -38,7 +38,7 @@ jobs:
     - uses: actions/upload-artifact@v2
       with:
         name: Package
-        path: build/libs/*-release.jar
+        path: build/libs/*.jar
 
     - name: Cleanup Gradle Cache
       run: |
