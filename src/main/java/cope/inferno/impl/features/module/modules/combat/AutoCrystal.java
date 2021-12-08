@@ -318,7 +318,7 @@ public class AutoCrystal extends Module {
                 }
             }
 
-            if (targetDamage > damage) {
+            if (targetDamage - 0.5f > damage) {
                 placement = pos;
                 damage = targetDamage;
             }
