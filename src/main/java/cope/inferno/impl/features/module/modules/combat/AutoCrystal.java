@@ -393,7 +393,7 @@ public class AutoCrystal extends Module {
             return;
         }
 
-        EntityEnderCrystal best = null;
+        EntityEnderCrystal best = this.crystal;
         float damage = 0.0f;
 
         for (Entity entity : mc.world.loadedEntityList) {
