@@ -314,10 +314,8 @@ public class AutoCrystal extends Module {
             return;
         }
 
-        if (this.target == null) {
-            Optional<EntityPlayer> player = mc.world.getEntities(EntityPlayer.class, (p) -> p != mc.player && !p.isDead && mc.player.getDistance(p) <= this.oppRange.getValue() && !Inferno.friendManager.isFriend(p.getUniqueID()))
-                    .stream().min(Comparator.comparingDouble((e) -> mc.player.getDistance(e)));
-
+        if (!this.isTargetValid(this.target)) {
+            Optional<EntityPlayer> player = mc.world.getEntities(EntityPlayer.class, this::isTargetValid).stream().min(Comparator.comparingDouble((e) -> mc.player.getDistance(e)));
             player.ifPresent(entityPlayer -> this.target = entityPlayer);
         }
 
@@ -345,7 +343,7 @@ public class AutoCrystal extends Module {
             }
 
             for (EntityPlayer player : mc.world.playerEntities) {
-                if (player == null || player.isDead || player == mc.player || mc.player.getDistance(player) > this.oppRange.getValue() || Inferno.friendManager.isFriend(player.getUniqueID())) {
+                if (!this.isTargetValid(player)) {
                     continue;
                 }
 
@@ -384,7 +382,21 @@ public class AutoCrystal extends Module {
             }
         }
 
+        if (!this.isTargetValid(this.target)) {
+            this.target = null;
+            this.placePos = null;
+            return;
+        }
+
         this.placePos = placement;
+    }
+
+    private boolean isTargetValid(EntityPlayer p) {
+        if (p == null) {
+            return false;
+        }
+
+        return p != mc.player && !p.isDead && mc.player.getDistance(p) <= this.oppRange.getValue() && !Inferno.friendManager.isFriend(p.getUniqueID());
     }
 
     private void calculateBestCrystal() {
