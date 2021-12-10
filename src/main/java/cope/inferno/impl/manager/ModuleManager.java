@@ -83,6 +83,7 @@ public class ModuleManager implements Wrapper {
                 new Chams(),
                 new ESP(),
                 new HoleESP(),
+                new LogoutSpots(),
                 new Nametags(),
                 new NoRender(),
                 new ViewClip(),
