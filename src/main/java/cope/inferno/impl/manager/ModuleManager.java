@@ -30,11 +30,11 @@ public class ModuleManager implements Wrapper {
                 // combat
                 new Aura(),
                 new AutoArmor(),
-                new AutoBowRelease(),
                 new AutoCrystal(),
                 new AutoGG(),
                 new AutoLog(),
                 new AutoTotem(),
+                new BowSpam(),
                 new Critcals(),
                 new FastProjectile(),
                 new HoleFiller(),
