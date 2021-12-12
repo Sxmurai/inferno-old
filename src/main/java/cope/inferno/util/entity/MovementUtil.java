@@ -1,6 +1,7 @@
 package cope.inferno.util.entity;
 
 import cope.inferno.impl.features.Wrapper;
+import net.minecraft.init.MobEffects;
 import net.minecraft.network.play.client.CPacketPlayer;
 import net.minecraft.util.math.Vec3d;
 
@@ -69,6 +70,24 @@ public class MovementUtil implements Wrapper {
 
     public static Vec3d getCentered() {
         return new Vec3d(Math.floor(mc.player.posX) + 0.5, mc.player.posY, Math.floor(mc.player.posZ) + 0.5);
+    }
+
+    public static double getBaseNCPSpeed() {
+        double baseSpeed = 0.2873;
+        if (mc.player.isPotionActive(MobEffects.SPEED)) {
+            baseSpeed *= 1.0 + 0.2 * (mc.player.getActivePotionEffect(MobEffects.SPEED).getAmplifier() + 1);
+        }
+
+        return baseSpeed;
+    }
+
+    public static double getJumpHeight() {
+        double y = 0.3995;
+        if (mc.player.isPotionActive(MobEffects.JUMP_BOOST)) {
+            y += (mc.player.getActivePotionEffect(MobEffects.JUMP_BOOST).getAmplifier() + 1) * 0.1;
+        }
+
+        return y;
     }
 
     public static void setPosition(double x, double y, double z) {
