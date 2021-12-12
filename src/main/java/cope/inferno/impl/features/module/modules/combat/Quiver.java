@@ -7,13 +7,10 @@ import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
 import net.minecraft.inventory.ClickType;
 import net.minecraft.item.ItemStack;
-import net.minecraft.network.play.client.CPacketPlayer;
 import net.minecraft.network.play.client.CPacketPlayerDigging;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionUtils;
 import net.minecraft.util.EnumFacing;
-import net.minecraftforge.event.entity.living.PotionEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 @Module.Define(name = "Quiver", category = Module.Category.Combat)
 @Module.Info(description = "Shoots positive arrow effects at you")
@@ -22,36 +19,18 @@ public class Quiver extends Module {
     public final Setting<Effect> secondary = new Setting<>("Secondary", Effect.Strength);
     public final Setting<Integer> amount = new Setting<>("Amount", 4, 0, 20);
 
-    private boolean forceRotate = false;
-
-    @Override
-    protected void onDeactivated() {
-        this.forceRotate = false;
-    }
-
-    @SubscribeEvent
-    public void onPotionAdded(PotionEvent.PotionAddedEvent event) {
-        if (event.getEntity() == mc.player) {
-            this.forceRotate = false;
-        }
-    }
-
     @Override
     public void onTick() {
-        if (forceRotate) {
-            mc.player.connection.sendPacket(new CPacketPlayer.Rotation(Inferno.rotationManager.getYaw(), -90.0f, mc.player.onGround));
-            Inferno.rotationManager.setRotations(Inferno.rotationManager.getYaw(), -90.0f);
-        }
-
         if (mc.player.isHandActive() && mc.player.getActiveItemStack().getItem() == Items.BOW && mc.player.getItemInUseMaxCount() >= this.amount.getValue()) {
             if (!mc.player.isPotionActive(this.primary.getValue().effect)) {
+                Inferno.rotationManager.setRotations(Inferno.rotationManager.getYaw(), -90.0f);
                 this.doShit(this.primary.getValue().effect);
                 return;
             }
 
             if (!mc.player.isPotionActive(this.secondary.getValue().effect)) {
+                Inferno.rotationManager.setRotations(Inferno.rotationManager.getYaw(), -90.0f);
                 this.doShit(this.secondary.getValue().effect);
-                return;
             }
         }
     }
@@ -71,8 +50,6 @@ public class Quiver extends Module {
         if (arrowSlot == -1) {
             return;
         }
-
-        this.forceRotate = true;
 
         if (arrowSlot != 9) {
             boolean containedItem = mc.player.inventoryContainer.getSlot(36).getHasStack();
