@@ -36,7 +36,7 @@ public class InfernoUI extends GuiScreen {
     @Override
     protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
         super.mouseClicked(mouseX, mouseY, mouseButton);
-        this.barRenderer.onRender(mouseX, mouseY);
+        this.barRenderer.onMouseClicked(mouseX, mouseY, mouseButton);
         if (this.current != null) {
             this.current.onMouseClicked(mouseX, mouseY, mouseButton);
         }

@@ -8,7 +8,7 @@ import cope.inferno.util.render.ScaleUtil;
 import org.lwjgl.opengl.GL11;
 
 public abstract class DefaultFrame extends AbstractFrame {
-    private static final double RADIUS = 15.0;
+    private static final double RADIUS = 12.0;
 
     private boolean resizing;
     private double h2;
@@ -34,7 +34,7 @@ public abstract class DefaultFrame extends AbstractFrame {
         RenderUtil.drawRoundedRectangle(this.x, this.y, this.width, this.height, RADIUS, BACKGROUND_COLOR);
         RenderUtil.drawLine(this.x, this.y + (BAR_HEIGHT - 1.0), this.x + width, this.y + (BAR_HEIGHT - 1.0), 2.0f, Colors.color());
 
-        double origin = this.children.get(0).getHeight();
+        double origin = this.children.get(0).getY();
         double posY = origin == 0.0 ? this.y + (BAR_HEIGHT - 0.5) : origin;
         for (AbstractComponent component : this.children) {
             component.setX(this.x + 2.0);

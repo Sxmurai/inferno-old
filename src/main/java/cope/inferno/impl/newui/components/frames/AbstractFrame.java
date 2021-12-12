@@ -10,8 +10,7 @@ public abstract class AbstractFrame extends AbstractComponent {
     protected static final double DEFAULT_HEIGHT = 235.0;
     protected static final double BAR_HEIGHT = 16.0;
 
-    // @todo, resizing too?
-    private boolean dragging = false;
+    protected boolean dragging = false;
     protected double x2, y2;
 
     public AbstractFrame(String id, double x, double y, double width, double height) {
@@ -25,8 +24,8 @@ public abstract class AbstractFrame extends AbstractComponent {
     @Override
     public void onRender(int mouseX, int mouseY) {
         if (this.dragging) {
-            this.x = this.x2 - mouseX;
-            this.y = this.y2 - mouseY;
+            this.x = this.x2 + mouseX;
+            this.y = this.y2 + mouseY;
         }
 
         if (this.isMouseInBounds(mouseX, mouseY)) {

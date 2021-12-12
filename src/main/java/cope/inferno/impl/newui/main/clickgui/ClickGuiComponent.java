@@ -32,20 +32,25 @@ public class ClickGuiComponent extends AbstractComponent {
                 }
             });
 
-            x += 90.0;
+            x += 96.0;
         }
     }
 
     @Override
     public void onRender(int mouseX, int mouseY) {
-        System.out.println(this.children.size());
         this.children.forEach((child) -> child.onRender(mouseX, mouseY));
     }
 
     @Override
     public void onMouseClicked(int mouseX, int mouseY, int button) {
         super.onMouseClicked(mouseX, mouseY, button);
-        this.children.forEach((child) -> child.onMouseReleased(mouseX, mouseY, button));
+        this.children.forEach((child) -> child.onMouseClicked(mouseX, mouseY, button));
+    }
+
+    @Override
+    public void onMouseReleased(int mouseX, int mouseY, int state) {
+        super.onMouseReleased(mouseX, mouseY, state);
+        this.children.forEach((child) -> child.onMouseReleased(mouseX, mouseY, state));
     }
 
     public static ClickGuiComponent getInstance() {

@@ -77,6 +77,10 @@ public abstract class AbstractComponent implements Wrapper {
         mc.getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(SoundEvents.UI_BUTTON_CLICK, 1.0f));
     }
 
+    public boolean isVisible() {
+        return true;
+    }
+
     public ArrayList<AbstractComponent> getChildren() {
         return children;
     }

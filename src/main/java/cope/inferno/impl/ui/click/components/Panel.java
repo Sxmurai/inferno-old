@@ -55,7 +55,7 @@ public class Panel extends Component {
         }
 
         // title bar
-        RenderUtil.drawHalfRoundedRectangle(this.x, this.y, this.width, 16.0, 15.0, new Color(35, 39, 42).getRGB());
+        RenderUtil.drawHalfRoundedRectangle(this.x, this.y, this.width, 16.0, 12.0, new Color(35, 39, 42).getRGB());
         Inferno.fontManager.drawCorrectString(
                 this.name,
                 ScaleUtil.centerTextX((float) this.x, (float) this.width, mc.fontRenderer.getStringWidth(this.name)),
@@ -68,7 +68,7 @@ public class Panel extends Component {
         GL11.glEnable(GL11.GL_SCISSOR_TEST);
 
         // rest
-        RenderUtil.drawRoundedRectangle(this.x, this.y, this.width, this.height, 15.0, new Color(35, 39, 42).getRGB());
+        RenderUtil.drawRoundedRectangle(this.x, this.y, this.width, this.height, 12.0, new Color(35, 39, 42).getRGB());
         RenderUtil.drawLine(this.x, this.y + 15.0, this.x + this.width, this.y + 15.0, 2.0f, Colors.color());
 
         double firstButtonY = this.buttons.get(0).getY();

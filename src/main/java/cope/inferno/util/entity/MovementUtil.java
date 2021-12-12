@@ -73,6 +73,10 @@ public class MovementUtil implements Wrapper {
     }
 
     public static double getBaseNCPSpeed() {
+        if (mc.player == null) {
+            return 0.0;
+        }
+
         double baseSpeed = 0.2873;
         if (mc.player.isPotionActive(MobEffects.SPEED)) {
             baseSpeed *= 1.0 + 0.2 * (mc.player.getActivePotionEffect(MobEffects.SPEED).getAmplifier() + 1);
