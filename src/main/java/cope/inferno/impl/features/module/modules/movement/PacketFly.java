@@ -80,6 +80,10 @@ public class PacketFly extends Module {
                 }
             }
 
+            if (mc.player.ticksExisted % 30 == 0) {
+                motionY -= 0.082;
+            }
+
             mc.player.setVelocity(motion[0], motionY, motion[1]);
             this.sendMovementPackets(mc.player.getPositionVector().add(mc.player.motionX, mc.player.motionY, mc.player.motionZ));
         }
