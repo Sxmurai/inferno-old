@@ -58,8 +58,11 @@ public class Nametags extends Module {
                 continue;
             }
 
-            Vec3d pos = new Vec3d(player.posX, player.posY, player.posZ).subtract(RenderUtil.renderPositions());
-            Nametags.renderNametag(player, pos.x, pos.y, pos.z);
+            double x = RenderUtil.interpolate(player.posX, player.lastTickPosX) - mc.renderManager.renderPosX;
+            double y = RenderUtil.interpolate(player.posY, player.lastTickPosY) - mc.renderManager.renderPosY;
+            double z = RenderUtil.interpolate(player.posZ, player.lastTickPosZ) - mc.renderManager.renderPosZ;
+
+            Nametags.renderNametag(player, x, y, z);
         }
     }
 
@@ -108,7 +111,7 @@ public class Nametags extends Module {
         name.append(player.isSneaking() ?
                 ChatFormatting.YELLOW :
                 Inferno.friendManager.isFriend(player.getUniqueID()) ?
-                        ChatFormatting.BLUE :
+                        ChatFormatting.AQUA :
                         ChatFormatting.WHITE
         ).append(username)
                 .append(ChatFormatting.RESET)
