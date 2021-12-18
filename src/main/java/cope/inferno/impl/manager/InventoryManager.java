@@ -12,7 +12,13 @@ public class InventoryManager implements Wrapper {
     @SubscribeEvent
     public void onPacketSend(PacketEvent.Send event) {
         if (event.getPacket() instanceof CPacketHeldItemChange) {
-            this.serverHotbarSlot = ((CPacketHeldItemChange) event.getPacket()).getSlotId();
+            int slot = ((CPacketHeldItemChange) event.getPacket()).getSlotId();
+            if (slot < 0 || slot > 9) { // servers will kick if its out of these bounds
+                event.setCanceled(true);
+                return;
+            }
+
+            serverHotbarSlot = slot;
         }
     }
 
