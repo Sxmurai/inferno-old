@@ -134,9 +134,7 @@ public class Nametags extends Module {
         }
 
         double width = Inferno.fontManager.getWidth(name.toString()) / 2.0;
-        if (shape.getValue() != Shape.None) {
-            drawShape(width);
-        }
+        drawShape(width);
 
         Inferno.fontManager.drawCorrectString(name.toString(), -width, -(Inferno.fontManager.getHeight() - 1.0), -1);
 
@@ -308,7 +306,7 @@ public class Nametags extends Module {
     }
 
     public enum Shape {
-        None, Rectangle, Rounded
+        Rectangle, Rounded
     }
 
     public enum Enchants {
