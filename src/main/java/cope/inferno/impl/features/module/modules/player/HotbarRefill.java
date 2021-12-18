@@ -1,10 +1,10 @@
 package cope.inferno.impl.features.module.modules.player;
 
-import cope.inferno.impl.features.Wrapper;
 import cope.inferno.impl.features.module.Module;
 import cope.inferno.impl.settings.Setting;
 import cope.inferno.util.entity.InventoryUtil;
 import cope.inferno.util.timing.TickTimer;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 
@@ -16,94 +16,83 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 @Module.Define(name = "HotbarRefill", category = Module.Category.Player)
 @Module.Info(description = "Refills slots in your hotbar")
 public class HotbarRefill extends Module {
-    public final Setting<Integer> delay = new Setting<>("Delay", 2, 0, 16);
-    public final Setting<Integer> actions = new Setting<>("Actions", 3, 1, 10);
-    public final Setting<Integer> threshold = new Setting<>("Threshold", 45, 0, 63);
-    public final Setting<Boolean> shiftClick = new Setting<>("ShiftClick", false);
-    public final Setting<Boolean> update = new Setting<>("Update", true);
+    public final Setting<Integer> threshold = new Setting<>("Threshold", 50, 0, 63);
+    public final Setting<Integer> delay = new Setting<>("Delay", 1, 0, 10);
 
     private final Map<Integer, ItemStack> hotbar = new HashMap<>();
     private final Queue<InventoryUtil.Task> tasks = new ConcurrentLinkedQueue<>();
     private final TickTimer timer = new TickTimer();
 
     @Override
-    public String getDisplayInfo() {
-        return String.valueOf(this.threshold.getValue());
-    }
-
-    @Override
     protected void onDeactivated() {
-        this.hotbar.clear();
+        hotbar.clear();
+        tasks.clear();
     }
 
     @Override
     public void onTick() {
-        if (this.hotbar.isEmpty()) {
-            this.recordHotbar();
-        }
-
-        for (int i = 0; i < 9; ++i) {
-            ItemStack stack = Wrapper.mc.player.inventory.getStackInSlot(i);
-            if (stack.getItem() != this.hotbar.get(i).getItem() || stack.stackSize < this.threshold.getValue() || stack.getMaxStackSize() > stack.stackSize) {
-                this.refill(i);
+        if (hotbar.isEmpty()) {
+            if (!InventoryUtil.getSlots(0, 9).values().stream().allMatch((stack) -> stack.getItem().equals(Items.AIR))) {
+                saveHotbar();
             }
+
+            return; // do not continue on
         }
 
-        if (!this.tasks.isEmpty() && this.timer.passed(this.delay.getValue())) {
-            this.timer.reset();
-            for (int i = 0; i < this.actions.getValue(); ++i) {
-                InventoryUtil.Task task = this.tasks.poll();
-                if (task == null) {
-                    break;
-                }
+        if (!tasks.isEmpty() && timer.passed(delay.getValue())) {
+            timer.reset();
 
+            InventoryUtil.Task task = tasks.poll();
+            if (task != null) {
                 task.run();
+                return;
             }
+        }
+
+        for (Map.Entry<Integer, ItemStack> entry : InventoryUtil.getSlots(0, 9).entrySet()) {
+            refill(entry.getKey(), entry.getValue());
         }
     }
 
-    private void refill(int slot) {
-        ItemStack hotbarStack = Wrapper.mc.player.inventory.getStackInSlot(slot);
+    private void refill(int slot, ItemStack stack) {
+        if (!stack.isEmpty()) {
+            int threshold = stack.getMaxStackSize() == 64 ? this.threshold.getValue() : stack.getMaxStackSize() - 1;
+            if (stack.stackSize > threshold) {
+                return;
+            }
+        }
 
-        int id = -1;
-        for (int i = 9; i < 36; ++i) {
-            ItemStack stack = Wrapper.mc.player.inventory.getStackInSlot(i);
-            if (stack.isEmpty || stack.getItem() != hotbarStack.getItem()) {
+        int inventorySlot = -1;
+        for (Map.Entry<Integer, ItemStack> entry : InventoryUtil.getSlots(9, 36).entrySet()) {
+            ItemStack val = entry.getValue();
+            if (!stack.getDisplayName().equals(val.getDisplayName())) {
                 continue;
             }
 
-            if (!stack.getDisplayName().equals(hotbarStack.getDisplayName())) {
-                continue;
-            }
+            if (stack.getItem() instanceof ItemBlock) {
+                if (!(val.getItem() instanceof ItemBlock)) {
+                    continue;
+                }
 
-            if (hotbarStack.getItem() instanceof ItemBlock) {
-                if (((ItemBlock) stack.getItem()).getBlock() != ((ItemBlock) hotbarStack.getItem()).getBlock()) {
+                if (((ItemBlock) stack.getItem()).block != ((ItemBlock) val.getItem()).block) {
                     continue;
                 }
             }
 
-            id = i;
-            break;
+            inventorySlot = entry.getKey();
         }
 
-        if (id == -1) {
-            return;
-        }
-
-        this.tasks.add(new InventoryUtil.Task(id, this.update.getValue(), this.shiftClick.getValue()));
-        if (!this.shiftClick.getValue()) {
-            int actualSlot = slot < 9 ? slot + 36 : slot;
-            this.tasks.add(new InventoryUtil.Task(actualSlot, this.update.getValue(), false));
-            if (Wrapper.mc.player.inventoryContainer.getSlot(actualSlot).getHasStack()) {
-                this.tasks.add(new InventoryUtil.Task(id, this.update.getValue(), this.shiftClick.getValue())); // put back
+        if (inventorySlot != -1) {
+            tasks.add(new InventoryUtil.Task(inventorySlot, false, false));
+            tasks.add(new InventoryUtil.Task(slot + 36, false, false));
+            if (stack.stackSize + mc.player.inventory.getStackInSlot(inventorySlot).stackSize > stack.getMaxStackSize()) {
+                tasks.add(new InventoryUtil.Task(inventorySlot, false, false));
             }
         }
     }
 
-    private void recordHotbar() {
-        this.hotbar.clear();
-        for (int i = 0; i < 9; ++i) {
-            this.hotbar.put(i, Wrapper.mc.player.inventory.getStackInSlot(i));
-        }
+    private void saveHotbar() {
+        hotbar.clear();
+        hotbar.putAll(InventoryUtil.getSlots(0, 9));
     }
 }

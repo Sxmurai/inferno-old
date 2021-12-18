@@ -9,6 +9,9 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class InventoryUtil implements Util {
     public static final int OFFHAND_SLOT = 45;
 
@@ -86,6 +89,15 @@ public class InventoryUtil implements Util {
 
     public static ItemStack getHeld(EnumHand hand) {
         return mc.player.getHeldItem(hand);
+    }
+
+    public static Map<Integer, ItemStack> getSlots(int from, int to) {
+        Map<Integer, ItemStack> slots = new HashMap<>();
+        for (int i = from; i < to; ++i) {
+            slots.put(i, mc.player.inventory.getStackInSlot(i));
+        }
+
+        return slots;
     }
 
     public static class Task {
