@@ -1,5 +1,6 @@
 package cope.inferno.impl.features.module.modules.render;
 
+import cope.inferno.Inferno;
 import cope.inferno.impl.event.render.RenderModelEvent;
 import cope.inferno.impl.features.module.Module;
 import cope.inferno.impl.settings.Setting;
@@ -8,9 +9,12 @@ import cope.inferno.util.render.RenderUtil;
 import net.minecraft.client.shader.Framebuffer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.lwjgl.opengl.EXTFramebufferObject;
 import org.lwjgl.opengl.GL11;
+
+import java.awt.*;
 
 @Module.Define(name = "ESP", category = Module.Category.Render)
 @Module.Info(description = "Shows where entities are")
@@ -87,7 +91,25 @@ public class ESP extends Module {
             GL11.glStencilFunc(GL11.GL_EQUAL, 1, 0xff);
             GL11.glStencilOp(GL11.GL_KEEP, GL11.GL_KEEP, GL11.GL_KEEP);
             GL11.glPolygonMode(GL11.GL_FRONT_AND_BACK, GL11.GL_LINE);
+
+            Color color = new Color(255, 255, 255);
+            if (event.getEntity() instanceof EntityPlayer && Inferno.friendManager.isFriend(event.getEntity().getUniqueID())) {
+                color = new Color(0, 102, 255);
+            }
+
+            GL11.glColor3d(color.getRed(), color.getGreen(), color.getBlue());
+
+            if (walls.getValue()) {
+                GL11.glDepthMask(false);
+                GL11.glDisable(GL11.GL_DEPTH_TEST);
+            }
+
             event.getModelBase().render(event.getEntity(), event.getLimbSwing(), event.getLimbSwingAmount(), event.getAgeInTicks(), event.getNetHeadYaw(), event.getHeadPitch(), event.getScaleFactor());
+
+            if (walls.getValue()) {
+                GL11.glDepthMask(true);
+                GL11.glEnable(GL11.GL_DEPTH_TEST);
+            }
 
             GL11.glLineWidth(1.0f);
             GL11.glDisable(GL11.GL_LINE_SMOOTH);
@@ -116,6 +138,13 @@ public class ESP extends Module {
             GL11.glEnable(GL11.GL_LINE_SMOOTH);
             GL11.glHint(GL11.GL_LINE_SMOOTH_HINT, GL11.GL_NICEST);
             GL11.glLineWidth(this.width.getValue());
+
+            Color color = new Color(255, 255, 255);
+            if (event.getEntity() instanceof EntityPlayer && Inferno.friendManager.isFriend(event.getEntity().getUniqueID())) {
+                color = new Color(0, 102, 255);
+            }
+
+            GL11.glColor3d(color.getRed(), color.getGreen(), color.getBlue());
 
             event.getModelBase().render(event.getEntity(), event.getLimbSwing(), event.getLimbSwingAmount(), event.getAgeInTicks(), event.getNetHeadYaw(), event.getHeadPitch(), event.getScaleFactor());
 
