@@ -27,6 +27,12 @@ import org.lwjgl.opengl.GL11;
 import java.util.UUID;
 
 public class EventManager implements Wrapper {
+    public static EventManager INSTANCE;
+
+    public EventManager() {
+        INSTANCE = this;
+    }
+
     @SubscribeEvent
     public void onClientConnection(FMLNetworkEvent.ClientConnectedToServerEvent event) {
         MinecraftForge.EVENT_BUS.post(new SelfConnectionEvent(SelfConnectionEvent.Type.Connect));
