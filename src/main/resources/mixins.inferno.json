@@ -4,35 +4,13 @@
   "mixinPriority": 2147483647,
   "minVersion": "0.7-SNAPSHOT",
   "compatibilityLevel": "JAVA_8",
-  "package": "cope.inferno.asm.mixins",
+  "package": "cope.inferno.asm.impl",
   "refmap": "mixins.inferno.refmap.json",
   "verbose": true,
   "mixins": [
-    "entity.MixinEntity",
-    "entity.MixinEntityPlayer",
-    "entity.MixinEntityPlayerSP",
-
-    "input.MixinKeyBinding",
-    "input.MixinPlayerControllerMP",
+    "entity.player.MixinEntityPlayerSP",
 
     "network.MixinNetworkManager",
-
-    "render.MixinBufferBuilder",
-    "render.MixinEntityRenderer",
-    "render.MixinGuiIngame",
-    "render.MixinItemRenderer",
-    "render.MixinLayerArmorBase",
-    "render.MixinParticleManager",
-    "render.MixinRenderLivingBase",
-    "render.MixinRenderPlayer",
-    "render.MixinRenderXPOrb",
-
-    "world.blocks.state.MixinStateImplementation",
-    "world.blocks.MixinBlock",
-    "world.blocks.MixinBlockLiquid",
-    "world.blocks.MixinBlockSlime",
-    "world.blocks.MixinBlockSoulSand",
-    "world.MixinWorldClient",
 
     "MixinMinecraft"
   ],
