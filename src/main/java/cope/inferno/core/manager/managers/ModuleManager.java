@@ -5,6 +5,7 @@ import cope.inferno.core.features.module.client.ClickGUI;
 import cope.inferno.core.features.module.client.Notifier;
 import cope.inferno.core.features.module.combat.Criticals;
 import cope.inferno.core.features.module.movement.Sprint;
+import cope.inferno.core.features.module.player.Timer;
 import cope.inferno.core.manager.Manager;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
@@ -22,6 +23,9 @@ public class ModuleManager extends Manager<Module> {
 
         // movement
         modules.add(new Sprint());
+
+        // player
+        modules.add(new Timer());
 
         LOGGER.info("Loaded {} modules.", modules.size());
 

@@ -3,6 +3,7 @@ package cope.inferno.core;
 import cope.inferno.core.events.ShutdownEvent;
 import cope.inferno.core.manager.managers.EventManager;
 import cope.inferno.core.manager.managers.ModuleManager;
+import cope.inferno.core.manager.managers.TickManager;
 import cope.inferno.core.manager.managers.relationships.RelationshipManager;
 import cope.inferno.util.internal.fs.FileUtil;
 import cope.inferno.util.internal.tray.SystemTrayUtil;
@@ -28,6 +29,7 @@ public class Inferno {
 
     // client related shit
     private ModuleManager moduleManager;
+    private TickManager tickManager;
     private RelationshipManager relationshipManager;
 
     @Mod.EventHandler
@@ -43,6 +45,8 @@ public class Inferno {
         moduleManager = new ModuleManager();
         moduleManager.init();
         MinecraftForge.EVENT_BUS.register(moduleManager);
+
+        tickManager = new TickManager();
 
         relationshipManager = new RelationshipManager();
 
@@ -72,6 +76,10 @@ public class Inferno {
 
     public ModuleManager getModuleManager() {
         return moduleManager;
+    }
+
+    public TickManager getTickManager() {
+        return tickManager;
     }
 
     public RelationshipManager getRelationshipManager() {

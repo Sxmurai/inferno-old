@@ -40,6 +40,8 @@ public class EventManager implements Wrapper {
                     mc.profiler.endSection();
                 }
             }
+
+            getInferno().getTickManager().onTick();
         }
     }
 }
