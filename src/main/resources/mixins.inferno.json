@@ -12,6 +12,8 @@
 
     "network.MixinNetworkManager",
 
+    "world.block.MixinStateImplementation",
+
     "MixinMinecraft"
   ],
   "injectors": {

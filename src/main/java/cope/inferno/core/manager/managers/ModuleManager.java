@@ -22,6 +22,7 @@ public class ModuleManager extends Manager<Module> {
         modules.add(new Criticals());
 
         // movement
+        // modules.add(new Jesus()); // @todo broken
         modules.add(new Sprint());
 
         // player
