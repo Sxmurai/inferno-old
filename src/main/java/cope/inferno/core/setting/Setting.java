@@ -1,5 +1,6 @@
 package cope.inferno.core.setting;
 
+import java.util.ArrayList;
 import java.util.function.Supplier;
 
 public class Setting<T> {
@@ -11,7 +12,9 @@ public class Setting<T> {
     private final Number min, max;
 
     private final Supplier<Boolean> visibility;
+
     private final Setting parent;
+    private final ArrayList<Setting> children = new ArrayList<>();
 
     public Setting(String name, T value) {
         this(null, name, value, null, null, null);
@@ -41,10 +44,26 @@ public class Setting<T> {
         this.min = min;
         this.max = max;
         this.visibility = visibility;
+
+        if (parent != null) {
+            parent.getChildren().add(this);
+        }
     }
 
     public Setting getParent() {
         return parent;
+    }
+
+    public ArrayList<Setting> getChildren() {
+        return children;
+    }
+
+    public boolean isParent() {
+        return !children.isEmpty();
+    }
+
+    public boolean hasParent() {
+        return parent != null;
     }
 
     public String getName() {
@@ -73,5 +92,29 @@ public class Setting<T> {
 
     public boolean isVisible() {
         return visibility == null || visibility.get();
+    }
+
+    public static int current(Enum clazz) {
+        for (int i = 0; i < clazz.getClass().getEnumConstants().length; ++i) {
+            Enum e = ((Enum[]) clazz.getClass().getEnumConstants())[i];
+            if (e.name().equalsIgnoreCase(clazz.name())) {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
+    public static Enum increase(Enum clazz) {
+        int index = current(clazz);
+
+        for (int i = 0; i < clazz.getClass().getEnumConstants().length; ++i) {
+            Enum e = ((Enum[]) clazz.getClass().getEnumConstants())[i];
+            if (i == index + 1) {
+                return e;
+            }
+        }
+
+        return ((Enum[]) clazz.getClass().getEnumConstants())[0];
     }
 }
