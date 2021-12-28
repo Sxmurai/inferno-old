@@ -85,12 +85,6 @@ public class ClickGUIScreen extends GuiScreen implements Wrapper {
         return ClickGUI.pause.getValue();
     }
 
-    @Override
-    public void onGuiClosed() {
-        super.onGuiClosed();
-        ClickGUI.INSTANCE.toggle();
-    }
-
     public static ClickGUIScreen getInstance() {
         if (INSTANCE == null) {
             INSTANCE = new ClickGUIScreen();

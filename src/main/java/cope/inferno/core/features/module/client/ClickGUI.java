@@ -4,6 +4,8 @@ import cope.inferno.core.features.module.Category;
 import cope.inferno.core.features.module.Module;
 import cope.inferno.core.gui.click.ClickGUIScreen;
 import cope.inferno.core.setting.Setting;
+import net.minecraftforge.client.event.GuiOpenEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.lwjgl.input.Keyboard;
 
 public class ClickGUI extends Module {
@@ -33,6 +35,13 @@ public class ClickGUI extends Module {
     protected void onDisable() {
         if (nullCheck()) {
             mc.displayGuiScreen(null);
+        }
+    }
+
+    @SubscribeEvent
+    public void onGuiOpen(GuiOpenEvent event) {
+        if (!(event.getGui() instanceof ClickGUIScreen)) {
+            toggle();
         }
     }
 
