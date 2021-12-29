@@ -5,9 +5,11 @@ public class Timer {
 
     /**
      * Resets the timer back to the current time in nanoseconds
+     * @return This Timer instance
      */
-    public void reset() {
+    public Timer reset() {
         time = System.nanoTime();
+        return this;
     }
 
     /**

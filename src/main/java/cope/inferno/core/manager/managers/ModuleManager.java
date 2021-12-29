@@ -4,6 +4,7 @@ import cope.inferno.core.features.module.Module;
 import cope.inferno.core.features.module.client.ClickGUI;
 import cope.inferno.core.features.module.client.Notifier;
 import cope.inferno.core.features.module.combat.Criticals;
+import cope.inferno.core.features.module.movement.PacketFly;
 import cope.inferno.core.features.module.movement.Sprint;
 import cope.inferno.core.features.module.player.Timer;
 import cope.inferno.core.manager.Manager;
@@ -23,6 +24,7 @@ public class ModuleManager extends Manager<Module> {
 
         // movement
         // modules.add(new Jesus()); // @todo broken
+        modules.add(new PacketFly());
         modules.add(new Sprint());
 
         // player

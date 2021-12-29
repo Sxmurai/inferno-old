@@ -3,12 +3,14 @@ package cope.inferno.asm.impl.entity.player;
 import com.mojang.authlib.GameProfile;
 import cope.inferno.asm.duck.IEntityPlayerSP;
 import cope.inferno.core.Inferno;
+import cope.inferno.core.events.MoveEvent;
 import cope.inferno.core.events.UpdateWalkingPlayerEvent;
 import cope.inferno.core.manager.managers.relationships.impl.Relationship;
 import cope.inferno.core.manager.managers.relationships.impl.Status;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.entity.MoverType;
 import net.minecraft.network.play.client.CPacketEntityAction;
 import net.minecraft.network.play.client.CPacketPlayer;
 import net.minecraft.world.World;
@@ -17,6 +19,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(EntityPlayerSP.class)
@@ -40,6 +43,17 @@ public abstract class MixinEntityPlayerSP extends AbstractClientPlayer implement
 
     @Shadow
     public abstract boolean isCurrentViewEntity();
+
+
+    @Redirect(method = "move", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/entity/AbstractClientPlayer;move(Lnet/minecraft/entity/MoverType;DDD)V"))
+    public void move(AbstractClientPlayer player, MoverType moverType, double x, double y, double z) {
+        MoveEvent event = new MoveEvent(moverType, x, y, z);
+        MinecraftForge.EVENT_BUS.post(event);
+
+        if (!event.isCanceled() || event.stillMove()) {
+            super.move(moverType, event.getX(), event.getY(), event.getZ());
+        }
+    }
 
     @Inject(method = "onUpdateWalkingPlayer", at = @At("HEAD"), cancellable = true)
     public void onUpdateWalkingPlayerPre(CallbackInfo info) {
