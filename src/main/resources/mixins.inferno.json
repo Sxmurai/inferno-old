@@ -10,8 +10,12 @@
   "mixins": [
     "entity.player.MixinEntityPlayerSP",
 
+    "input.MixinKeyBinding",
+
     "network.MixinNetworkManager",
 
+    "world.block.MixinBlockSlime",
+    "world.block.MixinBlockSoulSand",
     "world.block.MixinStateImplementation",
 
     "MixinMinecraft"
