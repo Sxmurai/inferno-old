@@ -37,6 +37,7 @@ public class ModuleManager extends Manager<Module> {
         // movement
         modules.add(new AntiVoid());
         // modules.add(new Jesus()); // @todo broken
+        modules.add(new NoFall());
         modules.add(new NoSlow());
         modules.add(new PacketFly());
         modules.add(new Sprint());
