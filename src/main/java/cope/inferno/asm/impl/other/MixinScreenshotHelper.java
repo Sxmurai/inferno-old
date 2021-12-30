@@ -26,8 +26,8 @@ public class MixinScreenshotHelper {
             try {
                 return new Robot().createScreenCapture(new Rectangle(Toolkit.getDefaultToolkit().getScreenSize()));
             } catch (AWTException e) {
-                e.printStackTrace();
-                return null;
+                System.out.println("Screenshot failed to be taken, resorting to vanilla screenshot...");
+                return defaultCreateScreenshot(width, height, framebufferIn);
             }
         } else {
             return defaultCreateScreenshot(width, height, framebufferIn);
