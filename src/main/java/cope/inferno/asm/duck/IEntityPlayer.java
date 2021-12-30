@@ -3,7 +3,7 @@ package cope.inferno.asm.duck;
 import cope.inferno.core.manager.managers.relationships.impl.Relationship;
 import cope.inferno.core.manager.managers.relationships.impl.Status;
 
-public interface IEntityPlayerSP {
+public interface IEntityPlayer {
     /**
      * Gets the relationship object of this player
      * @return null if none exists, or the relationship object for this player

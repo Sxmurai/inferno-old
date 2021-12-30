@@ -8,6 +8,7 @@ import cope.inferno.core.features.module.movement.NoSlow;
 import cope.inferno.core.features.module.movement.PacketFly;
 import cope.inferno.core.features.module.movement.Sprint;
 import cope.inferno.core.features.module.movement.Velocity;
+import cope.inferno.core.features.module.other.MiddleClick;
 import cope.inferno.core.features.module.player.Scaffold;
 import cope.inferno.core.features.module.player.Timer;
 import cope.inferno.core.manager.Manager;
@@ -31,6 +32,9 @@ public class ModuleManager extends Manager<Module> {
         modules.add(new PacketFly());
         modules.add(new Sprint());
         modules.add(new Velocity());
+
+        // other
+        modules.add(new MiddleClick());
 
         // player
         modules.add(new Scaffold());

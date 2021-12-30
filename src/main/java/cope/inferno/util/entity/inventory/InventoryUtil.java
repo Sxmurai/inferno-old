@@ -39,6 +39,30 @@ public class InventoryUtil implements Wrapper {
     }
 
     /**
+     * Gets an item slot for the item
+     * @param item The item to look for
+     * @param offhand If to check the offhand slot
+     * @return -1 if none found, 45 if its in your offhand, or any int 1-9 for the slot id
+     */
+    public static int getHotbarItem(Item item, Predicate<Item> filter, boolean offhand) {
+        if (offhand && mc.player.getHeldItemOffhand().getItem().equals(item)) {
+            return OFFHAND_SLOT;
+        }
+
+        for (Map.Entry<Integer, ItemStack> entry : getSlots(0, 9)) {
+            ItemStack stack = entry.getValue();
+            if (!stack.isEmpty() &&
+                    stack.getItem().equals(item) &&
+                    (filter == null || filter.test(stack.getItem()))) {
+
+                return entry.getKey();
+            }
+        }
+
+        return -1;
+    }
+
+    /**
      * Gets an item slot for the item class
      * @param clazz The class to look for instances of
      * @param offhand If to check the offhand slot
@@ -53,7 +77,7 @@ public class InventoryUtil implements Wrapper {
             ItemStack stack = entry.getValue();
             if (!stack.isEmpty() &&
                     clazz.isInstance(stack.getItem()) &&
-                    (filter != null && filter.test(stack.getItem()))) {
+                    (filter == null || filter.test(stack.getItem()))) {
 
                 return entry.getKey();
             }

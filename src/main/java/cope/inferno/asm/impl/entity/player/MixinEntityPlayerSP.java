@@ -1,13 +1,9 @@
 package cope.inferno.asm.impl.entity.player;
 
 import com.mojang.authlib.GameProfile;
-import cope.inferno.asm.duck.IEntityPlayerSP;
-import cope.inferno.core.Inferno;
 import cope.inferno.core.events.EntityVelocityEvent;
 import cope.inferno.core.events.MoveEvent;
 import cope.inferno.core.events.UpdateWalkingPlayerEvent;
-import cope.inferno.core.manager.managers.relationships.impl.Relationship;
-import cope.inferno.core.manager.managers.relationships.impl.Status;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -25,7 +21,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(EntityPlayerSP.class)
-public abstract class MixinEntityPlayerSP extends AbstractClientPlayer implements IEntityPlayerSP {
+public abstract class MixinEntityPlayerSP extends AbstractClientPlayer {
     @Shadow public Minecraft mc;
 
     @Shadow public double lastReportedPosX;
@@ -79,32 +75,6 @@ public abstract class MixinEntityPlayerSP extends AbstractClientPlayer implement
         if (event.isCanceled()) {
             info.setReturnValue(false);
         }
-    }
-
-    // methods inherited from IEntityPlayerSP interface below
-
-    @Override
-    public Relationship getRelationship() {
-        return Inferno.INSTANCE.getRelationshipManager().getRelationship(getUniqueID());
-    }
-
-    @Override
-    public Status getStatus() {
-        Relationship relation = getRelationship();
-        return relation == null ? Status.NEUTRAL : relation.getStatus();
-    }
-
-    @Override
-    public void setStatus(Status status) {
-        Relationship relation = getRelationship();
-        if (relation != null) {
-            relation.setStatus(status);
-        }
-    }
-
-    @Override
-    public boolean isRelationship(Status status) {
-        return getRelationship() != null;
     }
 
     /**

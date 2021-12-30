@@ -1,6 +1,10 @@
 package cope.inferno.asm.impl.entity.player;
 
+import cope.inferno.asm.duck.IEntityPlayer;
+import cope.inferno.core.Inferno;
 import cope.inferno.core.events.EntityVelocityEvent;
+import cope.inferno.core.manager.managers.relationships.impl.Relationship;
+import cope.inferno.core.manager.managers.relationships.impl.Status;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
@@ -11,7 +15,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(EntityPlayer.class)
-public abstract class MixinEntityPlayer extends EntityLivingBase {
+public abstract class MixinEntityPlayer extends EntityLivingBase implements IEntityPlayer {
     public MixinEntityPlayer(World worldIn) {
         super(worldIn);
     }
@@ -23,5 +27,30 @@ public abstract class MixinEntityPlayer extends EntityLivingBase {
         if (event.isCanceled()) {
             info.setReturnValue(false);
         }
+    }
+
+
+    @Override
+    public Relationship getRelationship() {
+        return Inferno.INSTANCE.getRelationshipManager().getRelationship(getUniqueID());
+    }
+
+    @Override
+    public Status getStatus() {
+        Relationship relation = getRelationship();
+        return relation == null ? Status.NEUTRAL : relation.getStatus();
+    }
+
+    @Override
+    public void setStatus(Status status) {
+        Relationship relation = getRelationship();
+        if (relation != null) {
+            relation.setStatus(status);
+        }
+    }
+
+    @Override
+    public boolean isRelationship(Status status) {
+        return getRelationship() != null;
     }
 }
