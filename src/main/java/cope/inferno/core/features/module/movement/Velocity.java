@@ -5,7 +5,6 @@ import cope.inferno.core.events.PacketEvent;
 import cope.inferno.core.features.module.Category;
 import cope.inferno.core.features.module.Module;
 import cope.inferno.core.setting.Setting;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.projectile.EntityFishHook;
 import net.minecraft.init.Blocks;
 import net.minecraft.network.play.server.SPacketEntityStatus;
@@ -85,10 +84,12 @@ public class Velocity extends Module {
 
         if (event.getPacket() instanceof SPacketEntityStatus && bobbers.getValue()) {
             SPacketEntityStatus packet = event.getPacket();
-            Entity entity = packet.getEntity(mc.world);
 
-            if (packet.getOpCode() == 31 && entity instanceof EntityFishHook) {
-                event.setCanceled(((EntityFishHook) entity).caughtEntity == mc.player);
+            if (packet.getEntity(mc.world) instanceof EntityFishHook && packet.getOpCode() == 31) {
+                EntityFishHook entity = (EntityFishHook) packet.getEntity(mc.world);
+                if (entity.caughtEntity == mc.player) {
+                    event.setCanceled(true);
+                }
             }
         }
     }
