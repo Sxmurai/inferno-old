@@ -14,6 +14,7 @@
 
     "input.MixinKeyBinding",
 
+    "network.MixinNetHandlerPlayClient",
     "network.MixinNetworkManager",
 
     "render.MixinRenderPlayer",
