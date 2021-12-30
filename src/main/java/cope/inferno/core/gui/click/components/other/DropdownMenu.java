@@ -1,5 +1,6 @@
 package cope.inferno.core.gui.click.components.other;
 
+import com.mojang.realmsclient.gui.ChatFormatting;
 import cope.inferno.core.gui.base.AbstractButton;
 import cope.inferno.core.gui.base.AbstractComponent;
 import cope.inferno.core.gui.click.components.buttons.BindButton;
@@ -9,6 +10,7 @@ import cope.inferno.core.setting.Bind;
 import cope.inferno.core.setting.Setting;
 import cope.inferno.util.render.RenderUtil;
 import cope.inferno.util.render.ScaleUtil;
+import cope.inferno.util.text.FormatUtil;
 
 import java.util.List;
 
@@ -51,7 +53,14 @@ public class DropdownMenu extends AbstractButton {
         }
 
         RenderUtil.drawRectangle(x, y, width, height, color);
-        mc.fontRenderer.drawStringWithShadow(name, (float) (x + 3.0), (float) ScaleUtil.alignH(y, height), -1);
+
+        String text = name;
+        if (setting.getValue() instanceof Enum) {
+            Setting<Enum> enumSetting = (Setting<Enum>) setting;
+            text += (": " + ChatFormatting.GRAY + FormatUtil.formatName(enumSetting.getValue().name()));
+        }
+
+        mc.fontRenderer.drawStringWithShadow(text, (float) (x + 3.0), (float) ScaleUtil.alignH(y, height), -1);
 
         int stringWidth = mc.fontRenderer.getStringWidth("...");
         mc.fontRenderer.drawStringWithShadow("...", (float) (((x + width) - stringWidth) - 1.0), (float) ScaleUtil.alignH(y, height), -1);
