@@ -11,6 +11,7 @@ import cope.inferno.core.features.module.movement.PacketFly;
 import cope.inferno.core.features.module.movement.Sprint;
 import cope.inferno.core.features.module.movement.Velocity;
 import cope.inferno.core.features.module.other.FakePlayer;
+import cope.inferno.core.features.module.other.FullScreenshot;
 import cope.inferno.core.features.module.other.MiddleClick;
 import cope.inferno.core.features.module.player.FastPlace;
 import cope.inferno.core.features.module.player.Scaffold;
@@ -42,6 +43,7 @@ public class ModuleManager extends Manager<Module> {
 
         // other
         modules.add(new FakePlayer());
+        modules.add(new FullScreenshot());
         modules.add(new MiddleClick());
 
         // player

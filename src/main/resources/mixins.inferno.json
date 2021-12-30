@@ -17,6 +17,8 @@
     "network.MixinNetHandlerPlayClient",
     "network.MixinNetworkManager",
 
+    "other.MixinScreenshotHelper",
+
     "render.MixinRenderPlayer",
 
     "world.block.MixinBlockSlime",
