@@ -90,7 +90,7 @@ public class NoSlow extends Module {
             NetworkUtil.send(new CPacketPlayerDigging(CPacketPlayerDigging.Action.ABORT_DESTROY_BLOCK, mc.player.getPosition(), EnumFacing.DOWN));
         }
 
-        if (event.getPacket() instanceof CPacketClickWindow && bypass.getValue().equals(Bypass.NCPSTRICT)) {
+        if (event.getPacket() instanceof CPacketClickWindow && bypass.getValue().equals(Bypass.STRICT)) {
             NetworkUtil.send(new CPacketEntityAction(mc.player, CPacketEntityAction.Action.STOP_SPRINTING));
         }
     }
@@ -111,7 +111,7 @@ public class NoSlow extends Module {
                 NetworkUtil.send(new CPacketEntityAction(mc.player, CPacketEntityAction.Action.START_SNEAKING));
             }
 
-            if (bypass.getValue().equals(Bypass.NCPSTRICT)) {
+            if (bypass.getValue().equals(Bypass.STRICT)) {
                 NetworkUtil.send(new CPacketHeldItemChange(mc.player.inventory.currentItem));
             }
         }
@@ -165,6 +165,6 @@ public class NoSlow extends Module {
          * Sends a CPacketHeldItemChange packet constantly. Yep, that's it.
          * Also sends a STOP_SPRINTING packet for when a CPacketWindowClick packet is sent for the inv move bypass
          */
-        NCPSTRICT
+        STRICT
     }
 }
