@@ -3,6 +3,7 @@ package cope.inferno.core.manager.managers;
 import cope.inferno.core.features.module.Module;
 import cope.inferno.core.features.module.client.ClickGUI;
 import cope.inferno.core.features.module.client.Notifier;
+import cope.inferno.core.features.module.combat.AutoTotem;
 import cope.inferno.core.features.module.combat.Criticals;
 import cope.inferno.core.features.module.movement.NoSlow;
 import cope.inferno.core.features.module.movement.PacketFly;
@@ -26,6 +27,7 @@ public class ModuleManager extends Manager<Module> {
         modules.add(new Notifier());
 
         // combat
+        modules.add(new AutoTotem());
         modules.add(new Criticals());
 
         // movement

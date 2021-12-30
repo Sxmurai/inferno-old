@@ -24,6 +24,14 @@ public class InventoryUtil implements Wrapper {
         return slot < 9 ? slot + 36 : slot;
     }
 
+    public static boolean isHolding(Item item, boolean offhand) {
+        if (offhand && mc.player.getHeldItemOffhand().getItem().equals(item)) {
+            return true;
+        }
+
+        return mc.player.getHeldItemMainhand().getItem().equals(item);
+    }
+
     /**
      * Checks if the local player is holding an item
      * @param clazz The class to look for instances of in your hands
@@ -77,6 +85,28 @@ public class InventoryUtil implements Wrapper {
             ItemStack stack = entry.getValue();
             if (!stack.isEmpty() &&
                     clazz.isInstance(stack.getItem()) &&
+                    (filter == null || filter.test(stack.getItem()))) {
+
+                return entry.getKey();
+            }
+        }
+
+        return -1;
+    }
+
+    /**
+     * Gets an item slot for an item in the local players inventory
+     * @param item The item to look for
+     * @param filter The filter to... filter..
+     * @param hotbar If to search the hotbar
+     * @return -1 if none found, or the item slot of this item
+     */
+    public static int getInventoryItem(Item item, Predicate<Item> filter, boolean hotbar) {
+        for (Map.Entry<Integer, ItemStack> entry : getSlots(hotbar ? 0 : 9, 36)) {
+            ItemStack stack = entry.getValue();
+
+            if (!stack.isEmpty() &&
+                    stack.getItem().equals(item) &&
                     (filter == null || filter.test(stack.getItem()))) {
 
                 return entry.getKey();
