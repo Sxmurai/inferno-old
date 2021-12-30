@@ -13,6 +13,7 @@ import cope.inferno.core.features.module.other.FullScreenshot;
 import cope.inferno.core.features.module.other.MiddleClick;
 import cope.inferno.core.features.module.other.Rubberband;
 import cope.inferno.core.features.module.player.FastPlace;
+import cope.inferno.core.features.module.player.PingSpoof;
 import cope.inferno.core.features.module.player.Scaffold;
 import cope.inferno.core.features.module.player.Timer;
 import cope.inferno.core.features.module.render.CameraClip;
@@ -51,6 +52,7 @@ public class ModuleManager extends Manager<Module> {
 
         // player
         modules.add(new FastPlace());
+        modules.add(new PingSpoof());
         modules.add(new Scaffold());
         modules.add(new Timer());
 
