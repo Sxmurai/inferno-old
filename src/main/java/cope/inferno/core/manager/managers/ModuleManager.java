@@ -6,6 +6,7 @@ import cope.inferno.core.features.module.client.Notifier;
 import cope.inferno.core.features.module.combat.AutoClip;
 import cope.inferno.core.features.module.combat.AutoTotem;
 import cope.inferno.core.features.module.combat.Criticals;
+import cope.inferno.core.features.module.combat.FeetTrap;
 import cope.inferno.core.features.module.movement.NoSlow;
 import cope.inferno.core.features.module.movement.PacketFly;
 import cope.inferno.core.features.module.movement.Sprint;
@@ -33,6 +34,7 @@ public class ModuleManager extends Manager<Module> {
         modules.add(new AutoClip());
         modules.add(new AutoTotem());
         modules.add(new Criticals());
+        modules.add(new FeetTrap());
 
         // movement
         // modules.add(new Jesus()); // @todo broken

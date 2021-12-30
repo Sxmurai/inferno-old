@@ -1,7 +1,9 @@
 package cope.inferno.util.entity.inventory;
 
 import cope.inferno.util.internal.Wrapper;
+import net.minecraft.block.Block;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 
 import java.util.Map;
@@ -24,6 +26,18 @@ public class InventoryUtil implements Wrapper {
         return slot < 9 ? slot + 36 : slot;
     }
 
+    public static boolean isHolding(Block block, boolean offhand) {
+        if (offhand) {
+            ItemStack stack = mc.player.getHeldItemOffhand();
+            if (isBlockItemStack(stack) && ((ItemBlock) stack.getItem()).getBlock().equals(block)) {
+                return true;
+            }
+        }
+
+        ItemStack stack = mc.player.getHeldItemMainhand();
+        return isBlockItemStack(stack) && ((ItemBlock) stack.getItem()).getBlock().equals(block);
+    }
+
     public static boolean isHolding(Item item, boolean offhand) {
         if (offhand && mc.player.getHeldItemOffhand().getItem().equals(item)) {
             return true;
@@ -44,6 +58,24 @@ public class InventoryUtil implements Wrapper {
         }
 
         return clazz.isInstance(mc.player.getHeldItemMainhand().getItem());
+    }
+
+    public static int getHotbarBlock(Block block, Predicate<Item> filter, boolean offhand) {
+        if (offhand) {
+            ItemStack stack = mc.player.getHeldItemOffhand();
+            if (isBlockItemStack(stack) && ((ItemBlock) stack.getItem()).getBlock().equals(block)) {
+                return OFFHAND_SLOT;
+            }
+        }
+
+        for (Map.Entry<Integer, ItemStack> entry : getSlots(0, 9)) {
+            ItemStack stack = entry.getValue();
+            if (isBlockItemStack(stack) && ((ItemBlock) stack.getItem()).getBlock().equals(block)) {
+                return entry.getKey();
+            }
+        }
+
+        return -1;
     }
 
     /**
@@ -114,6 +146,15 @@ public class InventoryUtil implements Wrapper {
         }
 
         return -1;
+    }
+
+    /**
+     * Checks if the item stack is for a block item
+     * @param stack The stack to check
+     * @return true if the item is a block, false if it is not
+     */
+    public static boolean isBlockItemStack(ItemStack stack) {
+        return !stack.isEmpty() && stack.getItem() instanceof ItemBlock;
     }
 
     /**

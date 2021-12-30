@@ -1,6 +1,9 @@
 package cope.inferno.util.entity.player;
 
 import cope.inferno.util.internal.Wrapper;
+import cope.inferno.util.network.NetworkUtil;
+import net.minecraft.network.play.client.CPacketPlayer;
+import net.minecraft.util.math.Vec3d;
 
 public class MotionUtil implements Wrapper {
     /**
@@ -56,5 +59,20 @@ public class MotionUtil implements Wrapper {
         }
 
         return new float[] { forward, strafe, yaw, };
+    }
+
+    /**
+     * Centers you on the block you are standing on
+     */
+    public static void center() {
+        Vec3d centered = LocalPlayerUtil.getCentered();
+        if (Math.abs(mc.player.posX - centered.x) > 0.21 || Math.abs(mc.player.posZ - centered.z) > 0.21) {
+            mc.player.motionX = (centered.x - mc.player.posX) / 2.0;
+            mc.player.motionZ = (centered.z - mc.player.posZ) / 2.0;
+
+            Vec3d pos = centered.add(mc.player.motionX, 0.0, mc.player.motionZ);
+            NetworkUtil.send(new CPacketPlayer.Position(pos.x, pos.y, pos.z, mc.player.onGround));
+            mc.player.setPosition(pos.x, pos.y, pos.z);
+        }
     }
 }
