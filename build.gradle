@@ -140,6 +140,8 @@ jar {
             // Directory for the mixin loader for the built jar.
             'FMLCorePlugin': 'cope.inferno.asm.MixinLoader',
             // Turn this to false for the client to be able to load in a IDE.
-            'ForceLoadAsMod': 'true'
+            'ForceLoadAsMod': 'true',
+            // main class
+            'Main-Class': 'cope.inferno.core.Main'
     )
 }
