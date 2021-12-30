@@ -131,6 +131,8 @@ jar {
     manifest.attributes(
             // Name for the clients mixins.json.
             'MixinConfigs': 'mixins.inferno.json',
+            // access transformers
+            'FMLAT': 'inferno_at.cfg',
             // Directory for the org library mixin loader.
             'TweakClass': 'org.spongepowered.asm.launch.MixinTweaker',
             // Actually not too sure what this is for.
