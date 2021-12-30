@@ -4,9 +4,9 @@ import cope.inferno.util.internal.Wrapper;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Predicate;
 
 public class InventoryUtil implements Wrapper {
@@ -69,7 +69,7 @@ public class InventoryUtil implements Wrapper {
      * @return A set of Map.Entry's containing the slot number and the ItemStack object
      */
     public static Set<Map.Entry<Integer, ItemStack>> getSlots(int start, int end) {
-        Map<Integer, ItemStack> slots = new HashMap<>();
+        Map<Integer, ItemStack> slots = new ConcurrentHashMap<>();
 
         for (int i = start; i < end; ++i) {
             slots.put(i, mc.player.inventory.getStackInSlot(i));

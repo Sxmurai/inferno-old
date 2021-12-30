@@ -30,6 +30,7 @@ public class Inferno {
     private TickManager tickManager;
     private InteractionManager interactionManager;
     private InventoryManager inventoryManager;
+    private RotationManager rotationManager;
     private RelationshipManager relationshipManager;
 
     @Mod.EventHandler
@@ -52,6 +53,9 @@ public class Inferno {
 
         inventoryManager = new InventoryManager();
         MinecraftForge.EVENT_BUS.register(inventoryManager);
+
+        rotationManager = new RotationManager();
+        MinecraftForge.EVENT_BUS.register(rotationManager);
 
         relationshipManager = new RelationshipManager();
 
@@ -93,6 +97,10 @@ public class Inferno {
 
     public InventoryManager getInventoryManager() {
         return inventoryManager;
+    }
+
+    public RotationManager getRotationManager() {
+        return rotationManager;
     }
 
     public RelationshipManager getRelationshipManager() {

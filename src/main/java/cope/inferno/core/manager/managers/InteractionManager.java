@@ -33,7 +33,7 @@ public class InteractionManager implements Wrapper {
         }
 
         if (rotate) {
-            // @todo
+            getInferno().getRotationManager().rotate(neighbor);
         }
 
         Vec3d hitVec = new Vec3d(neighbor).add(0.5, 0.5, 0.5).add(new Vec3d(facing.getOpposite().getDirectionVec()).scale(0.5));
