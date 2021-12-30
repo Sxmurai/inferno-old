@@ -8,7 +8,9 @@
   "refmap": "mixins.inferno.refmap.json",
   "verbose": true,
   "mixins": [
+    "entity.player.MixinEntityPlayer",
     "entity.player.MixinEntityPlayerSP",
+    "entity.MixinEntity",
 
     "input.MixinKeyBinding",
 

@@ -3,6 +3,7 @@ package cope.inferno.asm.impl.entity.player;
 import com.mojang.authlib.GameProfile;
 import cope.inferno.asm.duck.IEntityPlayerSP;
 import cope.inferno.core.Inferno;
+import cope.inferno.core.events.EntityVelocityEvent;
 import cope.inferno.core.events.MoveEvent;
 import cope.inferno.core.events.UpdateWalkingPlayerEvent;
 import cope.inferno.core.manager.managers.relationships.impl.Relationship;
@@ -21,6 +22,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(EntityPlayerSP.class)
 public abstract class MixinEntityPlayerSP extends AbstractClientPlayer implements IEntityPlayerSP {
@@ -67,6 +69,16 @@ public abstract class MixinEntityPlayerSP extends AbstractClientPlayer implement
     @Inject(method = "onUpdateWalkingPlayer", at = @At("RETURN"))
     public void onUpdateWalkingPlayerPost(CallbackInfo info) {
         MinecraftForge.EVENT_BUS.post(new UpdateWalkingPlayerEvent());
+    }
+
+    @Inject(method = "pushOutOfBlocks", at = @At("HEAD"), cancellable = true)
+    public void pushOutOfBlocks(double x, double y, double z, CallbackInfoReturnable<Boolean> info) {
+        EntityVelocityEvent event = new EntityVelocityEvent(EntityVelocityEvent.Material.LIQUID);
+        MinecraftForge.EVENT_BUS.post(event);
+
+        if (event.isCanceled()) {
+            info.setReturnValue(false);
+        }
     }
 
     // methods inherited from IEntityPlayerSP interface below
