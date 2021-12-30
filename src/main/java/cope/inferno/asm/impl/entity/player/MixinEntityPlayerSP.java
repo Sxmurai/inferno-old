@@ -44,7 +44,6 @@ public abstract class MixinEntityPlayerSP extends AbstractClientPlayer implement
     @Shadow
     public abstract boolean isCurrentViewEntity();
 
-
     @Redirect(method = "move", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/entity/AbstractClientPlayer;move(Lnet/minecraft/entity/MoverType;DDD)V"))
     public void move(AbstractClientPlayer player, MoverType moverType, double x, double y, double z) {
         MoveEvent event = new MoveEvent(moverType, x, y, z);
@@ -60,8 +59,8 @@ public abstract class MixinEntityPlayerSP extends AbstractClientPlayer implement
         UpdateWalkingPlayerEvent event = new UpdateWalkingPlayerEvent(posX, posY, posZ, onGround, rotationYaw, rotationPitch);
         MinecraftForge.EVENT_BUS.post(event);
         if (event.isCanceled()) {
-            modifiedOnUpdateWalkingPlayer(event.getX(), event.getY(), event.getZ(), event.isOnGround(), event.getYaw(), event.getPitch());
             info.cancel();
+            modifiedOnUpdateWalkingPlayer(event.getX(), event.getY(), event.getZ(), event.isOnGround(), event.getYaw(), event.getPitch());
         }
     }
 

@@ -35,9 +35,9 @@ public class RotationManager implements Wrapper {
                 reset();
             } else {
                 if (rotation.isValid()) {
-                    event.setCanceled(true);
                     event.setYaw(rotation.getYaw());
                     event.setPitch(rotation.getPitch());
+                    event.setCanceled(true);
                 }
             }
         }
@@ -54,10 +54,10 @@ public class RotationManager implements Wrapper {
     public void rotate(Vec3d vec) {
         timer.reset();
 
-        Rotation rotation = RotationUtil.calcRotations(mc.player.getPositionEyes(mc.getRenderPartialTicks()), vec);
+        Rotation newRotation = RotationUtil.calcRotations(mc.player.getPositionEyes(mc.getRenderPartialTicks()), vec);
 
-        rotation.setYaw(rotation.getYaw());
-        rotation.setPitch(rotation.getPitch());
+        rotation.setYaw(newRotation.getYaw());
+        rotation.setPitch(newRotation.getPitch());
     }
 
     public void reset() {
