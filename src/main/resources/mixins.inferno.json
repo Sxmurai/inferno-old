@@ -19,6 +19,7 @@
 
     "other.MixinScreenshotHelper",
 
+    "render.MixinEntityRenderer",
     "render.MixinRenderPlayer",
 
     "world.block.MixinBlockSlime",

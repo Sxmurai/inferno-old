@@ -15,6 +15,7 @@ import cope.inferno.core.features.module.other.Rubberband;
 import cope.inferno.core.features.module.player.FastPlace;
 import cope.inferno.core.features.module.player.Scaffold;
 import cope.inferno.core.features.module.player.Timer;
+import cope.inferno.core.features.module.render.CameraClip;
 import cope.inferno.core.features.module.render.Fullbright;
 import cope.inferno.core.manager.Manager;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -54,6 +55,7 @@ public class ModuleManager extends Manager<Module> {
         modules.add(new Timer());
 
         // render
+        modules.add(new CameraClip());
         modules.add(new Fullbright());
 
         LOGGER.info("Loaded {} modules.", modules.size());
