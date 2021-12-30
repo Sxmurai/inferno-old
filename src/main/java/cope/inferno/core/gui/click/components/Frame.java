@@ -43,10 +43,18 @@ public abstract class Frame extends AbstractComponent {
             double speed = ClickGUI.scrollSpeed.getValue();
             int scroll = Mouse.getDWheel();
 
+            if (ClickGUI.scrollInvert.getValue()) {
+                speed = -speed;
+            }
+
             if (scroll > 0) {
-                children.forEach((child) -> child.setY(child.getY() - speed));
+                for (AbstractComponent child : children) {
+                    child.setY(child.getY() - speed);
+                }
             } else if (scroll < 0) {
-                children.forEach((child) -> child.setY(child.getY() + speed));
+                for (AbstractComponent child : children) {
+                    child.setY(child.getY() + speed);
+                }
             }
         }
 

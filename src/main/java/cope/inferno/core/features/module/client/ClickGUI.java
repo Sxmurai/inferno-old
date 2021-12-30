@@ -17,6 +17,8 @@ public class ClickGUI extends Module {
     }
 
     public static final Setting<Boolean> pause = new Setting<>("Pause", false);
+
+    public static final Setting<Boolean> scrollInvert = new Setting<>("ScrollInvert", true);
     public static final Setting<Double> scrollSpeed = new Setting<>("ScrollSpeed", 10.0, 1.0, 20.0);
 
     public static final Setting<Background> background = new Setting<>("Background", Background.BLUR);
