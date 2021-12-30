@@ -15,6 +15,7 @@ import cope.inferno.core.features.module.player.Scaffold;
 import cope.inferno.core.features.module.player.Timer;
 import cope.inferno.core.features.module.render.CameraClip;
 import cope.inferno.core.features.module.render.Fullbright;
+import cope.inferno.core.features.module.render.Nametags;
 import cope.inferno.core.manager.Manager;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
@@ -58,6 +59,7 @@ public class ModuleManager extends Manager<Module> {
         // render
         modules.add(new CameraClip());
         modules.add(new Fullbright());
+        modules.add(new Nametags());
 
         LOGGER.info("Loaded {} modules.", modules.size());
 

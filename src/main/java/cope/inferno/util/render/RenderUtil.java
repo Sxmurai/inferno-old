@@ -117,4 +117,14 @@ public class RenderUtil implements Wrapper {
     public static void stopScissor() {
         glDisable(GL_SCISSOR_TEST);
     }
+
+    /**
+     * Interpolates two positions
+     * @param start The start value
+     * @param end The end value
+     * @return the interpolated value
+     */
+    public static double interpolate(double start, double end) {
+        return end + (start - end) * mc.getRenderPartialTicks();
+    }
 }

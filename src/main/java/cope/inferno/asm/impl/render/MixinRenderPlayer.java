@@ -1,6 +1,7 @@
 package cope.inferno.asm.impl.render;
 
 import cope.inferno.core.Inferno;
+import cope.inferno.core.features.module.render.Nametags;
 import cope.inferno.util.internal.Wrapper;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.renderer.entity.RenderPlayer;
@@ -54,6 +55,13 @@ public class MixinRenderPlayer {
 
             player.rotationYawHead = renderHeadYaw;
             player.prevRotationYawHead = prevRenderHeadYaw;
+        }
+    }
+
+    @Inject(method = "renderEntityName", at = @At("HEAD"), cancellable = true)
+    public void renderEntityName(AbstractClientPlayer entityIn, double x, double y, double z, String name, double distanceSq, CallbackInfo info) {
+        if (Nametags.INSTANCE.isToggled()) {
+            info.cancel();
         }
     }
 }

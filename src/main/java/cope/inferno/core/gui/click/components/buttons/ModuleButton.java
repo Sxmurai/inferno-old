@@ -24,12 +24,12 @@ public class ModuleButton extends AbstractButton {
         this.module = module;
 
         module.getSettings().forEach((setting) -> {
-            if (setting.isParent()) {
+            if (setting.isParent() && !setting.hasParent()) {
                 this.children.add(new DropdownMenu(setting));
             } else if (setting instanceof Bind) {
                 this.children.add(new BindButton((Bind) setting));
             } else {
-                if (setting.hasParent()) {
+                if (setting.hasParent() || setting.isParent()) {
                     return;
                 }
 
