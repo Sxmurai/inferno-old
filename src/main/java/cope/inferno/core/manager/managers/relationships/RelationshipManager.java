@@ -30,6 +30,10 @@ public class RelationshipManager extends BaseManager {
         return relationships.stream().filter((r) -> r.getUuid().equals(uuid)).findFirst().orElse(null);
     }
 
+    public Relationship getRelationship(String alias) {
+        return relationships.stream().filter((r) ->r.getAlias().equalsIgnoreCase(alias)).findFirst().orElse(null);
+    }
+
     public Set<Relationship> getRelationships() {
         return relationships;
     }

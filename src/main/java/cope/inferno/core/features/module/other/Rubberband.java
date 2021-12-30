@@ -13,7 +13,7 @@ public class Rubberband extends Module {
     @Override
     protected void onEnable() {
         if (nullCheck()) {
-            NetworkUtil.send(new CPacketPlayer.Position(mc.player.posX, mc.player.posY + 100.0, mc.player.posZ, false));
+            NetworkUtil.send(new CPacketPlayer.Position(mc.player.posX, mc.player.posY + 1.0, mc.player.posZ, false));
         }
 
         toggle();
