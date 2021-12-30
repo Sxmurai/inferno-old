@@ -12,6 +12,7 @@ import cope.inferno.core.features.module.other.FakePlayer;
 import cope.inferno.core.features.module.other.MiddleClick;
 import cope.inferno.core.features.module.player.Scaffold;
 import cope.inferno.core.features.module.player.Timer;
+import cope.inferno.core.features.module.render.Fullbright;
 import cope.inferno.core.manager.Manager;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
@@ -41,6 +42,9 @@ public class ModuleManager extends Manager<Module> {
         // player
         modules.add(new Scaffold());
         modules.add(new Timer());
+
+        // render
+        modules.add(new Fullbright());
 
         LOGGER.info("Loaded {} modules.", modules.size());
 
