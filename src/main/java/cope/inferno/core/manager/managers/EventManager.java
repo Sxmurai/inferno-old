@@ -1,9 +1,14 @@
 package cope.inferno.core.manager.managers;
 
+import cope.inferno.core.events.PacketEvent;
+import cope.inferno.core.events.TotemPopEvent;
 import cope.inferno.core.features.module.Module;
 import cope.inferno.util.internal.Wrapper;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.network.play.server.SPacketEntityStatus;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
@@ -14,6 +19,16 @@ public class EventManager implements Wrapper {
 
     public EventManager() {
         INSTANCE = this;
+    }
+
+    @SubscribeEvent
+    public void onPacketReceive(PacketEvent.Receive event) {
+        if (event.getPacket() instanceof SPacketEntityStatus) {
+            SPacketEntityStatus packet = event.getPacket();
+            if (packet.getOpCode() == 35 && packet.getEntity(mc.world) instanceof EntityPlayer) {
+                MinecraftForge.EVENT_BUS.post(new TotemPopEvent((EntityPlayer) packet.getEntity(mc.world)));
+            }
+        }
     }
 
     @SubscribeEvent

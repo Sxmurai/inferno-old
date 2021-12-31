@@ -17,12 +17,19 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import java.util.Comparator;
 
 public class Notifier extends Module {
+    public static Notifier INSTANCE;
+
     public Notifier() {
         super("Notifier", Category.CLIENT, "Notifies you upon actions that happen");
         toggle(); // force enabled until configurations loaded say otherwise
+
+        INSTANCE = this;
     }
 
     public static final Setting<Boolean> modules = new Setting<>("Modules", true);
+
+    public static final Setting<Boolean> totems = new Setting<>("Totems", true);
+    public static final Setting<Boolean> self = new Setting<>(totems, "Self", false);
 
     // @todo
     public static final Setting<Boolean> visualRange = new Setting<>("VisualRange", false);

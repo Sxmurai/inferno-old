@@ -31,6 +31,7 @@ public class Inferno {
     private InteractionManager interactionManager;
     private InventoryManager inventoryManager;
     private RotationManager rotationManager;
+    private TotemPopManager totemPopManager;
     private RelationshipManager relationshipManager;
 
     @Mod.EventHandler
@@ -56,6 +57,9 @@ public class Inferno {
 
         rotationManager = new RotationManager();
         MinecraftForge.EVENT_BUS.register(rotationManager);
+
+        totemPopManager = new TotemPopManager();
+        MinecraftForge.EVENT_BUS.register(totemPopManager);
 
         relationshipManager = new RelationshipManager();
 
@@ -101,6 +105,10 @@ public class Inferno {
 
     public RotationManager getRotationManager() {
         return rotationManager;
+    }
+
+    public TotemPopManager getTotemPopManager() {
+        return totemPopManager;
     }
 
     public RelationshipManager getRelationshipManager() {
