@@ -56,8 +56,12 @@ public class RotationManager implements Wrapper {
 
         Rotation newRotation = RotationUtil.calcRotations(mc.player.getPositionEyes(mc.getRenderPartialTicks()), vec);
 
-        rotation.setYaw(newRotation.getYaw());
-        rotation.setPitch(newRotation.getPitch());
+        setRotations(newRotation.getYaw(), newRotation.getPitch());
+    }
+
+    public void setRotations(float yaw, float pitch) {
+        rotation.setYaw(yaw);
+        rotation.setPitch(pitch);
     }
 
     public void reset() {

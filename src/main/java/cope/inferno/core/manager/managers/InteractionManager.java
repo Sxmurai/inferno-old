@@ -5,6 +5,7 @@ import cope.inferno.util.internal.Wrapper;
 import cope.inferno.util.network.NetworkUtil;
 import cope.inferno.util.world.block.BlockUtil;
 import cope.inferno.util.world.block.Place;
+import net.minecraft.entity.Entity;
 import net.minecraft.network.play.client.CPacketPlayerTryUseItemOnBlock;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -50,6 +51,28 @@ public class InteractionManager implements Wrapper {
 
         if (sneak) {
             LocalPlayerUtil.sneak(false);
+        }
+    }
+
+    /**
+     * Attacks an entity
+     * @param entity The entity to attack
+     * @param rotate If to rotate when attacking
+     * @param swing If to swing upon attacking
+     */
+    public void attack(Entity entity, boolean rotate, boolean swing) {
+        if (entity == null || entity == mc.player) {
+            return;
+        }
+
+        if (rotate) {
+            getInferno().getRotationManager().rotate(entity);
+        }
+
+        mc.playerController.attackEntity(mc.player, entity);
+
+        if (swing) {
+            mc.player.swingArm(EnumHand.MAIN_HAND);
         }
     }
 }

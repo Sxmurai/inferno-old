@@ -28,7 +28,8 @@ public class ModuleManager extends Manager<Module> {
         modules.add(new ClickGUI());
         modules.add(new Notifier());
 
-        // combat\
+        // combat
+        modules.add(new Aura());
         modules.add(new AutoClip());
         modules.add(new AutoTotem());
         modules.add(new Criticals());
