@@ -17,7 +17,6 @@ public class Slider extends AbstractComponent {
         super(setting.getName());
 
         this.setting = setting;
-        System.out.println(setting.getName());
         this.difference = setting.getMax().floatValue() - setting.getMin().floatValue();
     }
 
