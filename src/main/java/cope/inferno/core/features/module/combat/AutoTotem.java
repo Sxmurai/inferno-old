@@ -30,6 +30,11 @@ public class AutoTotem extends Module {
     private final Timer timer = new Timer();
 
     @Override
+    protected void onDisable() {
+        tasks.clear();
+    }
+
+    @Override
     public void onUpdate() {
         if (mc.currentScreen == null) {
             if (!tasks.isEmpty()) {
