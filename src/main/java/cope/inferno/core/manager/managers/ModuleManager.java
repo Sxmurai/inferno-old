@@ -6,10 +6,7 @@ import cope.inferno.core.features.module.client.Notifier;
 import cope.inferno.core.features.module.combat.*;
 import cope.inferno.core.features.module.movement.*;
 import cope.inferno.core.features.module.other.*;
-import cope.inferno.core.features.module.player.FastPlace;
-import cope.inferno.core.features.module.player.PingSpoof;
-import cope.inferno.core.features.module.player.Scaffold;
-import cope.inferno.core.features.module.player.Timer;
+import cope.inferno.core.features.module.player.*;
 import cope.inferno.core.features.module.render.CameraClip;
 import cope.inferno.core.features.module.render.Fullbright;
 import cope.inferno.core.features.module.render.Nametags;
@@ -51,6 +48,7 @@ public class ModuleManager extends Manager<Module> {
 
         // player
         modules.add(new FastPlace());
+        modules.add(new Interact());
         modules.add(new PingSpoof());
         modules.add(new Scaffold());
         modules.add(new Timer());

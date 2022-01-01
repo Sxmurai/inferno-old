@@ -13,6 +13,7 @@
     "entity.MixinEntity",
 
     "input.MixinKeyBinding",
+    "input.MixinPlayerControllerMP",
 
     "network.MixinNetHandlerPlayClient",
     "network.MixinNetworkManager",
@@ -23,6 +24,7 @@
     "render.MixinEntityRenderer",
     "render.MixinRenderPlayer",
 
+    "world.block.MixinBlockLiquid",
     "world.block.MixinBlockSlime",
     "world.block.MixinBlockSoulSand",
     "world.block.MixinStateImplementation",
