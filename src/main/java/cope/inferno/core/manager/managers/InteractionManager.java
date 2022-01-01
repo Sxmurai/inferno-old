@@ -1,11 +1,14 @@
 package cope.inferno.core.manager.managers;
 
 import cope.inferno.util.entity.player.LocalPlayerUtil;
+import cope.inferno.util.entity.player.rotation.Rotation;
+import cope.inferno.util.entity.player.rotation.RotationUtil;
 import cope.inferno.util.internal.Wrapper;
 import cope.inferno.util.network.NetworkUtil;
 import cope.inferno.util.world.block.BlockUtil;
 import cope.inferno.util.world.block.Place;
 import net.minecraft.entity.Entity;
+import net.minecraft.network.play.client.CPacketPlayer;
 import net.minecraft.network.play.client.CPacketPlayerTryUseItemOnBlock;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -34,7 +37,10 @@ public class InteractionManager implements Wrapper {
         }
 
         if (rotate) {
-            getInferno().getRotationManager().rotate(neighbor);
+            Rotation rotation = RotationUtil.calcRotations(mc.player.getPositionEyes(mc.getRenderPartialTicks()), new Vec3d(neighbor.getX() + 0.5, neighbor.getY() + 0.5, neighbor.getZ() + 0.5));
+
+            getInferno().getRotationManager().setRotations(rotation.getYaw(), rotation.getPitch());
+            NetworkUtil.send(new CPacketPlayer.Rotation(rotation.getYaw(), rotation.getPitch(), mc.player.onGround));
         }
 
         Vec3d hitVec = new Vec3d(neighbor).add(0.5, 0.5, 0.5).add(new Vec3d(facing.getOpposite().getDirectionVec()).scale(0.5));

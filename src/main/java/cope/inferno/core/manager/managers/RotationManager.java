@@ -6,7 +6,6 @@ import cope.inferno.util.entity.player.rotation.Rotation;
 import cope.inferno.util.entity.player.rotation.RotationUtil;
 import cope.inferno.util.internal.Wrapper;
 import cope.inferno.util.internal.timing.Timer;
-import cope.inferno.util.network.NetworkUtil;
 import net.minecraft.entity.Entity;
 import net.minecraft.network.play.client.CPacketPlayer;
 import net.minecraft.util.math.BlockPos;
@@ -58,8 +57,6 @@ public class RotationManager implements Wrapper {
         Rotation newRotation = RotationUtil.calcRotations(mc.player.getPositionEyes(mc.getRenderPartialTicks()), vec);
 
         setRotations(newRotation.getYaw(), newRotation.getPitch());
-
-        NetworkUtil.send(new CPacketPlayer.Rotation(newRotation.getYaw(), newRotation.getPitch(), mc.player.onGround));
     }
 
     public void setRotations(float yaw, float pitch) {
