@@ -5,10 +5,7 @@ import cope.inferno.core.features.module.client.ClickGUI;
 import cope.inferno.core.features.module.client.Notifier;
 import cope.inferno.core.features.module.combat.*;
 import cope.inferno.core.features.module.movement.*;
-import cope.inferno.core.features.module.other.FakePlayer;
-import cope.inferno.core.features.module.other.FullScreenshot;
-import cope.inferno.core.features.module.other.MiddleClick;
-import cope.inferno.core.features.module.other.Rubberband;
+import cope.inferno.core.features.module.other.*;
 import cope.inferno.core.features.module.player.FastPlace;
 import cope.inferno.core.features.module.player.PingSpoof;
 import cope.inferno.core.features.module.player.Scaffold;
@@ -46,6 +43,7 @@ public class ModuleManager extends Manager<Module> {
         modules.add(new Velocity());
 
         // other
+        modules.add(new Chat());
         modules.add(new FakePlayer());
         modules.add(new FullScreenshot());
         modules.add(new MiddleClick());

@@ -19,6 +19,7 @@
 
     "other.MixinScreenshotHelper",
 
+    "render.gui.MixinGuiNewChat",
     "render.MixinEntityRenderer",
     "render.MixinRenderPlayer",
 
