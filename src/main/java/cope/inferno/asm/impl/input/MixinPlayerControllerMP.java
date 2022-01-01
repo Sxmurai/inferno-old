@@ -1,6 +1,7 @@
 package cope.inferno.asm.impl.input;
 
 import cope.inferno.core.features.module.player.Interact;
+import cope.inferno.core.features.module.player.Reach;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.multiplayer.PlayerControllerMP;
 import net.minecraft.client.multiplayer.WorldClient;
@@ -21,5 +22,17 @@ public class MixinPlayerControllerMP {
         if (Interact.INSTANCE.isToggled() && Interact.shouldNoInteract(pos)) {
             info.setReturnValue(EnumActionResult.FAIL);
         }
+    }
+
+    @Inject(method = "getBlockReachDistance", at = @At("HEAD"), cancellable = true)
+    public void getBlockReachDistance(CallbackInfoReturnable<Float> info) {
+        if (Reach.INSTANCE.isToggled()) {
+            info.setReturnValue(Reach.distance.getValue());
+        }
+    }
+
+    @Inject(method = "extendedReach", at = @At("RETURN"), cancellable = true)
+    public void extendedReach(CallbackInfoReturnable<Boolean> info) {
+        info.setReturnValue(info.getReturnValue() || Reach.INSTANCE.isToggled());
     }
 }

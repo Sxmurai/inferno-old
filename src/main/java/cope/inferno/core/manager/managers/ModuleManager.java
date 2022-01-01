@@ -50,6 +50,7 @@ public class ModuleManager extends Manager<Module> {
         modules.add(new FastPlace());
         modules.add(new Interact());
         modules.add(new PingSpoof());
+        modules.add(new Reach());
         modules.add(new Scaffold());
         modules.add(new Timer());
 
