@@ -69,7 +69,7 @@ public abstract class MixinEntityPlayerSP extends AbstractClientPlayer {
 
     @Inject(method = "pushOutOfBlocks", at = @At("HEAD"), cancellable = true)
     public void pushOutOfBlocks(double x, double y, double z, CallbackInfoReturnable<Boolean> info) {
-        EntityVelocityEvent event = new EntityVelocityEvent(EntityVelocityEvent.Material.LIQUID);
+        EntityVelocityEvent event = new EntityVelocityEvent(EntityVelocityEvent.Material.BLOCK);
         MinecraftForge.EVENT_BUS.post(event);
 
         if (event.isCanceled()) {
