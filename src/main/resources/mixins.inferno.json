@@ -16,6 +16,7 @@
     "input.MixinPlayerControllerMP",
 
     "network.MixinNetHandlerPlayClient",
+    "network.MixinNettyCompressionDecoder",
     "network.MixinNetworkManager",
 
     "other.MixinScreenshotHelper",

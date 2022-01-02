@@ -40,6 +40,7 @@ public class ModuleManager extends Manager<Module> {
         modules.add(new Velocity());
 
         // other
+        modules.add(new AntiBookBan());
         modules.add(new Chat());
         modules.add(new FakePlayer());
         modules.add(new FullScreenshot());
