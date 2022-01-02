@@ -7,7 +7,6 @@ import cope.inferno.util.entity.inventory.InventoryUtil;
 import cope.inferno.util.entity.inventory.task.Task;
 import cope.inferno.util.internal.timing.Format;
 import cope.inferno.util.internal.timing.Timer;
-import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 
 import java.util.HashMap;
@@ -60,12 +59,10 @@ public class Replenish extends Module {
                 }
             }
 
-            InventoryUtil.getSlots(0, 9).forEach((entry) -> {
-                ItemStack stack = entry.getValue();
-
+            InventoryUtil.getSlots(0, 9).forEach((slot, stack) -> {
                 int dynamicThreshold = stack.getMaxStackSize() != 64 ? stack.getMaxStackSize() - 1 : threshold.getValue();
                 if (stack.getCount() <= dynamicThreshold) {
-                    refill(entry.getKey(), stack);
+                    refill(slot, stack);
                 }
             });
         }
@@ -73,30 +70,17 @@ public class Replenish extends Module {
 
     private void refill(int slot, ItemStack stack) {
         int id = -1, count = 0;
-
         for (int i = 9; i < 36; ++i) {
             ItemStack itemStack = mc.player.inventory.getStackInSlot(i);
+            if (InventoryUtil.canStacksCombine(itemStack, stack)) {
+                id = i;
+                count = itemStack.getCount();
 
-            if (!stack.getDisplayName().equals(stack.getDisplayName())) {
-                continue;
+                break;
             }
-
-            if (stack.getItem() instanceof ItemBlock) {
-                if (!(itemStack.getItem() instanceof ItemBlock)) {
-                    continue;
-                }
-
-
-                if (!((ItemBlock) stack.getItem()).getBlock().equals(((ItemBlock) itemStack.getItem()).getBlock())) {
-                    continue;
-                }
-            }
-
-            id = i;
-            count = itemStack.getCount();
         }
 
-        if (id != -1) {
+        if (id == -1) {
             return;
         }
 
@@ -108,6 +92,7 @@ public class Replenish extends Module {
     }
 
     private void save() {
-        InventoryUtil.getSlots(0, 9).forEach((entry) -> hotbar.put(entry.getKey(), entry.getValue()));
+        hotbar.clear();
+        hotbar.putAll(InventoryUtil.getSlots(0, 9));
     }
 }

@@ -7,7 +7,6 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Predicate;
 
@@ -24,6 +23,24 @@ public class InventoryUtil implements Wrapper {
      */
     public static int toClickableSlot(int slot) {
         return slot < 9 ? slot + 36 : slot;
+    }
+
+    /**
+     * Checks if we can combine two stacks
+     * @param in The input stack
+     * @param out Another input stack
+     * @return true if they can combine, false if they cannot
+     */
+    public static boolean canStacksCombine(ItemStack in, ItemStack out) {
+        if (!in.getDisplayName().equals(out.getDisplayName())) {
+            return false;
+        }
+
+        if (isBlockItemStack(in) && isBlockItemStack(out)) {
+            return ((ItemBlock) in.getItem()).getBlock().equals(((ItemBlock) out.getItem()).getBlock());
+        } else {
+            return in.getItem().equals(out.getItem());
+        }
     }
 
     public static boolean isHolding(Block block, boolean offhand) {
@@ -68,7 +85,7 @@ public class InventoryUtil implements Wrapper {
             }
         }
 
-        for (Map.Entry<Integer, ItemStack> entry : getSlots(0, 9)) {
+        for (Map.Entry<Integer, ItemStack> entry : getSlots(0, 9).entrySet()) {
             ItemStack stack = entry.getValue();
             if (isBlockItemStack(stack) && ((ItemBlock) stack.getItem()).getBlock().equals(block)) {
                 return entry.getKey();
@@ -89,7 +106,7 @@ public class InventoryUtil implements Wrapper {
             return OFFHAND_SLOT;
         }
 
-        for (Map.Entry<Integer, ItemStack> entry : getSlots(0, 9)) {
+        for (Map.Entry<Integer, ItemStack> entry : getSlots(0, 9).entrySet()) {
             ItemStack stack = entry.getValue();
             if (!stack.isEmpty() &&
                     stack.getItem().equals(item) &&
@@ -113,7 +130,7 @@ public class InventoryUtil implements Wrapper {
             return OFFHAND_SLOT;
         }
 
-        for (Map.Entry<Integer, ItemStack> entry : getSlots(0, 9)) {
+        for (Map.Entry<Integer, ItemStack> entry : getSlots(0, 9).entrySet()) {
             ItemStack stack = entry.getValue();
             if (!stack.isEmpty() &&
                     clazz.isInstance(stack.getItem()) &&
@@ -134,7 +151,7 @@ public class InventoryUtil implements Wrapper {
      * @return -1 if none found, or the item slot of this item
      */
     public static int getInventoryItem(Item item, Predicate<Item> filter, boolean hotbar) {
-        for (Map.Entry<Integer, ItemStack> entry : getSlots(hotbar ? 0 : 9, 36)) {
+        for (Map.Entry<Integer, ItemStack> entry : getSlots(hotbar ? 0 : 9, 36).entrySet()) {
             ItemStack stack = entry.getValue();
 
             if (!stack.isEmpty() &&
@@ -163,13 +180,13 @@ public class InventoryUtil implements Wrapper {
      * @param end The ending index
      * @return A set of Map.Entry's containing the slot number and the ItemStack object
      */
-    public static Set<Map.Entry<Integer, ItemStack>> getSlots(int start, int end) {
+    public static Map<Integer, ItemStack> getSlots(int start, int end) {
         Map<Integer, ItemStack> slots = new ConcurrentHashMap<>();
 
         for (int i = start; i < end; ++i) {
             slots.put(i, mc.player.inventory.getStackInSlot(i));
         }
 
-        return slots.entrySet();
+        return slots;
     }
 }
