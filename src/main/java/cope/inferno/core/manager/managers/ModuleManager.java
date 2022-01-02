@@ -26,6 +26,7 @@ public class ModuleManager extends Manager<Module> {
         modules.add(new Aura());
         modules.add(new AutoClip());
         modules.add(new AutoTotem());
+        modules.add(new BowRelease());
         modules.add(new Criticals());
         modules.add(new FeetTrap());
         modules.add(new SelfFill());
