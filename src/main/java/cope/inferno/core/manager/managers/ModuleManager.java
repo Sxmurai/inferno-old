@@ -8,6 +8,7 @@ import cope.inferno.core.features.module.movement.*;
 import cope.inferno.core.features.module.other.*;
 import cope.inferno.core.features.module.player.*;
 import cope.inferno.core.features.module.render.CameraClip;
+import cope.inferno.core.features.module.render.ESP;
 import cope.inferno.core.features.module.render.Fullbright;
 import cope.inferno.core.features.module.render.Nametags;
 import cope.inferno.core.manager.Manager;
@@ -59,6 +60,7 @@ public class ModuleManager extends Manager<Module> {
 
         // render
         modules.add(new CameraClip());
+        modules.add(new ESP());
         modules.add(new Fullbright());
         modules.add(new Nametags());
 

@@ -23,7 +23,9 @@
 
     "render.gui.MixinGuiNewChat",
     "render.MixinEntityRenderer",
+    "render.MixinRenderLivingBase",
     "render.MixinRenderPlayer",
+    "render.MixinTileEntityRendererDispatcher",
 
     "world.block.MixinBlockLiquid",
     "world.block.MixinBlockSlime",

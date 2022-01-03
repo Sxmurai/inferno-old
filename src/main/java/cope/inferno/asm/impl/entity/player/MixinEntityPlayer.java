@@ -46,6 +46,8 @@ public abstract class MixinEntityPlayer extends EntityLivingBase implements IEnt
         Relationship relation = getRelationship();
         if (relation != null) {
             relation.setStatus(status);
+        } else {
+            Inferno.INSTANCE.getRelationshipManager().add(getUniqueID(), status);
         }
     }
 
