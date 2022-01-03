@@ -30,6 +30,7 @@ public class PacketFly extends Module {
     public static final Setting<Mode> mode = new Setting<>("Mode", Mode.SETBACK);
 
     public static final Setting<Phase> phase = new Setting<>("Phase", Phase.NONE);
+
     public static final Setting<Direction> direction = new Setting<>("Direction", Direction.NEGATIVE);
 
     public static final Setting<Float> speed = new Setting<>("Speed", 1.0f, 0.1f, 10.0f);
@@ -67,21 +68,24 @@ public class PacketFly extends Module {
     @SubscribeEvent
     public void onUpdateWalkingPlayer(UpdateWalkingPlayerEvent event) {
         mc.player.setVelocity(0.0, 0.0, 0.0);
-
         event.setCanceled(true);
 
         double smallerSpeed = speed.getValue() / 10.0;
 
-        if (antiKick.getValue() && timer.passed(245L, Format.MS)) {
-            timer.reset();
-            mc.player.motionY = -0.0625;
+        double multiplier = packets % 2 == 0 ? 0.87 : 0.7442;
+        if (mc.gameSettings.keyBindJump.isKeyDown()) {
+            mc.player.motionY += smallerSpeed * multiplier;
+
+            if (mc.player.ticksExisted % 6 == 0) {
+                mc.player.motionY = -0.08;
+            }
+        } else if (mc.gameSettings.keyBindSneak.isKeyDown()) {
+            mc.player.motionY -= smallerSpeed * multiplier;
         }
 
-        double multiplier = packets % 2 == 0 ? 1.0 : 0.972;
-        if (mc.gameSettings.keyBindJump.isKeyDown()) {
-            mc.player.motionY = smallerSpeed * multiplier;
-        } else if (mc.gameSettings.keyBindSneak.isKeyDown()) {
-            mc.player.motionY = -smallerSpeed * multiplier;
+        if (antiKick.getValue() && timer.passed(4L, Format.TICKS)) {
+            timer.reset();
+            mc.player.motionY = -0.04;
         }
 
         if (MotionUtil.isMoving()) {
@@ -95,20 +99,12 @@ public class PacketFly extends Module {
                     mc.player.motionX = motion[0] * i * smallerSpeed;
                     mc.player.motionZ = motion[1] * i * smallerSpeed;
 
-                    sendPacket(
-                            mc.player.posX + mc.player.motionX,
-                            mc.player.getEntityBoundingBox().minY + mc.player.motionY,
-                            mc.player.posZ + mc.player.motionZ
-                    );
+                    sendPackets(getPlayerPos().add(mc.player.motionX, mc.player.motionY, mc.player.motionZ), false);
                 }
             }
-
-            Vec3d pos = getPlayerPos().add(mc.player.motionX, mc.player.motionY, mc.player.motionZ);
-            sendPackets(pos);
-
-            NetworkUtil.send(new CPacketConfirmTeleport(teleportId++));
-            teleports.put(teleportId, pos);
         }
+
+        sendPackets(getPlayerPos().add(mc.player.motionX, mc.player.motionY, mc.player.motionZ), true);
     }
 
     @SubscribeEvent
@@ -186,15 +182,20 @@ public class PacketFly extends Module {
         return new Vec3d(mc.player.posX, mc.player.getEntityBoundingBox().minY, mc.player.posZ);
     }
 
-    private void sendPackets(Vec3d pos) {
+    private void sendPackets(Vec3d pos, boolean invalid) {
         sendPacket(pos.x, pos.y, pos.z);
 
-        Vec3d outOfBounds = getOutOfBoundsVec(pos);
-        sendPacket(outOfBounds.x, outOfBounds.y, outOfBounds.z);
+        if (invalid) {
+            Vec3d outOfBounds = getOutOfBoundsVec(pos);
+            sendPacket(outOfBounds.x, outOfBounds.y, outOfBounds.z);
+        }
+
+        NetworkUtil.send(new CPacketConfirmTeleport(teleportId++));
+        teleports.put(teleportId, pos);
     }
 
     private void sendPacket(double x, double y, double z) {
-        NetworkUtil.send(new CPacketPlayer.Position(x, y, z, false));
+        NetworkUtil.send(new CPacketPlayer.PositionRotation(x, y, z, mc.player.rotationYaw, mc.player.rotationPitch, false));
     }
 
     private Vec3d getOutOfBoundsVec(Vec3d pos) {
