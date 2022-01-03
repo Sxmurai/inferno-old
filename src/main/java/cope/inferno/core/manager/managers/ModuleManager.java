@@ -48,6 +48,7 @@ public class ModuleManager extends Manager<Module> {
         modules.add(new FullScreenshot());
         modules.add(new MiddleClick());
         modules.add(new Rubberband());
+        modules.add(new XCarry());
 
         // player
         modules.add(new FastPlace());
