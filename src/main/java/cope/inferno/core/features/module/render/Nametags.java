@@ -109,7 +109,10 @@ public class Nametags extends Module {
         }
 
         if (totems.getValue()) {
-            // @todo implement TotemPopManager
+            int totems = getInferno().getTotemPopManager().getPops(player);
+            if (totems > 0) {
+                display.append("-").append(totems);
+            }
         }
 
         renderBaseNametag(display.toString());

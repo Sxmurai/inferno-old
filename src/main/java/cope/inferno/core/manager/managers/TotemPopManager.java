@@ -63,4 +63,8 @@ public class TotemPopManager implements Wrapper {
 
         pops.remove(player);
     }
+
+    public Integer getPops(EntityPlayer player) {
+        return pops.getOrDefault(player, -1);
+    }
 }
