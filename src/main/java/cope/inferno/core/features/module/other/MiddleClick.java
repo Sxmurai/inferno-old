@@ -64,7 +64,7 @@ public class MiddleClick extends Module {
                                 " has been " +
                                 (newStatus.equals(Status.FRIEND) ?
                                         "added to " :
-                                        "removed from") +
+                                        "removed from ") +
                                 "your friends list.");
             }
         }
