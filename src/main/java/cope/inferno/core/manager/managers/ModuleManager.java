@@ -25,6 +25,7 @@ public class ModuleManager extends Manager<Module> {
 
         // combat
         modules.add(new Aura());
+        modules.add(new Auto32K());
         modules.add(new AutoClip());
         modules.add(new AutoTotem());
         modules.add(new BowRelease());

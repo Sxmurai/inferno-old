@@ -5,6 +5,8 @@ import cope.inferno.core.features.module.Category;
 import cope.inferno.core.features.module.Module;
 import cope.inferno.core.setting.Setting;
 import cope.inferno.util.internal.timing.Timer;
+import net.minecraft.network.Packet;
+import net.minecraft.network.play.client.CPacketConfirmTransaction;
 import net.minecraft.network.play.client.CPacketKeepAlive;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -17,8 +19,9 @@ public class PingSpoof extends Module {
     }
 
     public static final Setting<Float> delay = new Setting<>("Delay", 0.5f, 0.1f, 10.0f);
+    public static final Setting<Boolean> bypass = new Setting<>("Bypass", false);
 
-    private final Queue<CPacketKeepAlive> packets = new ConcurrentLinkedQueue<>();
+    private final Queue<Packet<?>> packets = new ConcurrentLinkedQueue<>();
     private final Timer timer = new Timer();
     private boolean sending = false;
 
@@ -39,7 +42,7 @@ public class PingSpoof extends Module {
 
     @SubscribeEvent
     public void onPacketSend(PacketEvent.Send event) {
-        if (event.getPacket() instanceof CPacketKeepAlive && !sending) {
+        if ((event.getPacket() instanceof CPacketKeepAlive || bypass.getValue() && event.getPacket() instanceof CPacketConfirmTransaction) && !sending) {
             packets.add(event.getPacket());
             event.setCanceled(true);
         }
@@ -49,7 +52,7 @@ public class PingSpoof extends Module {
         sending = true;
 
         while (!packets.isEmpty()) {
-            CPacketKeepAlive packet = packets.poll();
+            Packet<?> packet = packets.poll();
             if (packet == null) {
                 break;
             }

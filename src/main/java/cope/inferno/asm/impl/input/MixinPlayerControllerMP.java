@@ -1,5 +1,6 @@
 package cope.inferno.asm.impl.input;
 
+import cope.inferno.core.events.BlockPlaceEvent;
 import cope.inferno.core.features.module.player.Interact;
 import cope.inferno.core.features.module.player.Reach;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -10,6 +11,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
+import net.minecraftforge.common.MinecraftForge;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -21,6 +23,13 @@ public class MixinPlayerControllerMP {
     public void processRightClickBlock(EntityPlayerSP player, WorldClient worldIn, BlockPos pos, EnumFacing direction, Vec3d vec, EnumHand hand, CallbackInfoReturnable<EnumActionResult> info) {
         if (Interact.INSTANCE.isToggled() && Interact.shouldNoInteract(pos)) {
             info.setReturnValue(EnumActionResult.FAIL);
+            return;
+        }
+
+        BlockPlaceEvent event = new BlockPlaceEvent(pos, direction, hand, vec);
+        MinecraftForge.EVENT_BUS.post(event);
+        if (event.isCanceled()) {
+            info.cancel();
         }
     }
 

@@ -29,6 +29,7 @@ public class BlockUtil implements Wrapper {
             Blocks.BED,
             Blocks.BEACON,
             Blocks.CRAFTING_TABLE,
+            Blocks.HOPPER,
 
             // redstone shit
             Blocks.LEVER,

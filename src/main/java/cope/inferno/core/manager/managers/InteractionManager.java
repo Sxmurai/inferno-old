@@ -24,7 +24,18 @@ public class InteractionManager implements Wrapper {
      * @param swing If to swing your arm when placing
      */
     public void place(BlockPos pos, Place place, boolean rotate, boolean swing) {
-        EnumFacing facing = BlockUtil.getFacing(pos);
+        place(pos, BlockUtil.getFacing(pos), place, rotate, swing);
+    }
+
+    /**
+     * Places a block at a specific facing value
+     * @param pos The position to place at
+     * @param facing The facing value when placing
+     * @param place The mode for placement
+     * @param rotate If to rotate
+     * @param swing If to swing your arm when placing
+     */
+    public void place(BlockPos pos, EnumFacing facing, Place place, boolean rotate, boolean swing) {
         if (facing == null) {
             return;
         }
@@ -57,6 +68,28 @@ public class InteractionManager implements Wrapper {
 
         if (sneak) {
             LocalPlayerUtil.sneak(false);
+        }
+    }
+
+    public void rightClick(BlockPos pos, boolean rotate, boolean swing) {
+        EnumFacing facing = BlockUtil.getFacing(pos);
+        if (facing == null) {
+            return;
+        }
+
+        BlockPos neighbor = pos.offset(facing);
+
+        if (rotate) {
+            Rotation rotation = RotationUtil.calcRotations(mc.player.getPositionEyes(mc.getRenderPartialTicks()), new Vec3d(neighbor.getX() + 0.5, neighbor.getY() + 0.5, neighbor.getZ() + 0.5));
+
+            getInferno().getRotationManager().setRotations(rotation.getYaw(), rotation.getPitch());
+            NetworkUtil.send(new CPacketPlayer.Rotation(rotation.getYaw(), rotation.getPitch(), mc.player.onGround));
+        }
+
+        mc.playerController.processRightClickBlock(mc.player, mc.world, pos, facing, new Vec3d(0, 0, 0), mc.player.getActiveHand());
+
+        if (swing) {
+            mc.player.swingArm(EnumHand.MAIN_HAND);
         }
     }
 
