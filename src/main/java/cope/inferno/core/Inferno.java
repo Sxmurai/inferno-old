@@ -2,6 +2,7 @@ package cope.inferno.core;
 
 import cope.inferno.core.events.ShutdownEvent;
 import cope.inferno.core.manager.managers.*;
+import cope.inferno.core.manager.managers.hole.HoleManager;
 import cope.inferno.core.manager.managers.relationships.RelationshipManager;
 import cope.inferno.util.internal.fs.FileUtil;
 import cope.inferno.util.internal.tray.SystemTrayUtil;
@@ -31,6 +32,7 @@ public class Inferno {
     private InteractionManager interactionManager;
     private InventoryManager inventoryManager;
     private RotationManager rotationManager;
+    private HoleManager holeManager;
     private TotemPopManager totemPopManager;
     private RelationshipManager relationshipManager;
 
@@ -57,6 +59,8 @@ public class Inferno {
 
         rotationManager = new RotationManager();
         MinecraftForge.EVENT_BUS.register(rotationManager);
+
+        holeManager = new HoleManager();
 
         totemPopManager = new TotemPopManager();
         MinecraftForge.EVENT_BUS.register(totemPopManager);
@@ -105,6 +109,10 @@ public class Inferno {
 
     public RotationManager getRotationManager() {
         return rotationManager;
+    }
+
+    public HoleManager getHoleManager() {
+        return holeManager;
     }
 
     public TotemPopManager getTotemPopManager() {

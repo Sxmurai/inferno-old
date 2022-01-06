@@ -9,6 +9,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BlockUtil implements Wrapper {
@@ -74,6 +75,20 @@ public class BlockUtil implements Wrapper {
     );
 
     /**
+     * An arraylist of all the non-explodable blocks
+     */
+    public static final ArrayList<Block> EXPLOSION_RESISTANT_BLOCKS = Lists.newArrayList(
+            Blocks.OBSIDIAN,
+            Blocks.BEDROCK,
+            Blocks.COMMAND_BLOCK,
+            Blocks.BARRIER,
+            Blocks.ENCHANTING_TABLE,
+            Blocks.END_PORTAL_FRAME,
+            Blocks.BEACON,
+            Blocks.ANVIL
+    );
+
+    /**
      * Gets the block from a block position
      * @param pos The position
      * @return The block object of what it is
@@ -106,7 +121,16 @@ public class BlockUtil implements Wrapper {
      * @return true if there is an entity within the bb, or false if there is not
      */
     public static boolean intersects(BlockPos pos) {
-        return !mc.world.getEntitiesWithinAABB(Entity.class, new AxisAlignedBB(pos), (e) -> e != null && !e.isDead).isEmpty();
+        return intersects(new AxisAlignedBB(pos));
+    }
+
+    /**
+     * Checks if there's any entities at this bounding box
+     * @param box The collision box to check
+     * @return true if there is an entity within the bb, or false if there is not
+     */
+    public static boolean intersects(AxisAlignedBB box) {
+        return !mc.world.getEntitiesWithinAABB(Entity.class, box, (e) -> e != null && !e.isDead).isEmpty();
     }
 
     /**
@@ -132,5 +156,61 @@ public class BlockUtil implements Wrapper {
         }
 
         return null;
+    }
+
+    /**
+     * Gets a sphere around a block position
+     * @param start The start position
+     * @param radius The radius of the sphere
+     * @return All blocks surrounding that position in a sphere
+     */
+    public static ArrayList<BlockPos> getSphere(BlockPos start, int radius) {
+        ArrayList<BlockPos> blocks = new ArrayList<>();
+
+        float cx = start.getX(),
+                cy = start.getY(),
+                cz = start.getZ(),
+                x = cx - radius;
+
+        while (x <= cx + radius) {
+            float z = cz - radius;
+
+            while (z <= cz + radius) {
+                float y = cy - radius;
+                while (y < (cy + radius)) {
+                    double dist = Math.pow(cx - x, 2) + Math.pow(cy - y, 2) + Math.pow(cz - z, 2);
+
+                    if (dist < Math.pow(radius, 2.0f)) {
+                        blocks.add(new BlockPos(x, y, z));
+                    }
+
+                    ++y;
+                }
+
+                ++z;
+            }
+
+            ++x;
+        }
+
+        return blocks;
+    }
+
+    /**
+     * Checks if the headpsace above a position is available
+     * @param pos The position to start at
+     * @param blocks The amount of blocks to check
+     * @return true if headspace is open, false if not
+     */
+    public static boolean isHeadspaceOpen(BlockPos pos, int blocks) {
+        BlockPos current = pos;
+        for (int i = 0; i < blocks; ++i) {
+            current = current.add(0.0, 1.0, 0.0);
+            if (!mc.world.isAirBlock(current)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

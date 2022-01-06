@@ -43,6 +43,8 @@ public class EventManager implements Wrapper {
                     mc.profiler.endSection();
                 }
             }
+
+            getInferno().getHoleManager().onUpdate();
         }
     }
 

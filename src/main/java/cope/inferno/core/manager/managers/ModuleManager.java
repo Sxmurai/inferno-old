@@ -31,6 +31,7 @@ public class ModuleManager extends Manager<Module> {
         modules.add(new BowRelease());
         modules.add(new Criticals());
         modules.add(new FeetTrap());
+        // modules.add(new HoleFiller());
         modules.add(new SelfFill());
 
         // movement
