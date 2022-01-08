@@ -2,11 +2,8 @@ package cope.inferno.core.gui.font;
 
 import net.minecraft.client.renderer.texture.DynamicTexture;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -97,13 +94,6 @@ public class AWTFont {
 
             // add our current width to not overlap other characters in the bitmap
             x += charWidth;
-        }
-
-        // debugging purposes:
-        try {
-            ImageIO.write(image, "png", new File("bitmap.png"));
-        } catch (IOException e) {
-            e.printStackTrace();
         }
 
         // we now have our image, let's generate our DynamicTexture which we'll use for rendering
