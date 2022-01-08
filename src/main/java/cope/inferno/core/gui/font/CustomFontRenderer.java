@@ -123,6 +123,11 @@ public class CustomFontRenderer extends FontRenderer implements Wrapper {
                 continue;
             }
 
+            if (c == '\u00a7') {
+                ++i;
+                continue; // ignore color codes
+            }
+
             width += charData.getWidth();
         }
 
