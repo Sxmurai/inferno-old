@@ -79,8 +79,12 @@ public class CustomFontRenderer extends FontRenderer implements Wrapper {
                 continue;
             }
 
-            if (c == '\u00a7' && i < text.length()) {
-                int colorCode = parseColorIndex(text, i);
+            if (c == '\u00a7') {
+                int colorCode = 21;
+                try {
+                    colorCode = "0123456789abcdefklmnor".indexOf(text.charAt(i + 1));
+                } catch (Exception ignored) { }
+
                 if (colorCode < 16) {
                     if (colorCode < 0 || colorCode > 15) {
                         colorCode = 15;
@@ -92,10 +96,10 @@ public class CustomFontRenderer extends FontRenderer implements Wrapper {
 
                     colorCode = colorCodes[colorCode];
                     GlStateManager.color((float) (colorCode >> 16 & 0xFF) / 255.0f, (float) (colorCode >> 8 & 0xFF) / 255.0f, (float) (colorCode & 0xFF) / 255.0f, rgba[3]);
-
-                    ++i;
-                    continue;
                 }
+
+                ++i;
+                continue;
             }
 
             font.drawChar(charData, (float) x1, (float) y1);
@@ -123,17 +127,6 @@ public class CustomFontRenderer extends FontRenderer implements Wrapper {
         }
 
         return width / 2;
-    }
-
-    private int parseColorIndex(String text, int index) {
-        int colorIndex = 21;
-        try {
-            colorIndex = "0123456789abcdefklmnor".indexOf(text.charAt(index + 1));
-        } catch (Exception e) {
-            colorIndex = -1;
-        }
-
-        return colorIndex;
     }
 
     private void setupMcColorCodes() {
