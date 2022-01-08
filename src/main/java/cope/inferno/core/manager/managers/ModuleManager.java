@@ -61,6 +61,7 @@ public class ModuleManager extends Manager<Module> {
         modules.add(new Reach());
         modules.add(new Replenish()); // @todo broken???? https://pastebin.com/RrMuVSFJ
         modules.add(new Scaffold());
+        modules.add(new Speedmine());
         modules.add(new Timer());
 
         // render

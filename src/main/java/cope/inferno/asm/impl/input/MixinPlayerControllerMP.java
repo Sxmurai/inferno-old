@@ -1,6 +1,7 @@
 package cope.inferno.asm.impl.input;
 
 import cope.inferno.core.events.BlockPlaceEvent;
+import cope.inferno.core.events.DamageBlockEvent;
 import cope.inferno.core.features.module.player.Interact;
 import cope.inferno.core.features.module.player.Reach;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -27,6 +28,15 @@ public class MixinPlayerControllerMP {
         }
 
         BlockPlaceEvent event = new BlockPlaceEvent(pos, direction, hand, vec);
+        MinecraftForge.EVENT_BUS.post(event);
+        if (event.isCanceled()) {
+            info.cancel();
+        }
+    }
+
+    @Inject(method = "onPlayerDamageBlock", at = @At("HEAD"), cancellable = true)
+    public void onPlayerDamageBlock(BlockPos posBlock, EnumFacing directionFacing, CallbackInfoReturnable<Boolean> info) {
+        DamageBlockEvent event = new DamageBlockEvent(posBlock, directionFacing);
         MinecraftForge.EVENT_BUS.post(event);
         if (event.isCanceled()) {
             info.cancel();
