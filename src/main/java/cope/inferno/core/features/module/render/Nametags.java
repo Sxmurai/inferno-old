@@ -2,6 +2,7 @@ package cope.inferno.core.features.module.render;
 
 import com.mojang.realmsclient.gui.ChatFormatting;
 import cope.inferno.asm.duck.IEntityPlayer;
+import cope.inferno.core.Inferno;
 import cope.inferno.core.features.module.Category;
 import cope.inferno.core.features.module.Module;
 import cope.inferno.core.setting.Setting;
@@ -158,6 +159,6 @@ public class Nametags extends Module {
             RenderUtil.drawOutline(x, y, w, h, outlineWidth.getValue(), outlineColor.getValue().getRGB());
         }
 
-        mc.fontRenderer.drawStringWithShadow(text, -width, -(mc.fontRenderer.FONT_HEIGHT - 1), -1);
+        Inferno.INSTANCE.getFontManager().drawNormalizedString(text, -width, -(mc.fontRenderer.FONT_HEIGHT - 1), -1);
     }
 }
