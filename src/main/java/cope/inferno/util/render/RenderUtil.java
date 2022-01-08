@@ -4,8 +4,10 @@ import cope.inferno.util.internal.Wrapper;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.RenderGlobal;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
+import net.minecraft.util.math.AxisAlignedBB;
 
 import static org.lwjgl.opengl.GL11.*;
 
@@ -16,6 +18,78 @@ public class RenderUtil implements Wrapper {
      */
     public static ScaledResolution getResolution() {
         return new ScaledResolution(mc);
+    }
+
+    /**
+     * Renders a basic block ESP
+     * @param box The bounding box to render
+     * @param filled If to fill the bounding box
+     * @param outline If to outline the bounding box
+     * @param lineWidth The line width of the outline
+     * @param color The color of the ESP
+     */
+    public static void renderBlockEsp(AxisAlignedBB box, boolean filled, boolean outline, float lineWidth, int color) {
+        if (filled) {
+            renderFilledBox(box, color);
+        }
+
+        if (outline) {
+            renderOutlinedBox(box, lineWidth, color);
+        }
+    }
+
+    public static void renderFilledBox(AxisAlignedBB box, int color) {
+        GlStateManager.enableBlend();
+        GlStateManager.tryBlendFuncSeparate(770, 771, 0, 1);
+        GlStateManager.disableTexture2D();
+        GlStateManager.disableDepth();
+
+        float[] rgba = ColorUtil.getColor(color);
+        RenderGlobal.renderFilledBox(box, rgba[0], rgba[1], rgba[2], rgba[3]);
+
+        GlStateManager.enableDepth();
+        GlStateManager.enableTexture2D();
+    }
+
+    public static void renderOutlinedBox(AxisAlignedBB box, float lineWidth, int color) {
+        GlStateManager.enableBlend();
+        GlStateManager.tryBlendFuncSeparate(770, 771, 0, 1);
+        GlStateManager.disableTexture2D();
+        GlStateManager.disableDepth();
+
+        glEnable(GL_LINE_SMOOTH);
+        glHint(GL_LINE_SMOOTH_HINT, GL_NICEST);
+
+        GlStateManager.glLineWidth(lineWidth);
+
+        float[] rgba = ColorUtil.getColor(color);
+
+        Tessellator tessellator = Tessellator.getInstance();
+        BufferBuilder buffer = tessellator.getBuffer();
+
+        buffer.begin(GL_LINE_STRIP, DefaultVertexFormats.POSITION_COLOR);
+        buffer.pos(box.minX, box.minY, box.minZ).color(rgba[0], rgba[1], rgba[2], rgba[3]).endVertex();
+        buffer.pos(box.minX, box.minY, box.maxZ).color(rgba[0], rgba[1], rgba[2], rgba[3]).endVertex();
+        buffer.pos(box.maxX, box.minY, box.maxZ).color(rgba[0], rgba[1], rgba[2], rgba[3]).endVertex();
+        buffer.pos(box.maxX, box.minY, box.minZ).color(rgba[0], rgba[1], rgba[2], rgba[3]).endVertex();
+        buffer.pos(box.minX, box.minY, box.minZ).color(rgba[0], rgba[1], rgba[2], rgba[3]).endVertex();
+        buffer.pos(box.minX, box.maxY, box.minZ).color(rgba[0], rgba[1], rgba[2], rgba[3]).endVertex();
+        buffer.pos(box.minX, box.maxY, box.maxZ).color(rgba[0], rgba[1], rgba[2], rgba[3]).endVertex();
+        buffer.pos(box.minX, box.minY, box.maxZ).color(rgba[0], rgba[1], rgba[2], rgba[3]).endVertex();
+        buffer.pos(box.maxX, box.minY, box.maxZ).color(rgba[0], rgba[1], rgba[2], rgba[3]).endVertex();
+        buffer.pos(box.maxX, box.maxY, box.maxZ).color(rgba[0], rgba[1], rgba[2], rgba[3]).endVertex();
+        buffer.pos(box.minX, box.maxY, box.maxZ).color(rgba[0], rgba[1], rgba[2], rgba[3]).endVertex();
+        buffer.pos(box.maxX, box.maxY, box.maxZ).color(rgba[0], rgba[1], rgba[2], rgba[3]).endVertex();
+        buffer.pos(box.maxX, box.maxY, box.minZ).color(rgba[0], rgba[1], rgba[2], rgba[3]).endVertex();
+        buffer.pos(box.maxX, box.minY, box.minZ).color(rgba[0], rgba[1], rgba[2], rgba[3]).endVertex();
+        buffer.pos(box.maxX, box.maxY, box.minZ).color(rgba[0], rgba[1], rgba[2], rgba[3]).endVertex();
+        buffer.pos(box.minX, box.maxY, box.minZ).color(rgba[0], rgba[1], rgba[2], rgba[3]).endVertex();
+        tessellator.draw();
+
+        GlStateManager.glLineWidth(1.0f);
+        glDisable(GL_LINE_SMOOTH);
+        GlStateManager.enableDepth();
+        GlStateManager.enableTexture2D();
     }
 
     /**
@@ -126,5 +200,18 @@ public class RenderUtil implements Wrapper {
      */
     public static double interpolate(double start, double end) {
         return end + (start - end) * mc.getRenderPartialTicks();
+    }
+
+    /**
+     * Converts a bounding box to renderable 3D coordinates
+     * @param axisAlignedBB The bounding box
+     * @return What I already fucking said wtf
+     */
+    public static AxisAlignedBB getRenderBoundingBox(AxisAlignedBB axisAlignedBB) {
+        double renderPosX = mc.renderManager.renderPosX;
+        double renderPosY = mc.renderManager.renderPosY;
+        double renderPosZ = mc.renderManager.renderPosZ;
+
+        return axisAlignedBB.offset(-renderPosX, -renderPosY, -renderPosZ);
     }
 }

@@ -9,6 +9,8 @@ import cope.inferno.util.entity.inventory.Swap;
 import cope.inferno.util.internal.timing.Format;
 import cope.inferno.util.internal.timing.Timer;
 import cope.inferno.util.network.NetworkUtil;
+import cope.inferno.util.render.ColorUtil;
+import cope.inferno.util.render.RenderUtil;
 import cope.inferno.util.world.block.BlockUtil;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -20,6 +22,7 @@ import net.minecraft.network.play.client.CPacketAnimation;
 import net.minecraft.network.play.client.CPacketPlayerDigging;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -40,10 +43,32 @@ public class Speedmine extends Module {
     public static final Setting<Swing> swing = new Setting<>("Swing", Swing.ALLOW);
     public static final Setting<Boolean> onlyMainCancel = new Setting<>(swing, "OnlyMainCancel", true);
 
+    public static final Setting<Boolean> render = new Setting<>("Render", true);
+    public static final Setting<Boolean> filled = new Setting<>(render, "Filled", true);
+    public static final Setting<Boolean> outlined = new Setting<>(render, "Outlined", true);
+    public static final Setting<Float> lineWidth = new Setting<>(outlined, "LineWidth", 3.0f, 0.1f, 5.0f);
+
     private BlockPos miningPos;
     private final Timer timer = new Timer();
 
     private int oldSlot = -1;
+
+    @Override
+    public void onRender3D() {
+        if (miningPos != null && render.getValue()) {
+            int red, green;
+            if (allowBreak()) {
+                green = 255;
+                red = 0;
+            } else {
+                red = 255;
+                green = 0;
+            }
+
+            AxisAlignedBB box = RenderUtil.getRenderBoundingBox(new AxisAlignedBB(miningPos));
+            RenderUtil.renderBlockEsp(box, filled.getValue(), outlined.getValue(), lineWidth.getValue(), ColorUtil.getColor(red, green, 0, 80));
+        }
+    }
 
     @Override
     protected void onDisable() {
@@ -55,6 +80,10 @@ public class Speedmine extends Module {
 
     @Override
     public void onUpdate() {
+        if (miningPos != null && BlockUtil.isReplaceable(miningPos)) {
+            miningPos = null;
+        }
+
         if (miningPos == null && oldSlot != -1) {
             getInferno().getInventoryManager().swap(oldSlot, swap.getValue());
             oldSlot = -1;
@@ -181,7 +210,7 @@ public class Speedmine extends Module {
 
         int efficiency = EnchantmentHelper.getEnchantmentLevel(Enchantments.EFFICIENCY, stack);
         if (efficiency > 0) {
-            speed = Math.pow(efficiency, 2.0) + 1.0;
+            speed += Math.pow(efficiency, 2.0) + 1.0;
         }
 
         return speed;
@@ -205,7 +234,7 @@ public class Speedmine extends Module {
 
             // i think this is in ticks?
             double speed = getBreakSpeed(mc.player.inventory.getStackInSlot(getInferno().getInventoryManager().getServerSlot()), state);
-            return timer.passed((long) speed, Format.TICKS);
+            return timer.passed((long) speed, Format.SECONDS);
         }
 
         return false;
