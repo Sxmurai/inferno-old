@@ -29,6 +29,7 @@ public class Inferno {
     // client related shit
     private ModuleManager moduleManager;
     private TickManager tickManager;
+    private FontManager fontManager;
     private InteractionManager interactionManager;
     private InventoryManager inventoryManager;
     private RotationManager rotationManager;
@@ -51,6 +52,8 @@ public class Inferno {
         MinecraftForge.EVENT_BUS.register(moduleManager);
 
         tickManager = new TickManager();
+
+        fontManager = new FontManager();
 
         interactionManager = new InteractionManager();
 
@@ -97,6 +100,10 @@ public class Inferno {
 
     public TickManager getTickManager() {
         return tickManager;
+    }
+
+    public FontManager getFontManager() {
+        return fontManager;
     }
 
     public InteractionManager getInteractionManager() {

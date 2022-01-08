@@ -60,10 +60,10 @@ public class DropdownMenu extends AbstractButton {
             text += (": " + ChatFormatting.GRAY + FormatUtil.formatName(enumSetting.getValue().name()));
         }
 
-        mc.fontRenderer.drawStringWithShadow(text, (float) (x + 3.0), (float) ScaleUtil.alignH(y, height), -1);
+        getInferno().getFontManager().drawNormalizedString(text, (float) (x + 3.0), (float) ScaleUtil.alignH(y, height), -1);
 
         int stringWidth = mc.fontRenderer.getStringWidth("...");
-        mc.fontRenderer.drawStringWithShadow("...", (float) (((x + width) - stringWidth) - 1.0), (float) ScaleUtil.alignH(y, height), -1);
+        getInferno().getFontManager().drawNormalizedString("...", (float) (((x + width) - stringWidth) - 1.0), (float) ScaleUtil.alignH(y, height), -1);
 
         if (expanded) {
             double startY = y + height + 1.0;

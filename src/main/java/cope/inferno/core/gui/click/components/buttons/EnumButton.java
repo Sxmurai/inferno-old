@@ -21,7 +21,7 @@ public class EnumButton extends AbstractButton {
     @Override
     public void render(int mouseX, int mouseY) {
         RenderUtil.drawRectangle(x, y, width, height, BACKGROUND.getRGB());
-        mc.fontRenderer.drawStringWithShadow(
+        getInferno().getFontManager().drawNormalizedString(
                 setting.getName() + ": " + ChatFormatting.GRAY + FormatUtil.formatName(setting.getValue().name()),
                 (float) (x + 2.3),
                 (float) ScaleUtil.alignH(y, height),

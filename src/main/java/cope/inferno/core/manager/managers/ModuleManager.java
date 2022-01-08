@@ -2,6 +2,7 @@ package cope.inferno.core.manager.managers;
 
 import cope.inferno.core.features.module.Module;
 import cope.inferno.core.features.module.client.ClickGUI;
+import cope.inferno.core.features.module.client.CustomFont;
 import cope.inferno.core.features.module.client.Notifier;
 import cope.inferno.core.features.module.combat.*;
 import cope.inferno.core.features.module.movement.*;
@@ -21,6 +22,7 @@ public class ModuleManager extends Manager<Module> {
     public void init() {
         // client
         modules.add(new ClickGUI());
+        modules.add(new CustomFont());
         modules.add(new Notifier());
 
         // combat

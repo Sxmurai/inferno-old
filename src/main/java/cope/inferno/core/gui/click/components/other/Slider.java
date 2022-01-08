@@ -29,7 +29,7 @@ public class Slider extends AbstractComponent {
         double w = setting.getValue().floatValue() <= setting.getMin().floatValue() ? 0.0 : width * partialMultiplier();
         RenderUtil.drawRectangle(x, y, w, height, BACKGROUND.darker().darker().getRGB());
 
-        mc.fontRenderer.drawStringWithShadow(
+        getInferno().getFontManager().drawNormalizedString(
                 setting.getName() + ": " + ChatFormatting.GRAY + setting.getValue(),
                 (float) (x + 2.3),
                 (float) ScaleUtil.alignH(y, height),

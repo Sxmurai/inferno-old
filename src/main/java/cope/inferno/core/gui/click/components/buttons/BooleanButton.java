@@ -19,7 +19,7 @@ public class BooleanButton extends AbstractButton {
     @Override
     public void render(int mouseX, int mouseY) {
         RenderUtil.drawRectangle(x, y, width, height, setting.getValue() ? BACKGROUND.darker().darker().getRGB() : BACKGROUND.getRGB());
-        mc.fontRenderer.drawStringWithShadow(name, (float) (x + 3.0), (float) ScaleUtil.alignH(y, height), -1);
+        getInferno().getFontManager().drawNormalizedString(name, (float) (x + 3.0), (float) ScaleUtil.alignH(y, height), -1);
     }
 
     @Override

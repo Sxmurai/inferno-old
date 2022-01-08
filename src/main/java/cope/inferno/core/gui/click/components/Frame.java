@@ -63,7 +63,7 @@ public abstract class Frame extends AbstractComponent {
         // draw header
         RenderUtil.drawRectangle(x, y, width, headerHeight, HEADER);
         RenderUtil.drawOutline(x, y, width, expanded ? height : headerHeight, 3.0f, new Color(20, 20, 20).getRGB());
-        mc.fontRenderer.drawStringWithShadow(name, (float) ScaleUtil.alignV(name, x, width), (float) ScaleUtil.alignH(y, headerHeight), -1);
+        getInferno().getFontManager().drawNormalizedString(name, (float) ScaleUtil.alignV(name, x, width), (float) ScaleUtil.alignH(y, headerHeight), -1);
 
         // scissor elements so they are cleanly restricted within the frame
         RenderUtil.startScissor((int) x, (int) (y + headerHeight), (int) (x + width), (int) (y + height));

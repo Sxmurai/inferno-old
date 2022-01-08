@@ -47,11 +47,11 @@ public class ModuleButton extends AbstractButton {
     @Override
     public void render(int mouseX, int mouseY) {
         RenderUtil.drawRectangle(x, y, width, height, module.isToggled() ? BACKGROUND.darker().darker().getRGB() : BACKGROUND.getRGB());
-        mc.fontRenderer.drawStringWithShadow(name, (float) (x + 3.0), (float) ScaleUtil.alignH(y, height), -1);
+        getInferno().getFontManager().drawNormalizedString(name, (float) (x + 3.0), (float) ScaleUtil.alignH(y, height), -1);
 
         if (module.getSettings().size() > 2) {
             int stringWidth = mc.fontRenderer.getStringWidth("...");
-            mc.fontRenderer.drawStringWithShadow("...", (float) (((x + width) - stringWidth) - 1.0), (float) ScaleUtil.alignH(y, height), -1);
+            getInferno().getFontManager().drawNormalizedString("...", (float) (((x + width) - stringWidth) - 1.0), (float) ScaleUtil.alignH(y, height), -1);
         }
 
         if (expanded) {

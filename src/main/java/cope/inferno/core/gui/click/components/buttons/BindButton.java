@@ -24,7 +24,7 @@ public class BindButton extends AbstractButton {
         String text = listening ? "Listening..." : (name + ": " + ChatFormatting.GRAY + Keyboard.getKeyName(bind.getValue()));
         RenderUtil.drawRectangle(x, y, width, height, BACKGROUND.getRGB());
 
-        mc.fontRenderer.drawStringWithShadow(text, (float) (x + 2.3), (float) ScaleUtil.alignH(y, height), -1);
+        getInferno().getFontManager().drawNormalizedString(text, (float) (x + 2.3), (float) ScaleUtil.alignH(y, height), -1);
     }
 
     @Override
