@@ -3,6 +3,8 @@
 
 A 1.12.2 block game Anarchy Hacked Client.
 
+So, I've stopped developing this because I got tired of 1.12.2, but soon I'll probably rewrite (again LOL) or archive this client and make a new one as I always have.
+
 ---
 
 ## Building
