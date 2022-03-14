@@ -1,3 +1,6 @@
+# This repo has been archived, new client is [nebula](https://github.com/Sxmurai/nebula) (LOL)
+
+
 ![infernologo](https://user-images.githubusercontent.com/90464553/133526203-64b11a67-e7c6-4f31-9fd1-05d9142227aa.png)
 # Inferno
 
